@@ -36,7 +36,7 @@ public class ChessBoard {
     }
 
     public boolean isEmptyPosition(ChessPosition position) {
-        return getPiece(position) != null;
+        return (isInBoundsPosition(position)) && (getPiece(position) == null);
     }
 
     public boolean isInBoundsPosition(ChessPosition position) {
