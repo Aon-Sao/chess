@@ -34,6 +34,10 @@ public class SearchRay {
             in_bounds = this.board.isInBoundsPosition(current);
             unimpeded = this.board.isEmptyPosition(current);
         }
+        if (in_bounds && board.getPiece(current).getTeamColor()
+                != board.getPiece(startPosition).getTeamColor()) {
+            tiles.add(current);
+        }
     }
 
 }
