@@ -105,7 +105,7 @@ public class ChessPiece {
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         ArrayList<ChessMove> moves = new ArrayList<>();
         for (ChessDirection dir : this.moveDirections) {
-            SearchRay ray = new SearchRay(myPosition, dir, board);
+            SearchRay ray = new SearchRay(myPosition, dir, this.maxMoveDistance, board);
             for (ChessPosition pos : ray.getTiles()) {
                 moves.add(new ChessMove(myPosition, pos));
             }

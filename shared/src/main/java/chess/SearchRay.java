@@ -7,12 +7,12 @@ public class SearchRay {
     private int y;
     private ArrayList<ChessPosition> tiles = new ArrayList<>();
     private ChessBoard board;
-    public SearchRay(ChessPosition startPosition, ChessDirection direction, ChessBoard board) {
+    public SearchRay(ChessPosition startPosition, ChessDirection direction, int maxLen, ChessBoard board) {
         int[] dir_vec = direction.getVector();
         this.x = dir_vec[0];
         this.y = dir_vec[1];
         this.board = board;
-        populate_ray(startPosition);
+        populate_ray(startPosition, maxLen);
     }
 
     public ArrayList<ChessPosition> getTiles() {
@@ -23,20 +23,25 @@ public class SearchRay {
         return new ChessPosition(pos.getRow() + this.x, pos.getColumn() + this.y);
     }
 
-    private void populate_ray(ChessPosition startPosition) {
+    private void populate_ray(ChessPosition startPosition, int maxLen) {
         ChessPosition current = advance(startPosition);
-        boolean in_bounds = this.board.isInBoundsPosition(current);
-        boolean unimpeded = this.board.isEmptyPosition(current);
-
-        while (in_bounds && unimpeded) {
-            tiles.add(current);
+        int len = 1;
+        while (len <= maxLen) {
+            if (this.board.isInBoundsPosition(current)) {
+                if (this.board.isEmptyPosition(current)) {
+                    tiles.add(current);
+                }
+                else if (board.getPiece(current).getTeamColor()
+                        != board.getPiece(startPosition).getTeamColor()) {
+                    tiles.add(current);
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
             current = advance(current);
-            in_bounds = this.board.isInBoundsPosition(current);
-            unimpeded = this.board.isEmptyPosition(current);
-        }
-        if (in_bounds && board.getPiece(current).getTeamColor()
-                != board.getPiece(startPosition).getTeamColor()) {
-            tiles.add(current);
+            len++;
         }
     }
 
