@@ -16,8 +16,8 @@ public class ChessPiece {
 
     private ChessGame.TeamColor pieceColor;
     private ChessPiece.PieceType pieceType;
-    private List<ChessDirection> moveDirections;
-    private int maxMoveDistance;
+    private ArrayList<ChessDirection> moveDirections = new ArrayList<>();
+    private int maxMoveDistance = 0;
 
     public ChessPiece(ChessGame.TeamColor pieceColor, ChessPiece.PieceType type) {
         this.pieceColor = pieceColor;
@@ -38,46 +38,32 @@ public class ChessPiece {
     }
 
     private void determineMovePattern() {
+        List<ChessDirection> diagonal = List.of(
+                UP_LEFT,
+                DOWN_LEFT,
+                UP_RIGHT,
+                DOWN_RIGHT
+        );
+        List<ChessDirection> orthogonal = List.of(
+                LEFT,
+                RIGHT,
+                UP,
+                DOWN
+        );
         if (this.pieceType == PieceType.KING) {
             this.maxMoveDistance = 1;
-            this.moveDirections = List.of(
-                    LEFT,
-                    RIGHT,
-                    UP,
-                    DOWN,
-                    UP_LEFT,
-                    DOWN_LEFT,
-                    UP_RIGHT,
-                    DOWN_RIGHT
-            );
+            this.moveDirections.addAll(diagonal);
+            this.moveDirections.addAll(orthogonal);
         } else if (this.pieceType == PieceType.QUEEN) {
             this.maxMoveDistance = 8;
-            this.moveDirections = List.of(
-                    LEFT,
-                    RIGHT,
-                    UP,
-                    DOWN,
-                    UP_LEFT,
-                    DOWN_LEFT,
-                    UP_RIGHT,
-                    DOWN_RIGHT
-            );
+            this.moveDirections.addAll(diagonal);
+            this.moveDirections.addAll(orthogonal);
         } else if (this.pieceType == PieceType.BISHOP) {
             this.maxMoveDistance = 8;
-            this.moveDirections = List.of(
-                    UP_LEFT,
-                    DOWN_LEFT,
-                    UP_RIGHT,
-                    DOWN_RIGHT
-            );
+            this.moveDirections.addAll(diagonal);
         } else if (this.pieceType == PieceType.ROOK) {
             this.maxMoveDistance = 8;
-            this.moveDirections = List.of(
-                    LEFT,
-                    RIGHT,
-                    UP,
-                    DOWN
-            );
+            this.moveDirections.addAll(orthogonal);
         }
     }
 
@@ -104,13 +90,16 @@ public class ChessPiece {
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         ArrayList<ChessMove> moves = new ArrayList<>();
-        for (ChessDirection dir : this.moveDirections) {
-            SearchRay ray = new SearchRay(myPosition, dir, this.maxMoveDistance, board);
-            for (ChessPosition pos : ray.getTiles()) {
-                moves.add(new ChessMove(myPosition, pos));
+        if ((!moveDirections.isEmpty()) && (maxMoveDistance > 0)) {
+            for (ChessDirection dir : moveDirections) {
+                SearchRay ray = new SearchRay(myPosition, dir, maxMoveDistance, board);
+                for (ChessPosition pos : ray.getTiles()) {
+                    moves.add(new ChessMove(myPosition, pos));
+                }
             }
+        } else {
+        throw new RuntimeException("Not implemented");
         }
         return moves;
-//        throw new RuntimeException("Not implemented");
     }
 }
