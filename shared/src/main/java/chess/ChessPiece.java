@@ -125,6 +125,47 @@ public class ChessPiece {
                     }
                 }
             }
+        } else  if (pieceType == PieceType.PAWN) {
+            int start_row;
+            int promotionRow;
+            int x = myPosition.getRow();
+            int y = myPosition.getColumn();
+            int offset;
+            if (pieceColor == ChessGame.TeamColor.WHITE) {
+                // Forward is UP (+)
+                offset = UP.getVector()[1];
+                start_row = 2;
+                promotionRow = 8;
+            } else {
+                // Forward is DOWN (-)
+                offset = DOWN.getVector()[1];
+                start_row = 7;
+                promotionRow = 1;
+            }
+            ChessPosition one_ahead = new ChessPosition(x + offset, y);
+            ChessPosition left_ahead = new ChessPosition(x + offset, y - 1);
+            ChessPosition right_ahead = new ChessPosition(x + offset, y + 1);
+            ChessPosition two_ahead = new ChessPosition(x + (2 * offset), y);
+            if (board.isEmptyPosition(one_ahead)) {
+                moves.add(new ChessMove(myPosition, one_ahead));
+                if ((x == start_row) && board.isEmptyPosition(two_ahead)) {
+                    moves.add(new ChessMove(myPosition, two_ahead));
+                }
+            }
+            for (ChessPosition pos : List.of(left_ahead, right_ahead)) {
+                if (board.isInBoundsPosition(pos) && (!board.isEmptyPosition(pos)) && (this.isEnemyPiece(board.getPiece(pos)))) {
+                    moves.add(new ChessMove(myPosition, pos));
+                }
+            }
+            if (x + offset == promotionRow) {
+                ArrayList<ChessMove> tmp = new ArrayList<>();
+                for (ChessMove move : moves) {
+                    for (PieceType promotionPiece : List.of(PieceType.QUEEN, PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK)) {
+                        tmp.add(new ChessMove(move.getStartPosition(), move.getEndPosition(), promotionPiece));
+                    }
+                }
+                moves = tmp;
+            }
         } else {
             throw new RuntimeException("Not implemented");
         }
