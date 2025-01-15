@@ -81,6 +81,25 @@ public class ChessPiece {
         return this.pieceType;
     }
 
+    public boolean isEnemyPiece(ChessPiece other) {
+        return other.getTeamColor() != this.getTeamColor();
+    }
+
+    private Collection<ChessPosition> knightPattern(ChessPosition startPosition) {
+        int x = startPosition.getRow();
+        int y = startPosition.getColumn();
+        ArrayList<ChessPosition> positions = new ArrayList<>();
+        positions.add(new ChessPosition(x + 1, y + 2));
+        positions.add(new ChessPosition(x + 1, y - 2));
+        positions.add(new ChessPosition(x - 1, y + 2));
+        positions.add(new ChessPosition(x - 1, y - 2));
+        positions.add(new ChessPosition(x + 2, y + 1));
+        positions.add(new ChessPosition(x - 2, y + 1));
+        positions.add(new ChessPosition(x + 2, y - 1));
+        positions.add(new ChessPosition(x - 2, y - 1));
+        return positions;
+    }
+
     /**
      * Calculates all the positions a chess piece can move to
      * Does not take into account moves that are illegal due to leaving the king in
@@ -97,8 +116,17 @@ public class ChessPiece {
                     moves.add(new ChessMove(myPosition, pos));
                 }
             }
+        } else if (pieceType == PieceType.KNIGHT) {
+            for (ChessPosition pos : knightPattern(myPosition)) {
+                if (board.isInBoundsPosition(pos)) {
+                    if ((board.isEmptyPosition(pos)) ||
+                            (this.isEnemyPiece(board.getPiece(pos)))) {
+                        moves.add(new ChessMove(myPosition, pos));
+                    }
+                }
+            }
         } else {
-        throw new RuntimeException("Not implemented");
+            throw new RuntimeException("Not implemented");
         }
         return moves;
     }

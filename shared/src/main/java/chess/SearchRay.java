@@ -25,14 +25,14 @@ public class SearchRay {
 
     private void populate_ray(ChessPosition startPosition, int maxLen) {
         ChessPosition current = advance(startPosition);
+        ChessPiece originPiece = board.getPiece(startPosition);
         int len = 1;
         while (len <= maxLen) {
             if (this.board.isInBoundsPosition(current)) {
                 if (this.board.isEmptyPosition(current)) {
                     tiles.add(current);
                 }
-                else if (board.getPiece(current).getTeamColor()
-                        != board.getPiece(startPosition).getTeamColor()) {
+                else if (originPiece.isEnemyPiece(board.getPiece(current))) {
                     tiles.add(current);
                     break;
                 }
