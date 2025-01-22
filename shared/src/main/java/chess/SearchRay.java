@@ -3,10 +3,10 @@ package chess;
 import java.util.ArrayList;
 
 public class SearchRay {
-    private int x;
-    private int y;
-    private ArrayList<ChessPosition> tiles = new ArrayList<>();
-    private ChessBoard board;
+    private final int x;
+    private final int y;
+    private final ArrayList<ChessPosition> tiles = new ArrayList<>();
+    private final ChessBoard board;
     public SearchRay(ChessPosition startPosition, ChessDirection direction, int maxLen, ChessBoard board) {
         int[] dir_vec = direction.getVector();
         this.x = dir_vec[0];

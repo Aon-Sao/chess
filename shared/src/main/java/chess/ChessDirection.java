@@ -11,7 +11,7 @@ public enum ChessDirection {
         UP_RIGHT  (new int[]{ 1,  1}),
         DOWN_RIGHT(new int[]{ 1, -1});
 
-        private int[] vector;
+        private final int[] vector;
         public int[] getVector() {
                 return this.vector;
         }

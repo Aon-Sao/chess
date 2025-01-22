@@ -53,7 +53,6 @@ public class ChessGame {
      * Makes a move in a chess game
      *
      * @param move chess move to preform
-     * @throws InvalidMoveException if move is invalid
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
         throw new RuntimeException("Not implemented");

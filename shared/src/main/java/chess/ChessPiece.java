@@ -15,9 +15,9 @@ import static chess.ChessDirection.*;
  */
 public class ChessPiece {
 
-    private ChessGame.TeamColor pieceColor;
-    private ChessPiece.PieceType pieceType;
-    private ArrayList<ChessDirection> moveDirections = new ArrayList<>();
+    private final ChessGame.TeamColor pieceColor;
+    private final ChessPiece.PieceType pieceType;
+    private final ArrayList<ChessDirection> moveDirections = new ArrayList<>();
     private int maxMoveDistance = 0;
 
     public ChessPiece(ChessGame.TeamColor pieceColor, ChessPiece.PieceType type) {
@@ -195,8 +195,6 @@ public class ChessPiece {
                 }
                 moves = tmp;
             }
-        } else {
-            throw new RuntimeException("Not implemented");
         }
         return moves;
     }
