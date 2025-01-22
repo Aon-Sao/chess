@@ -3,6 +3,7 @@ package chess;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import static chess.ChessDirection.*;
 
@@ -25,6 +26,19 @@ public class ChessPiece {
         determineMovePattern();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof ChessPiece that)) {
+            return false;
+        }
+        return maxMoveDistance == that.maxMoveDistance && pieceColor == that.pieceColor && pieceType == that.pieceType && Objects.equals(moveDirections, that.moveDirections);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieceColor, pieceType, moveDirections, maxMoveDistance);
+    }
+
     /**
      * The various different chess piece options
      */
@@ -35,6 +49,21 @@ public class ChessPiece {
         KNIGHT,
         ROOK,
         PAWN
+    }
+
+    @Override
+    public String toString() {
+        for (var entry : ChessBoard.charToTypeMap.entrySet()) {
+            if (this.pieceType == entry.getValue()) {
+                String s = entry.getKey().toString();
+                if (this.pieceColor == ChessGame.TeamColor.WHITE) {
+                    return s.toUpperCase();
+                } else {
+                    return s.toLowerCase();
+                }
+            }
+        }
+        return "?";
     }
 
     private void determineMovePattern() {
