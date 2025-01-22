@@ -1,5 +1,9 @@
 package chess;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Objects;
+
 /**
  * A chessboard that can hold and rearrange chess pieces.
  * <p>
@@ -45,11 +49,89 @@ public class ChessBoard {
         return ((x >= 1) && (x <= 8)) && ((y >= 1) && (y <= 8));
     }
 
+    public static final Map<Character, ChessPiece.PieceType> charToTypeMap = Map.of(
+            'p', ChessPiece.PieceType.PAWN,
+            'n', ChessPiece.PieceType.KNIGHT,
+            'r', ChessPiece.PieceType.ROOK,
+            'q', ChessPiece.PieceType.QUEEN,
+            'k', ChessPiece.PieceType.KING,
+            'b', ChessPiece.PieceType.BISHOP);
+
     /**
      * Sets the board to the default starting board
      * (How the game of chess normally starts)
      */
     public void resetBoard() {
-        throw new RuntimeException("Not implemented");
+        String defaultBoard = """
+                |r|n|b|q|k|b|n|r|
+                |p|p|p|p|p|p|p|p|
+                | | | | | | | | |
+                | | | | | | | | |
+                | | | | | | | | |
+                | | | | | | | | |
+                |P|P|P|P|P|P|P|P|
+                |R|N|B|Q|K|B|N|R|
+                """;
+        int row = 8;
+        int column = 1;
+        for (char c : defaultBoard.toCharArray()) {
+            if (c == '\n') {
+                column = 1;
+                row -= 1;
+            } else if (c == ' ') {
+                column += 1;
+            } else if (c != '|'){
+                ChessGame.TeamColor team = Character.isUpperCase(c) ? ChessGame.TeamColor.WHITE : ChessGame.TeamColor.BLACK;
+                ChessPiece.PieceType pieceType = charToTypeMap.get(Character.toLowerCase(c));
+                ChessPosition pos = new ChessPosition(row, column);
+                ChessPiece piece = new ChessPiece(team, pieceType);
+                addPiece(pos, piece);
+                column += 1;
+            }
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof ChessBoard that)) {
+            return false;
+        }
+        return Objects.deepEquals(grid, that.grid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(grid);
+    }
+
+    @Override
+    public String toString() {
+        var emptyBoard = """
+                | | | | | | | | |
+                | | | | | | | | |
+                | | | | | | | | |
+                | | | | | | | | |
+                | | | | | | | | |
+                | | | | | | | | |
+                | | | | | | | | |
+                | | | | | | | | |
+                """.toCharArray();
+        int row = 8;
+        int col = 1;
+        for (int i = 0; i < emptyBoard.length; i++) {
+            var c = emptyBoard[i];
+            if (c == '\n') {
+                col = 1;
+                row --;
+            }
+            else if (c == ' ') {
+                var pos = new ChessPosition(row, col);
+                if (!isEmptyPosition(pos)) {
+                    emptyBoard[i] = this.getPiece(pos).toString().toCharArray()[0];
+                }
+                col++;
+            }
+        }
+        return new String(emptyBoard);
     }
 }
