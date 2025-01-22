@@ -61,6 +61,28 @@ public class ChessBoard {
      * Sets the board to the default starting board
      * (How the game of chess normally starts)
      */
+    public static ChessBoard fromString(String boardString) {
+        var board = new ChessBoard();
+        int row = 8;
+        int column = 1;
+        for (char c : boardString.toCharArray()) {
+            if (c == '\n') {
+                column = 1;
+                row -= 1;
+            } else if (c == ' ') {
+                column += 1;
+            } else if (c != '|'){
+                ChessGame.TeamColor team = Character.isUpperCase(c) ? ChessGame.TeamColor.WHITE : ChessGame.TeamColor.BLACK;
+                ChessPiece.PieceType pieceType = charToTypeMap.get(Character.toLowerCase(c));
+                ChessPosition pos = new ChessPosition(row, column);
+                ChessPiece piece = new ChessPiece(team, pieceType);
+                board.addPiece(pos, piece);
+                column += 1;
+            }
+        }
+        return board;
+    }
+
     public void resetBoard() {
         String defaultBoard = """
                 |r|n|b|q|k|b|n|r|
@@ -72,23 +94,10 @@ public class ChessBoard {
                 |P|P|P|P|P|P|P|P|
                 |R|N|B|Q|K|B|N|R|
                 """;
-        int row = 8;
-        int column = 1;
-        for (char c : defaultBoard.toCharArray()) {
-            if (c == '\n') {
-                column = 1;
-                row -= 1;
-            } else if (c == ' ') {
-                column += 1;
-            } else if (c != '|'){
-                ChessGame.TeamColor team = Character.isUpperCase(c) ? ChessGame.TeamColor.WHITE : ChessGame.TeamColor.BLACK;
-                ChessPiece.PieceType pieceType = charToTypeMap.get(Character.toLowerCase(c));
-                ChessPosition pos = new ChessPosition(row, column);
-                ChessPiece piece = new ChessPiece(team, pieceType);
-                addPiece(pos, piece);
-                column += 1;
-            }
-        }
+        var b = ChessBoard.fromString(defaultBoard);
+        var tmp = b.grid;
+        b.grid = null;
+        this.grid = tmp;
     }
 
     @Override
