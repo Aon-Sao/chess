@@ -31,7 +31,10 @@ public class ChessPiece {
         if (!(o instanceof ChessPiece that)) {
             return false;
         }
-        return maxMoveDistance == that.maxMoveDistance && pieceColor == that.pieceColor && pieceType == that.pieceType && Objects.equals(moveDirections, that.moveDirections);
+        return maxMoveDistance == that.maxMoveDistance
+                && pieceColor == that.pieceColor
+                && pieceType == that.pieceType
+                && Objects.equals(moveDirections, that.moveDirections);
     }
 
     @Override
