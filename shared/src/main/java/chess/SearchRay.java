@@ -8,11 +8,11 @@ public class SearchRay {
     private final ArrayList<ChessPosition> tiles = new ArrayList<>();
     private final ChessBoard board;
     public SearchRay(ChessPosition startPosition, ChessDirection direction, int maxLen, ChessBoard board) {
-        int[] dir_vec = direction.getVector();
-        this.x = dir_vec[0];
-        this.y = dir_vec[1];
+        int[] dirVec = direction.getVector();
+        this.x = dirVec[0];
+        this.y = dirVec[1];
         this.board = board;
-        populate_ray(startPosition, maxLen);
+        populateRay(startPosition, maxLen);
     }
 
     public ArrayList<ChessPosition> getTiles() {
@@ -23,7 +23,7 @@ public class SearchRay {
         return new ChessPosition(pos.getRow() + this.x, pos.getColumn() + this.y);
     }
 
-    private void populate_ray(ChessPosition startPosition, int maxLen) {
+    private void populateRay(ChessPosition startPosition, int maxLen) {
         ChessPosition current = advance(startPosition);
         ChessPiece originPiece = board.getPiece(startPosition);
         int len = 1;

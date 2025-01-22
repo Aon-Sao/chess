@@ -56,7 +56,7 @@ public class ChessPiece {
 
     @Override
     public String toString() {
-        for (var entry : ChessBoard.charToTypeMap.entrySet()) {
+        for (var entry : ChessBoard.CHARACTER_PIECE_TYPE_MAP.entrySet()) {
             if (this.pieceType == entry.getValue()) {
                 String s = entry.getKey().toString();
                 if (this.pieceColor == ChessGame.TeamColor.WHITE) {
@@ -158,7 +158,7 @@ public class ChessPiece {
                 }
             }
         } else  if (pieceType == PieceType.PAWN) {
-            int start_row;
+            int startRow;
             int promotionRow;
             int x = myPosition.getRow();
             int y = myPosition.getColumn();
@@ -166,25 +166,25 @@ public class ChessPiece {
             if (pieceColor == ChessGame.TeamColor.WHITE) {
                 // Forward is UP (+)
                 offset = UP.getVector()[1];
-                start_row = 2;
+                startRow = 2;
                 promotionRow = 8;
             } else {
                 // Forward is DOWN (-)
                 offset = DOWN.getVector()[1];
-                start_row = 7;
+                startRow = 7;
                 promotionRow = 1;
             }
-            ChessPosition one_ahead = new ChessPosition(x + offset, y);
-            ChessPosition left_ahead = new ChessPosition(x + offset, y - 1);
-            ChessPosition right_ahead = new ChessPosition(x + offset, y + 1);
-            ChessPosition two_ahead = new ChessPosition(x + (2 * offset), y);
-            if (board.isEmptyPosition(one_ahead)) {
-                moves.add(new ChessMove(myPosition, one_ahead));
-                if ((x == start_row) && board.isEmptyPosition(two_ahead)) {
-                    moves.add(new ChessMove(myPosition, two_ahead));
+            ChessPosition oneAhead = new ChessPosition(x + offset, y);
+            ChessPosition leftAhead = new ChessPosition(x + offset, y - 1);
+            ChessPosition rightAhead = new ChessPosition(x + offset, y + 1);
+            ChessPosition twoAhead = new ChessPosition(x + (2 * offset), y);
+            if (board.isEmptyPosition(oneAhead)) {
+                moves.add(new ChessMove(myPosition, oneAhead));
+                if ((x == startRow) && board.isEmptyPosition(twoAhead)) {
+                    moves.add(new ChessMove(myPosition, twoAhead));
                 }
             }
-            for (ChessPosition pos : List.of(left_ahead, right_ahead)) {
+            for (ChessPosition pos : List.of(leftAhead, rightAhead)) {
                 if (board.isInBoundsPosition(pos) && (!board.isEmptyPosition(pos)) && (this.isEnemyPiece(board.getPiece(pos)))) {
                     moves.add(new ChessMove(myPosition, pos));
                 }

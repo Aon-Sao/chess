@@ -49,7 +49,7 @@ public class ChessBoard {
         return ((x >= 1) && (x <= 8)) && ((y >= 1) && (y <= 8));
     }
 
-    public static final Map<Character, ChessPiece.PieceType> charToTypeMap = Map.of(
+    public static final Map<Character, ChessPiece.PieceType> CHARACTER_PIECE_TYPE_MAP = Map.of(
             'p', ChessPiece.PieceType.PAWN,
             'n', ChessPiece.PieceType.KNIGHT,
             'r', ChessPiece.PieceType.ROOK,
@@ -73,7 +73,7 @@ public class ChessBoard {
                 column += 1;
             } else if (c != '|'){
                 ChessGame.TeamColor team = Character.isUpperCase(c) ? ChessGame.TeamColor.WHITE : ChessGame.TeamColor.BLACK;
-                ChessPiece.PieceType pieceType = charToTypeMap.get(Character.toLowerCase(c));
+                ChessPiece.PieceType pieceType = CHARACTER_PIECE_TYPE_MAP.get(Character.toLowerCase(c));
                 ChessPosition pos = new ChessPosition(row, column);
                 ChessPiece piece = new ChessPiece(team, pieceType);
                 board.addPiece(pos, piece);
