@@ -2,6 +2,7 @@ package chess;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * For a class that can manage a chess game, making moves on a board
@@ -93,7 +94,27 @@ public class ChessGame {
      * @return True if the specified team is in check
      */
     public boolean isInCheck(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
+        var kingPos = getKingPos(teamColor);
+        var king = board.getPiece(kingPos);
+        board = getBoard();
+        for (var searchDirection : ChessDirection.values()) {
+            var ray = new SearchRay(kingPos, searchDirection, 8, board);
+            var tiles = ray.getTiles();
+            if (!tiles.isEmpty()) {
+                var nearestPiece = board.getPiece(tiles.getLast());
+                if (nearestPiece != null && king.isEnemyPiece(nearestPiece)) {
+                    if (nearestPiece.getMoveDirections().contains(searchDirection)
+                            && ((tiles.size()) <= nearestPiece.getMaxMoveDistance())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private ChessPosition getKingPos(TeamColor teamColor) {
+        return getBoard().findPiece(new ChessPiece(teamColor, ChessPiece.PieceType.KING));
     }
 
     /**
