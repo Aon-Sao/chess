@@ -15,6 +15,15 @@ public class ChessPiece {
 
     private final ChessGame.TeamColor pieceColor;
     private final ChessPiece.PieceType pieceType;
+
+    public ArrayList<ChessDirection> getMoveDirections() {
+        return moveDirections;
+    }
+
+    public int getMaxMoveDistance() {
+        return maxMoveDistance;
+    }
+
     private ArrayList<ChessDirection> moveDirections = new ArrayList<>();
     private int maxMoveDistance = 0;
 
