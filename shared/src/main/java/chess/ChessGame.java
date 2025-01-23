@@ -10,6 +10,7 @@ import java.util.Collection;
  * signature of the existing methods.
  */
 public class ChessGame {
+    private ChessBoard board;
 
     public ChessGame() {
 
@@ -50,13 +51,16 @@ public class ChessGame {
         if (getBoard().isEmptyPosition(startPosition)) {
             return null;
         } else {
+            var originalBoard = getBoard();
             Collection<ChessMove> moves = new ArrayList<>();
             for (var move : getBoard().getPiece(startPosition).pieceMoves(getBoard(), startPosition)) {
                 var futureBoard = new ChessBoard(getBoard());
-                if (!isInCheckBoard(futureBoard, getTeamTurn())) {
+                setBoard(futureBoard);
+                if (!isInCheck(getTeamTurn())) {
                     moves.add(move);
                 }
             }
+            setBoard(originalBoard);
             return moves;
         }
     }
@@ -86,10 +90,6 @@ public class ChessGame {
      * @return True if the specified team is in check
      */
     public boolean isInCheck(TeamColor teamColor) {
-        return isInCheckBoard(getBoard(), teamColor);
-    }
-
-    private boolean isInCheckBoard(ChessBoard board, TeamColor teamColor) {
         throw new RuntimeException("Not implemented");
     }
 
@@ -120,7 +120,7 @@ public class ChessGame {
      * @param board the new board to use
      */
     public void setBoard(ChessBoard board) {
-        throw new RuntimeException("Not implemented");
+        this.board = board;
     }
 
     /**
@@ -129,6 +129,6 @@ public class ChessGame {
      * @return the chessboard
      */
     public ChessBoard getBoard() {
-        throw new RuntimeException("Not implemented");
+        return this.board;
     }
 }
