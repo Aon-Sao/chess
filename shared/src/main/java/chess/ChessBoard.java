@@ -17,9 +17,9 @@ public class ChessBoard implements Iterable {
     }
 
     public ChessBoard(ChessBoard copy) {
-        for (int y = 1; y <= 8; y++) {
-            for (int x = 1; x <= 8; x++) {
-                var pos = new ChessPosition(x, y);
+        for (int col = 1; col <= 8; col++) {
+            for (int row = 1; row <= 8; row++) {
+                var pos = new ChessPosition(row, col);
                 if (!copy.isEmptyPosition(pos)) {
                     this.addPiece(pos, copy.getPiece(pos));
                 }
@@ -33,16 +33,16 @@ public class ChessBoard implements Iterable {
     }
 
     public ChessPosition findPiece(ChessPiece piece) {
-        var y = 1;
-        var x = 1;
+        var col = 1;
+        var row = 1;
         for (var p : this) {
             if (piece.equals(p)) {
-                return new ChessPosition(x, y);
+                return new ChessPosition(row, col);
             }
-            x++;
-            if (x == 9) {
-                x = 1;
-                y++;
+            row++;
+            if (row == 9) {
+                row = 1;
+                col++;
             }
         }
         return null;
@@ -78,8 +78,8 @@ public class ChessBoard implements Iterable {
     }
 
     public boolean isInBoundsPosition(ChessPosition position) {
-        int x = position.getRow();
-        int y = position.getColumn();
+        int x = position.getColumn();
+        int y = position.getRow();
         return ((x >= 1) && (x <= 8)) && ((y >= 1) && (y <= 8));
     }
 
@@ -98,20 +98,20 @@ public class ChessBoard implements Iterable {
     public static ChessBoard fromString(String boardString) {
         var board = new ChessBoard();
         int row = 8;
-        int column = 1;
+        int col = 1;
         for (char c : boardString.toCharArray()) {
             if (c == '\n') {
-                column = 1;
+                col = 1;
                 row -= 1;
             } else if (c == ' ') {
-                column += 1;
+                col += 1;
             } else if (c != '|'){
                 ChessGame.TeamColor team = Character.isUpperCase(c) ? ChessGame.TeamColor.WHITE : ChessGame.TeamColor.BLACK;
                 ChessPiece.PieceType pieceType = CHARACTER_PIECE_TYPE_MAP.get(Character.toLowerCase(c));
-                ChessPosition pos = new ChessPosition(row, column);
+                ChessPosition pos = new ChessPosition(row, col);
                 ChessPiece piece = new ChessPiece(team, pieceType);
                 board.addPiece(pos, piece);
-                column += 1;
+                col += 1;
             }
         }
         return board;

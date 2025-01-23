@@ -1,7 +1,9 @@
 package chess;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 
 import static chess.ChessDirection.*;
 
@@ -134,17 +136,17 @@ public class ChessPiece {
     }
 
     private Collection<ChessPosition> knightPattern(ChessPosition startPosition) {
-        int x = startPosition.getRow();
-        int y = startPosition.getColumn();
+        int row = startPosition.getRow();
+        int col = startPosition.getColumn();
         ArrayList<ChessPosition> positions = new ArrayList<>();
-        positions.add(new ChessPosition(x + 1, y + 2));
-        positions.add(new ChessPosition(x + 1, y - 2));
-        positions.add(new ChessPosition(x - 1, y + 2));
-        positions.add(new ChessPosition(x - 1, y - 2));
-        positions.add(new ChessPosition(x + 2, y + 1));
-        positions.add(new ChessPosition(x - 2, y + 1));
-        positions.add(new ChessPosition(x + 2, y - 1));
-        positions.add(new ChessPosition(x - 2, y - 1));
+        positions.add(new ChessPosition(row + 1, col + 2));
+        positions.add(new ChessPosition(row + 1, col - 2));
+        positions.add(new ChessPosition(row - 1, col + 2));
+        positions.add(new ChessPosition(row - 1, col - 2));
+        positions.add(new ChessPosition(row + 2, col + 1));
+        positions.add(new ChessPosition(row - 2, col + 1));
+        positions.add(new ChessPosition(row + 2, col - 1));
+        positions.add(new ChessPosition(row - 2, col - 1));
         return positions;
     }
 
@@ -176,8 +178,8 @@ public class ChessPiece {
         } else  if (pieceType == PieceType.PAWN) {
             int startRow;
             int promotionRow;
-            int x = myPosition.getRow();
-            int y = myPosition.getColumn();
+            int row = myPosition.getRow();
+            int col = myPosition.getColumn();
             int offset;
             if (pieceColor == ChessGame.TeamColor.WHITE) {
                 // Forward is UP (+)
@@ -190,13 +192,13 @@ public class ChessPiece {
                 startRow = 7;
                 promotionRow = 1;
             }
-            ChessPosition oneAhead = new ChessPosition(x + offset, y);
-            ChessPosition leftAhead = new ChessPosition(x + offset, y - 1);
-            ChessPosition rightAhead = new ChessPosition(x + offset, y + 1);
-            ChessPosition twoAhead = new ChessPosition(x + (2 * offset), y);
+            ChessPosition oneAhead = new ChessPosition(row + offset, col);
+            ChessPosition leftAhead = new ChessPosition(row + offset, col - 1);
+            ChessPosition rightAhead = new ChessPosition(row + offset, col + 1);
+            ChessPosition twoAhead = new ChessPosition(row + (2 * offset), col);
             if (board.isEmptyPosition(oneAhead)) {
                 moves.add(new ChessMove(myPosition, oneAhead));
-                if ((x == startRow) && board.isEmptyPosition(twoAhead)) {
+                if ((row == startRow) && board.isEmptyPosition(twoAhead)) {
                     moves.add(new ChessMove(myPosition, twoAhead));
                 }
             }
@@ -205,7 +207,7 @@ public class ChessPiece {
                     moves.add(new ChessMove(myPosition, pos));
                 }
             }
-            if (x + offset == promotionRow) {
+            if (row + offset == promotionRow) {
                 ArrayList<ChessMove> tmp = new ArrayList<>();
                 for (ChessMove move : moves) {
                     for (PieceType promotionPiece : List.of(PieceType.QUEEN, PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK)) {
