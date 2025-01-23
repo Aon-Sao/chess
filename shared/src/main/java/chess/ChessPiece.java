@@ -1,9 +1,7 @@
 package chess;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.lang.reflect.Array;
+import java.util.*;
 
 import static chess.ChessDirection.*;
 
@@ -17,13 +15,22 @@ public class ChessPiece {
 
     private final ChessGame.TeamColor pieceColor;
     private final ChessPiece.PieceType pieceType;
-    private final ArrayList<ChessDirection> moveDirections = new ArrayList<>();
+    private ArrayList<ChessDirection> moveDirections = new ArrayList<>();
     private int maxMoveDistance = 0;
 
     public ChessPiece(ChessGame.TeamColor pieceColor, ChessPiece.PieceType type) {
         this.pieceColor = pieceColor;
         this.pieceType = type;
         determineMovePattern();
+    }
+
+    public ChessPiece(ChessPiece copy) {
+        this.pieceColor = copy.pieceColor;
+        this.pieceType = copy.pieceType;
+        this.maxMoveDistance = copy.maxMoveDistance;
+        // directions may be copied shallowly because they're enums,
+        // which follow the singleton pattern
+        this.moveDirections.addAll(copy.moveDirections);
     }
 
     @Override

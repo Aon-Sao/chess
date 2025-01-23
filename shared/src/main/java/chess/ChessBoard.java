@@ -18,6 +18,14 @@ public class ChessBoard {
         
     }
 
+    public ChessBoard(ChessBoard copy) {
+        for (int y = 1; y <= 8; y++) {
+            for (int x = 1; x <= 8; x++) {
+                this.grid[y][x] = new ChessPiece(copy.grid[y][x]);
+            }
+        }
+    }
+
     /**
      * Adds a chess piece to the chessboard
      *
@@ -26,6 +34,10 @@ public class ChessBoard {
      */
     public void addPiece(ChessPosition position, ChessPiece piece) {
         this.grid[position.getColumn() - 1][position.getRow() - 1] = piece;
+    }
+
+    public void removePiece(ChessPosition position) {
+        addPiece(position, null);
     }
 
     /**
