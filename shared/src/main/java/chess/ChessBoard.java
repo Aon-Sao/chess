@@ -21,7 +21,10 @@ public class ChessBoard {
     public ChessBoard(ChessBoard copy) {
         for (int y = 1; y <= 8; y++) {
             for (int x = 1; x <= 8; x++) {
-                this.grid[y][x] = new ChessPiece(copy.grid[y][x]);
+                var pos = new ChessPosition(x, y);
+                if (!copy.isEmptyPosition(pos)) {
+                    this.addPiece(pos, copy.getPiece(pos));
+                }
             }
         }
     }
