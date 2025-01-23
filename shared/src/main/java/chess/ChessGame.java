@@ -1,5 +1,6 @@
 package chess;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -46,7 +47,18 @@ public class ChessGame {
      * startPosition
      */
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
-        throw new RuntimeException("Not implemented");
+        if (getBoard().isEmptyPosition(startPosition)) {
+            return null;
+        } else {
+            Collection<ChessMove> moves = new ArrayList<>();
+            for (var move : getBoard().getPiece(startPosition).pieceMoves(getBoard(), startPosition)) {
+                var futureBoard = new ChessBoard(getBoard());
+                if (!isInCheckBoard(futureBoard, getTeamTurn())) {
+                    moves.add(move);
+                }
+            }
+            return moves;
+        }
     }
 
     /**
@@ -55,7 +67,16 @@ public class ChessGame {
      * @param move chess move to preform
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
-        throw new RuntimeException("Not implemented");
+        var board = getBoard();
+        var startPosition = move.getStartPosition();
+        var movingPiece = board.getPiece(startPosition);
+        if (getTeamTurn() == movingPiece.getTeamColor()
+                && validMoves(startPosition).contains(move)) {
+            board.addPiece(startPosition, movingPiece);
+            board.removePiece(startPosition);
+        } else {
+            throw new InvalidMoveException();
+        }
     }
 
     /**
@@ -65,6 +86,10 @@ public class ChessGame {
      * @return True if the specified team is in check
      */
     public boolean isInCheck(TeamColor teamColor) {
+        return isInCheckBoard(getBoard(), teamColor);
+    }
+
+    private boolean isInCheckBoard(ChessBoard board, TeamColor teamColor) {
         throw new RuntimeException("Not implemented");
     }
 
