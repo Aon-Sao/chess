@@ -7,6 +7,7 @@ public class SearchRay {
     private final int y;
     private final ArrayList<ChessPosition> tiles = new ArrayList<>();
     private final ChessBoard board;
+    private ChessPiece threat = null;
     public SearchRay(ChessPosition startPosition, ChessDirection direction, int maxLen, ChessBoard board) {
         int[] dirVec = direction.getVector();
         this.x = dirVec[0];
@@ -23,6 +24,10 @@ public class SearchRay {
         return new ChessPosition(pos.getRow() + this.x, pos.getColumn() + this.y);
     }
 
+    public ChessPiece getThreat() {
+        return this.threat;
+    }
+
     private void populateRay(ChessPosition startPosition, int maxLen) {
         ChessPosition current = advance(startPosition);
         ChessPiece originPiece = board.getPiece(startPosition);
@@ -34,6 +39,7 @@ public class SearchRay {
                 }
                 else if (originPiece.isEnemyPiece(board.getPiece(current))) {
                     tiles.add(current);
+                    this.threat = board.getPiece(current);
                     break;
                 }
                 else {
