@@ -3,15 +3,15 @@ package chess;
 import java.util.ArrayList;
 
 public class SearchRay {
-    private final int x;
-    private final int y;
+    private final int row;
+    private final int column;
     private final ArrayList<ChessPosition> tiles = new ArrayList<>();
     private final ChessBoard board;
-    private ChessPiece threat = null;
+    private ChessPosition threat = null;
     public SearchRay(ChessPosition startPosition, ChessDirection direction, int maxLen, ChessBoard board) {
         int[] dirVec = direction.getVector();
-        this.x = dirVec[0];
-        this.y = dirVec[1];
+        this.row = dirVec[0];
+        this.column = dirVec[1];
         this.board = board;
         populateRay(startPosition, maxLen);
     }
@@ -21,10 +21,10 @@ public class SearchRay {
     }
 
     private ChessPosition advance(ChessPosition pos) {
-        return new ChessPosition(pos.getRow() + this.x, pos.getColumn() + this.y);
+        return new ChessPosition(pos.getRow() + this.row, pos.getColumn() + this.column);
     }
 
-    public ChessPiece getThreat() {
+    public ChessPosition getThreatPos() {
         return this.threat;
     }
 
@@ -36,13 +36,11 @@ public class SearchRay {
             if (this.board.isInBoundsPosition(current)) {
                 if (this.board.isEmptyPosition(current)) {
                     tiles.add(current);
-                }
-                else if (originPiece.isEnemyPiece(board.getPiece(current))) {
+                } else if (originPiece.isEnemyPiece(board.getPiece(current))) {
                     tiles.add(current);
-                    this.threat = board.getPiece(current);
+                    this.threat = current;
                     break;
-                }
-                else {
+                } else {
                     break;
                 }
             } else {

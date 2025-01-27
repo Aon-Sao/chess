@@ -2,8 +2,6 @@ package chess;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 
 /**
  * For a class that can manage a chess game, making moves on a board
@@ -113,11 +111,15 @@ public class ChessGame {
         board = getBoard();
         for (var searchDirection : ChessDirection.values()) {
             var ray = new SearchRay(kingPos, searchDirection, 8, board);
-            var threatPiece = ray.getThreat();
-            if (threatPiece != null) {
-                if (threatPiece.getMoveDirections().contains(searchDirection.getOppositeDirection())
-                        && ((ray.getTiles().size()) <= threatPiece.getMaxMoveDistance())) {
-                    return true;
+            var threatPosition = ray.getThreatPos();
+            if (threatPosition != null) {
+                var threatPiece = board.getPiece(threatPosition);
+                if (threatPiece != null) {
+                    for (var move : threatPiece.pieceMoves(board, threatPosition)) {
+                        if (move.getEndPosition().equals(kingPos)) {
+                            return true;
+                        }
+                    }
                 }
             }
         }

@@ -8,7 +8,7 @@ import java.util.*;
  * Note: You can add to this class, but you may not alter
  * signature of the existing methods.
  */
-public class ChessBoard implements Iterable {
+public class ChessBoard implements Iterable<ChessPiece> {
 
     private ChessPiece[][] grid = new ChessPiece[8][8];
 

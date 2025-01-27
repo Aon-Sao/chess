@@ -130,15 +130,6 @@ public class ChessPiece {
         } else if (this.pieceType == PieceType.ROOK) {
             this.maxMoveDistance = 8;
             this.moveDirections.addAll(orthogonal);
-        } else if (this.pieceType == PieceType.PAWN) {
-            this.maxMoveDistance = 1;
-            if (this.pieceColor == ChessGame.TeamColor.WHITE) {
-                this.moveDirections.add(UP_LEFT);
-                this.moveDirections.add(UP_RIGHT);
-            } else {
-                this.moveDirections.add(DOWN_LEFT);
-                this.moveDirections.add(DOWN_RIGHT);
-            }
         }
     }
 
@@ -174,12 +165,12 @@ public class ChessPiece {
             int offset;
             if (pieceColor == ChessGame.TeamColor.WHITE) {
                 // Forward is UP (+)
-                offset = UP.getVector()[1];
+                offset = UP.getVector()[0];
                 startRow = 2;
                 promotionRow = 8;
             } else {
                 // Forward is DOWN (-)
-                offset = DOWN.getVector()[1];
+                offset = DOWN.getVector()[0];
                 startRow = 7;
                 promotionRow = 1;
             }
