@@ -3,6 +3,7 @@ package chess;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 
 /**
  * For a class that can manage a chess game, making moves on a board
@@ -19,14 +20,28 @@ public class ChessGame {
         this.board.resetBoard();
         this.teamTurn = TeamColor.WHITE;
     }
-
+    /**
+     * Sets this game's chessboard with a given board
+     *
+     * @param board the new board to use
+     */
+    public void setBoard(ChessBoard board) {
+        this.board = board;
+    }
+    /**
+     * Gets the current chessboard
+     *
+     * @return the chessboard
+     */
+    public ChessBoard getBoard() {
+        return this.board;
+    }
     /**
      * @return Which team's turn it is
      */
     public TeamColor getTeamTurn() {
         return this.teamTurn;
     }
-
     /**
      * Set's which teams turn it is
      *
@@ -36,6 +51,9 @@ public class ChessGame {
         this.teamTurn = team;
     }
 
+    private ChessPosition getKingPos(TeamColor teamColor) {
+        return getBoard().findPiece(new ChessPiece(teamColor, ChessPiece.PieceType.KING));
+    }
     /**
      * Enum identifying the 2 possible teams in a chess game
      */
@@ -43,7 +61,6 @@ public class ChessGame {
         WHITE,
         BLACK
     }
-
     /**
      * Gets a valid moves for a piece at the given location
      *
@@ -68,7 +85,6 @@ public class ChessGame {
             return moves;
         }
     }
-
     /**
      * Makes a move in a chess game
      *
@@ -86,7 +102,6 @@ public class ChessGame {
             throw new InvalidMoveException();
         }
     }
-
     /**
      * Determines if the given team is in check
      *
@@ -95,28 +110,19 @@ public class ChessGame {
      */
     public boolean isInCheck(TeamColor teamColor) {
         var kingPos = getKingPos(teamColor);
-        var king = board.getPiece(kingPos);
         board = getBoard();
         for (var searchDirection : ChessDirection.values()) {
             var ray = new SearchRay(kingPos, searchDirection, 8, board);
-            var tiles = ray.getTiles();
-            if (!tiles.isEmpty()) {
-                var nearestPiece = board.getPiece(tiles.getLast());
-                if (nearestPiece != null && king.isEnemyPiece(nearestPiece)) {
-                    if (nearestPiece.getMoveDirections().contains(searchDirection)
-                            && ((tiles.size()) <= nearestPiece.getMaxMoveDistance())) {
-                        return true;
-                    }
+            var threatPiece = ray.getThreat();
+            if (threatPiece != null) {
+                if (threatPiece.getMoveDirections().contains(searchDirection.getOppositeDirection())
+                        && ((ray.getTiles().size()) <= threatPiece.getMaxMoveDistance())) {
+                    return true;
                 }
             }
         }
         return false;
     }
-
-    private ChessPosition getKingPos(TeamColor teamColor) {
-        return getBoard().findPiece(new ChessPiece(teamColor, ChessPiece.PieceType.KING));
-    }
-
     /**
      * Determines if the given team is in checkmate
      *
@@ -124,7 +130,10 @@ public class ChessGame {
      * @return True if the specified team is in checkmate
      */
     public boolean isInCheckmate(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
+        var check = isInCheck(teamColor);
+        var noMoves = noMovesLeft(teamColor);
+        return check && noMoves;
+//        return isInCheck(teamColor) && noMovesLeft(teamColor);
     }
 
     /**
@@ -135,24 +144,25 @@ public class ChessGame {
      * @return True if the specified team is in stalemate, otherwise false
      */
     public boolean isInStalemate(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
+        return noMovesLeft(teamColor) && (!isInCheck(teamColor));
     }
 
-    /**
-     * Sets this game's chessboard with a given board
-     *
-     * @param board the new board to use
-     */
-    public void setBoard(ChessBoard board) {
-        this.board = board;
-    }
-
-    /**
-     * Gets the current chessboard
-     *
-     * @return the chessboard
-     */
-    public ChessBoard getBoard() {
-        return this.board;
+    private boolean noMovesLeft(TeamColor teamColor) {
+        var x = 1;
+        var y = 1;
+        var moves = new ArrayList<>();
+        for (ChessPiece piece : (Iterable<ChessPiece>) getBoard()) {
+            var pos = new ChessPosition(x, y);
+            if ((!getBoard().isEmptyPosition(pos))
+                    && piece.getTeamColor() == teamColor) {
+                moves.addAll(validMoves(pos));
+            }
+            x++;
+            if (x == 9) {
+                x = 1;
+                y++;
+            }
+        }
+        return moves.isEmpty();
     }
 }

@@ -45,6 +45,8 @@ public class SearchRay {
                 else {
                     break;
                 }
+            } else {
+                break;
             }
             current = advance(current);
             len++;

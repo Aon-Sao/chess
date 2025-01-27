@@ -32,20 +32,17 @@ public class ChessBoard implements Iterable {
         return Collections.unmodifiableList(flatList).iterator();
     }
 
-    public ChessPosition findPiece(ChessPiece piece) {
-        var col = 1;
-        var row = 1;
-        for (var p : this) {
-            if (piece.equals(p)) {
-                return new ChessPosition(row, col);
-            }
-            row++;
-            if (row == 9) {
-                row = 1;
-                col++;
-            }
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof ChessBoard that)) {
+            return false;
         }
-        return null;
+        return Objects.deepEquals(grid, that.grid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(grid);
     }
 
     /**
@@ -55,7 +52,7 @@ public class ChessBoard implements Iterable {
      * @param piece    the piece to add
      */
     public void addPiece(ChessPosition position, ChessPiece piece) {
-        this.grid[position.getRow() - 1][position.getColumn() - 1] = piece;
+        this.grid[position.getColumn() - 1][position.getRow() - 1] = piece;
     }
 
     public void removePiece(ChessPosition position) {
@@ -70,7 +67,7 @@ public class ChessBoard implements Iterable {
      * position
      */
     public ChessPiece getPiece(ChessPosition position) {
-        return this.grid[position.getRow() - 1][position.getColumn() - 1];
+        return this.grid[position.getColumn() - 1][position.getRow() - 1];
     }
 
     public boolean isEmptyPosition(ChessPosition position) {
@@ -90,6 +87,22 @@ public class ChessBoard implements Iterable {
             'q', ChessPiece.PieceType.QUEEN,
             'k', ChessPiece.PieceType.KING,
             'b', ChessPiece.PieceType.BISHOP);
+
+    public ChessPosition findPiece(ChessPiece piece) {
+        var col = 1;
+        var row = 1;
+        for (var p : this) {
+            if (piece.equals(p)) {
+                return new ChessPosition(row, col);
+            }
+            row++;
+            if (row == 9) {
+                row = 1;
+                col++;
+            }
+        }
+        return null;
+    }
 
     /**
      * Sets the board to the default starting board
@@ -132,19 +145,6 @@ public class ChessBoard implements Iterable {
         var tmp = b.grid;
         b.grid = null;
         this.grid = tmp;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof ChessBoard that)) {
-            return false;
-        }
-        return Objects.deepEquals(grid, that.grid);
-    }
-
-    @Override
-    public int hashCode() {
-        return Arrays.deepHashCode(grid);
     }
 
     @Override
