@@ -12,54 +12,20 @@ import java.util.Objects;
  * signature of the existing methods.
  */
 public class ChessPiece {
-    private ChessGame.TeamColor color;
-    private ChessPiece.PieceType type;
-    private ArrayList<Directions> moveDirections = new ArrayList<>();
+    private final ChessGame.TeamColor color;
+    private final ChessPiece.PieceType type;
+    private final ArrayList<Directions> moveDirections = new ArrayList<>();
     private int maxMoveDistance;
+
     public ChessPiece(ChessGame.TeamColor pieceColor, ChessPiece.PieceType type) {
         this.color = pieceColor;
         this.type = type;
         determineMoveDirections();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof ChessPiece that)) {
-            return false;
-        }
-        return maxMoveDistance == that.maxMoveDistance && color == that.color && type == that.type && Objects.equals(moveDirections, that.moveDirections);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(color, type, moveDirections, maxMoveDistance);
-    }
-
-    /**
-     * The various different chess piece options
-     */
-    public enum PieceType {
-        KING,
-        QUEEN,
-        BISHOP,
-        KNIGHT,
-        ROOK,
-        PAWN
-    }
-
     private void determineMoveDirections() {
-        var orthogonals = List.of(
-                Directions.UP,
-                Directions.DOWN,
-                Directions.LEFT,
-                Directions.RIGHT
-        );
-        var diagonals = List.of(
-                Directions.DOWN_LEFT,
-                Directions.DOWN_RIGHT,
-                Directions.UP_LEFT,
-                Directions.UP_RIGHT
-        );
+        var orthogonals = List.of(Directions.UP, Directions.DOWN, Directions.LEFT, Directions.RIGHT);
+        var diagonals = List.of(Directions.DOWN_LEFT, Directions.DOWN_RIGHT, Directions.UP_LEFT, Directions.UP_RIGHT);
         switch (type) {
             case BISHOP -> {
                 maxMoveDistance = 8;
@@ -82,26 +48,20 @@ public class ChessPiece {
         }
     }
 
-    /**
-     * @return Which team this chess piece belongs to
-     */
-    public ChessGame.TeamColor getTeamColor() {
-        return color;
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, type, moveDirections, maxMoveDistance);
     }
 
-    /**
-     * @return which type of chess piece this piece is
-     */
-    public PieceType getPieceType() {
-        return type;
-    }
-
-    public boolean isFriendly(ChessPiece other) {
-        return getTeamColor() == other.getTeamColor();
-    }
-
-    public boolean isEnemy(ChessPiece other) {
-        return !isFriendly(other);
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof ChessPiece that)) {
+            return false;
+        }
+        return maxMoveDistance == that.maxMoveDistance
+                && color == that.color
+                && type == that.type
+                && Objects.equals(moveDirections, that.moveDirections);
     }
 
     @Override
@@ -118,6 +78,13 @@ public class ChessPiece {
             }
         }
         return s;
+    }
+
+    /**
+     * @return which type of chess piece this piece is
+     */
+    public PieceType getPieceType() {
+        return type;
     }
 
     /**
@@ -147,14 +114,10 @@ public class ChessPiece {
                         new int[]{-1,  2},
                         new int[]{-1, -2},
                         new int[]{-2,  1},
-                        new int[]{-2, -1}
-                );
+                        new int[]{-2, -1});
                 for (var offset : knightOffsets) {
-                    var pos = new ChessPosition(myPosition.getRow() + offset[0],
-                            myPosition.getColumn() + offset[1]);
-                    if (board.isInBoundsPos(pos)
-                            && (board.isEmptyPos(pos)
-                            || board.getPiece(pos).isEnemy(this))) {
+                    var pos = new ChessPosition(myPosition.getRow() + offset[0], myPosition.getColumn() + offset[1]);
+                    if (board.isInBoundsPos(pos) && (board.isEmptyPos(pos) || board.getPiece(pos).isEnemy(this))) {
                         moves.add(new ChessMove(myPosition, pos, null));
                     }
                 }
@@ -211,5 +174,27 @@ public class ChessPiece {
             }
         }
         return moves;
+    }
+
+    public boolean isEnemy(ChessPiece other) {
+        return !isFriendly(other);
+    }
+
+    /**
+     * @return Which team this chess piece belongs to
+     */
+    public ChessGame.TeamColor getTeamColor() {
+        return color;
+    }
+
+    public boolean isFriendly(ChessPiece other) {
+        return getTeamColor() == other.getTeamColor();
+    }
+
+    /**
+     * The various different chess piece options
+     */
+    public enum PieceType {
+        KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN
     }
 }

@@ -1,15 +1,15 @@
 package chess;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class SearchRay {
-    private ChessBoard board;
-    private ChessPosition startPosition;
-    private Directions direction;
-    private int maxLen;
-    private ArrayList<ChessPosition> tiles;
+    private final ChessBoard board;
+    private final ChessPosition startPosition;
+    private final Directions direction;
+    private final int maxLen;
+    private final ArrayList<ChessPosition> tiles;
     private ChessPosition threatPos;
+
     SearchRay(ChessBoard board, ChessPosition startPosition, Directions direction, int maxLen) {
         this.board = board;
         this.startPosition = startPosition;
@@ -17,6 +17,27 @@ public class SearchRay {
         this.maxLen = maxLen;
         tiles = new ArrayList<>();
         populateRay();
+    }
+
+    private void populateRay() {
+        var currentPos = advance(startPosition);
+        int len = 1;
+        while (len <= maxLen) {
+            if (!board.isInBoundsPos(currentPos)) {
+                break;
+            }
+            if (board.isEmptyPos(currentPos)) {
+                tiles.add(currentPos);
+            } else if (board.notEmptyPos(currentPos) && board.getPiece(currentPos).isFriendly(board.getPiece(startPosition))) {
+                break;
+            } else if (board.notEmptyPos(currentPos) && board.getPiece(currentPos).isEnemy(board.getPiece(startPosition))) {
+                tiles.add(currentPos);
+                threatPos = currentPos;
+                break;
+            }
+            len++;
+            currentPos = advance(currentPos);
+        }
     }
 
     private ChessPosition advance(ChessPosition pos) {
@@ -31,28 +52,5 @@ public class SearchRay {
 
     public ArrayList<ChessPosition> getTiles() {
         return tiles;
-    }
-
-    private void populateRay() {
-        var currentPos = advance(startPosition);
-        int len = 1;
-        while (len <= maxLen) {
-            if (!board.isInBoundsPos(currentPos)) {
-                break;
-            }
-            if (board.isEmptyPos(currentPos)) {
-                tiles.add(currentPos);
-            } else if (board.notEmptyPos(currentPos)
-                    && board.getPiece(currentPos).isFriendly(board.getPiece(startPosition))) {
-                break;
-            } else if (board.notEmptyPos(currentPos)
-                    && board.getPiece(currentPos).isEnemy(board.getPiece(startPosition))) {
-                tiles.add(currentPos);
-                threatPos = currentPos;
-                break;
-            }
-            len++;
-            currentPos = advance(currentPos);
-        }
     }
 }

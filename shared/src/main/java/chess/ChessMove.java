@@ -9,9 +9,20 @@ import java.util.Objects;
  * signature of the existing methods.
  */
 public class ChessMove {
-    private ChessPosition start;
-    private ChessPosition end;
-    private ChessPiece.PieceType promotionType;
+    private final ChessPosition start;
+    private final ChessPosition end;
+    private final ChessPiece.PieceType promotionType;
+
+    public ChessMove(ChessPosition startPosition, ChessPosition endPosition, ChessPiece.PieceType promotionPiece) {
+        start = startPosition;
+        end = endPosition;
+        promotionType = promotionPiece;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(start, end, promotionType);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -22,15 +33,8 @@ public class ChessMove {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(start, end, promotionType);
-    }
-
-    public ChessMove(ChessPosition startPosition, ChessPosition endPosition,
-                     ChessPiece.PieceType promotionPiece) {
-        start = startPosition;
-        end = endPosition;
-        promotionType = promotionPiece;
+    public String toString() {
+        return start + "->" + end;
     }
 
     /**
@@ -55,10 +59,5 @@ public class ChessMove {
      */
     public ChessPiece.PieceType getPromotionPiece() {
         return promotionType;
-    }
-
-    @Override
-    public String toString() {
-        return start + "->" + end;
     }
 }
