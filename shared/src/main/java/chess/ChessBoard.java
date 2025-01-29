@@ -1,6 +1,8 @@
 package chess;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * A chessboard that can hold and rearrange chess pieces.
@@ -8,29 +10,9 @@ import java.util.*;
  * Note: You can add to this class, but you may not alter
  * signature of the existing methods.
  */
-public class ChessBoard implements Iterable<ChessPiece> {
+public class ChessBoard {
 
     private ChessPiece[][] grid = new ChessPiece[8][8];
-
-    public ChessBoard() {
-        
-    }
-
-    public ChessBoard(ChessBoard copy) {
-        for (int col = 1; col <= 8; col++) {
-            for (int row = 1; row <= 8; row++) {
-                var pos = new ChessPosition(row, col);
-                if (!copy.isEmptyPosition(pos)) {
-                    this.addPiece(pos, copy.getPiece(pos));
-                }
-            }
-        }
-    }
-
-    public Iterator<ChessPiece> iterator() {
-        var flatList = new ArrayList<>(Arrays.stream(this.grid).flatMap(Arrays::stream).toList());
-        return Collections.unmodifiableList(flatList).iterator();
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -45,6 +27,10 @@ public class ChessBoard implements Iterable<ChessPiece> {
         return Arrays.deepHashCode(grid);
     }
 
+    public ChessBoard() {
+        
+    }
+
     /**
      * Adds a chess piece to the chessboard
      *
@@ -52,11 +38,7 @@ public class ChessBoard implements Iterable<ChessPiece> {
      * @param piece    the piece to add
      */
     public void addPiece(ChessPosition position, ChessPiece piece) {
-        this.grid[position.getColumn() - 1][position.getRow() - 1] = piece;
-    }
-
-    public void removePiece(ChessPosition position) {
-        addPiece(position, null);
+        grid[position.getColumn() - 1][position.getRow() - 1] = piece;
     }
 
     /**
@@ -67,20 +49,24 @@ public class ChessBoard implements Iterable<ChessPiece> {
      * position
      */
     public ChessPiece getPiece(ChessPosition position) {
-        return this.grid[position.getColumn() - 1][position.getRow() - 1];
+        return grid[position.getColumn() - 1][position.getRow() - 1];
     }
 
-    public boolean isEmptyPosition(ChessPosition position) {
-        return (isInBoundsPosition(position)) && (getPiece(position) == null);
+    public boolean isEmptyPos(ChessPosition position) {
+        return getPiece(position) == null;
     }
 
-    public boolean isInBoundsPosition(ChessPosition position) {
-        int x = position.getColumn();
-        int y = position.getRow();
-        return ((x >= 1) && (x <= 8)) && ((y >= 1) && (y <= 8));
+    public boolean notEmptyPos(ChessPosition position) {
+        return !isEmptyPos(position);
     }
 
-    public static final Map<Character, ChessPiece.PieceType> CHARACTER_PIECE_TYPE_MAP = Map.of(
+    public boolean isInBoundsPos(ChessPosition position) {
+        var row = position.getRow();
+        var col = position.getColumn();
+        return (row <= 8) && (row >= 1) && (col <= 8) && (col >= 1);
+    }
+
+    public static final Map<Character, ChessPiece.PieceType> CHAR_TO_TYPE_MAP = Map.of(
             'p', ChessPiece.PieceType.PAWN,
             'n', ChessPiece.PieceType.KNIGHT,
             'r', ChessPiece.PieceType.ROOK,
@@ -88,50 +74,39 @@ public class ChessBoard implements Iterable<ChessPiece> {
             'k', ChessPiece.PieceType.KING,
             'b', ChessPiece.PieceType.BISHOP);
 
-    public ChessPosition findPiece(ChessPiece piece) {
-        var col = 1;
-        var row = 1;
-        for (var p : this) {
-            if (piece.equals(p)) {
-                return new ChessPosition(row, col);
-            }
-            row++;
-            if (row == 9) {
-                row = 1;
-                col++;
+    public static ChessBoard fromString(String boardText) {
+        var board = new ChessBoard();
+        int row = 8;
+        int column = 1;
+        for (var c : boardText.toCharArray()) {
+            switch (c) {
+                case '\n' -> {
+                    column = 1;
+                    row--;
+                }
+                case ' ' -> column++;
+                case '|' -> {
+                }
+                default -> {
+                    ChessGame.TeamColor color = Character.isLowerCase(c) ? ChessGame.TeamColor.BLACK
+                            : ChessGame.TeamColor.WHITE;
+                    var type = CHAR_TO_TYPE_MAP.get(Character.toLowerCase(c));
+                    var position = new ChessPosition(row, column);
+                    var piece = new ChessPiece(color, type);
+                    board.addPiece(position, piece);
+                    column++;
+                }
             }
         }
-        return null;
+        return board;
     }
 
     /**
      * Sets the board to the default starting board
      * (How the game of chess normally starts)
      */
-    public static ChessBoard fromString(String boardString) {
-        var board = new ChessBoard();
-        int row = 8;
-        int col = 1;
-        for (char c : boardString.toCharArray()) {
-            if (c == '\n') {
-                col = 1;
-                row -= 1;
-            } else if (c == ' ') {
-                col += 1;
-            } else if (c != '|'){
-                ChessGame.TeamColor team = Character.isUpperCase(c) ? ChessGame.TeamColor.WHITE : ChessGame.TeamColor.BLACK;
-                ChessPiece.PieceType pieceType = CHARACTER_PIECE_TYPE_MAP.get(Character.toLowerCase(c));
-                ChessPosition pos = new ChessPosition(row, col);
-                ChessPiece piece = new ChessPiece(team, pieceType);
-                board.addPiece(pos, piece);
-                col += 1;
-            }
-        }
-        return board;
-    }
-
     public void resetBoard() {
-        String defaultBoard = """
+        var board = fromString("""
                 |r|n|b|q|k|b|n|r|
                 |p|p|p|p|p|p|p|p|
                 | | | | | | | | |
@@ -140,16 +115,14 @@ public class ChessBoard implements Iterable<ChessPiece> {
                 | | | | | | | | |
                 |P|P|P|P|P|P|P|P|
                 |R|N|B|Q|K|B|N|R|
-                """;
-        var b = ChessBoard.fromString(defaultBoard);
-        var tmp = b.grid;
-        b.grid = null;
+                """);
+        var tmp = board.grid;
+        board.grid = null;
         this.grid = tmp;
     }
 
-    @Override
     public String toString() {
-        var emptyBoard = """
+        var boardText = """
                 | | | | | | | | |
                 | | | | | | | | |
                 | | | | | | | | |
@@ -158,23 +131,29 @@ public class ChessBoard implements Iterable<ChessPiece> {
                 | | | | | | | | |
                 | | | | | | | | |
                 | | | | | | | | |
-                """.toCharArray();
+                """;
         int row = 8;
-        int col = 1;
-        for (int i = 0; i < emptyBoard.length; i++) {
-            var c = emptyBoard[i];
-            if (c == '\n') {
-                col = 1;
-                row --;
-            }
-            else if (c == ' ') {
-                var pos = new ChessPosition(row, col);
-                if (!isEmptyPosition(pos)) {
-                    emptyBoard[i] = this.getPiece(pos).toString().toCharArray()[0];
+        int column = 1;
+        var boardArr = boardText.toCharArray();
+        int i = 0;
+        for (var c : boardArr) {
+            switch (c) {
+                case '\n' -> {
+                    column = 1;
+                    row--;
                 }
-                col++;
+                case ' ' -> {
+                    boardArr[i] = getPiece(new ChessPosition(row, column)).toString().toCharArray()[0];
+                    column++;
+                }
+                case '|' -> {
+                }
+                default -> {
+                    column++;
+                }
             }
+            i++;
         }
-        return new String(emptyBoard);
+        return boardArr.toString();
     }
 }

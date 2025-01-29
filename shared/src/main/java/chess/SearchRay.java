@@ -1,54 +1,58 @@
 package chess;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class SearchRay {
-    private final int row;
-    private final int column;
-    private final ArrayList<ChessPosition> tiles = new ArrayList<>();
-    private final ChessBoard board;
-    private ChessPosition threat = null;
-    public SearchRay(ChessPosition startPosition, ChessDirection direction, int maxLen, ChessBoard board) {
-        int[] dirVec = direction.getVector();
-        this.row = dirVec[0];
-        this.column = dirVec[1];
+    private ChessBoard board;
+    private ChessPosition startPosition;
+    private Directions direction;
+    private int maxLen;
+    private ArrayList<ChessPosition> tiles;
+    private ChessPosition threatPos;
+    SearchRay(ChessBoard board, ChessPosition startPosition, Directions direction, int maxLen) {
         this.board = board;
-        populateRay(startPosition, maxLen);
-    }
-
-    public ArrayList<ChessPosition> getTiles() {
-        return this.tiles;
+        this.startPosition = startPosition;
+        this.direction = direction;
+        this.maxLen = maxLen;
+        tiles = new ArrayList<>();
+        populateRay();
     }
 
     private ChessPosition advance(ChessPosition pos) {
-        return new ChessPosition(pos.getRow() + this.row, pos.getColumn() + this.column);
+        var row_offset = direction.getVector()[0];
+        var col_offset = direction.getVector()[1];
+        return new ChessPosition(pos.getRow() + row_offset, pos.getColumn() + col_offset);
     }
 
     public ChessPosition getThreatPos() {
-        return this.threat;
+        return threatPos;
     }
 
-    private void populateRay(ChessPosition startPosition, int maxLen) {
-        ChessPosition current = advance(startPosition);
-        ChessPiece originPiece = board.getPiece(startPosition);
+    public ArrayList<ChessPosition> getTiles() {
+        return tiles;
+    }
+
+    private void populateRay() {
+        var currentPos = advance(startPosition);
         int len = 1;
         while (len <= maxLen) {
-            if (this.board.isInBoundsPosition(current)) {
-                if (this.board.isEmptyPosition(current)) {
-                    tiles.add(current);
-                } else if (originPiece.isEnemyPiece(board.getPiece(current))) {
-                    tiles.add(current);
-                    this.threat = current;
-                    break;
-                } else {
-                    break;
-                }
-            } else {
+            if (!board.isInBoundsPos(currentPos)) {
                 break;
             }
-            current = advance(current);
+            if (board.isEmptyPos(currentPos)) {
+                tiles.add(currentPos);
+            } else if (board.notEmptyPos(currentPos)
+                    && board.getPiece(currentPos).isFriendly(board.getPiece(startPosition))) {
+                break;
+            } else if (board.notEmptyPos(currentPos)
+                    && board.getPiece(currentPos).isEnemy(board.getPiece(startPosition))) {
+                tiles.add(currentPos);
+                threatPos = currentPos;
+                break;
+            }
             len++;
+            currentPos = advance(currentPos);
         }
     }
-
 }
