@@ -14,7 +14,7 @@ import java.util.Objects;
 public class ChessPiece {
     private final ChessGame.TeamColor color;
     private final ChessPiece.PieceType type;
-    private final ArrayList<Directions> moveDirections = new ArrayList<>();
+    private final ArrayList<AllDirections> moveDirections = new ArrayList<>();
     private int maxMoveDistance;
 
     public ChessPiece(ChessGame.TeamColor pieceColor, ChessPiece.PieceType type) {
@@ -24,8 +24,8 @@ public class ChessPiece {
     }
 
     private void determineMoveDirections() {
-        var orthogonals = List.of(Directions.UP, Directions.DOWN, Directions.LEFT, Directions.RIGHT);
-        var diagonals = List.of(Directions.DOWN_LEFT, Directions.DOWN_RIGHT, Directions.UP_LEFT, Directions.UP_RIGHT);
+        var orthogonals = List.of(AllDirections.UP, AllDirections.DOWN, AllDirections.LEFT, AllDirections.RIGHT);
+        var diagonals = List.of(AllDirections.DOWN_LEFT, AllDirections.DOWN_RIGHT, AllDirections.UP_LEFT, AllDirections.UP_RIGHT);
         switch (type) {
             case BISHOP -> {
                 maxMoveDistance = 8;
@@ -129,17 +129,17 @@ public class ChessPiece {
                 boolean promotion_imminent = false;
                 if (getTeamColor().equals(ChessGame.TeamColor.WHITE)) {
                     // UP is forward
-                    moveDirections.add(Directions.UP);
+                    moveDirections.add(AllDirections.UP);
                     first_move = row == 2;
                     promotion_imminent = row == 7;
                 } else {
                     // DOWN is forward
-                    moveDirections.add(Directions.DOWN);
+                    moveDirections.add(AllDirections.DOWN);
                     first_move = row == 7;
                     promotion_imminent = row == 2;
                 }
-                int row_offset = moveDirections.getFirst().getVector()[0];
-                int col_offset = moveDirections.getFirst().getVector()[1];
+                int row_offset = moveDirections.getFirst().getRow();
+                int col_offset = moveDirections.getFirst().getCol();
                 var one_ahead = new ChessPosition(row + row_offset, col + col_offset);
                 var two_ahead = new ChessPosition(row + (2 * row_offset), col + (2 * col_offset));
                 var left_ahead = new ChessPosition(row + row_offset, col + col_offset - 1);
