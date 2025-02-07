@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class SearchRay {
     private final ChessBoard board;
     private final ChessPosition startPosition;
-    private final Directions direction;
+    private final AllDirections direction;
     private final int maxLen;
     private final ArrayList<ChessPosition> tiles;
     private ChessPosition threatPos;
 
-    SearchRay(ChessBoard board, ChessPosition startPosition, Directions direction, int maxLen) {
+    SearchRay(ChessBoard board, ChessPosition startPosition, AllDirections direction, int maxLen) {
         this.board = board;
         this.startPosition = startPosition;
         this.direction = direction;
@@ -41,8 +41,8 @@ public class SearchRay {
     }
 
     private ChessPosition advance(ChessPosition pos) {
-        var row_offset = direction.getVector()[0];
-        var col_offset = direction.getVector()[1];
+        var row_offset = direction.getRow();
+        var col_offset = direction.getCol();
         return new ChessPosition(pos.getRow() + row_offset, pos.getColumn() + col_offset);
     }
 
