@@ -130,6 +130,12 @@ public class ChessGame {
     }
 
     private boolean noMovesLeft(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
+        for (var pos : board.positionIter()) {
+            if (board.getPiece(pos).getTeamColor().equals(teamColor)
+                && !validMoves(pos).isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 }
