@@ -1,5 +1,6 @@
 package chess;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,40 +36,48 @@ public enum AllDirections {
         return direction.getCol();
     }
 
-    public static Collection<AllDirections> getOrthogonals() {
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public Direction plus(AllDirections other) {
+        return this.direction.plus(other.direction);
+    }
+
+    public static Collection<Direction> getOrthogonals() {
         return List.of(
-                LEFT,
-                RIGHT,
-                UP,
-                DOWN
+                LEFT.direction,
+                RIGHT.direction,
+                UP.direction,
+                DOWN.direction
         );
     }
 
-    public static Collection<AllDirections> getDiagonals() {
+    public static Collection<Direction> getDiagonals() {
         return List.of(
-                UP_LEFT,
-                UP_RIGHT,
-                DOWN_LEFT,
-                DOWN_RIGHT
+                UP_LEFT.direction,
+                UP_RIGHT.direction,
+                DOWN_LEFT.direction,
+                DOWN_RIGHT.direction
         );
     }
 
-    public static Collection<AllDirections> getCardinals() {
+    public static ArrayList<Direction> getCardinals() {
         var ortho = new java.util.ArrayList<>(getOrthogonals());
         ortho.addAll(getDiagonals());
         return ortho;
     }
 
-    public static Collection<AllDirections> getKnights() {
+    public static Collection<Direction> getKnights() {
         return List.of(
-                UUL,
-                UUR,
-                ULL,
-                URR,
-                DDL,
-                DDR,
-                DLL,
-                DRR
+                UUL.direction,
+                UUR.direction,
+                ULL.direction,
+                URR.direction,
+                DDL.direction,
+                DDR.direction,
+                DLL.direction,
+                DRR.direction
         );
     }
 }

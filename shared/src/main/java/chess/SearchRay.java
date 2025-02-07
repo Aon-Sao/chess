@@ -7,14 +7,14 @@ import java.util.function.Function;
 public class SearchRay {
     private final ChessBoard board;
     private final ChessPosition startPosition;
-    private final AllDirections direction;
+    private final Direction direction;
     private final int maxLen;
     private final ArrayList<ChessPosition> tiles;
     private final Function<ChessPosition, Boolean> breakCon;
     private final Function<ChessPosition, Boolean> addCon;
     private ChessPosition threatPos;
 
-    SearchRay(ChessBoard board, ChessPosition startPosition, AllDirections direction, int maxLen, String breakCondition, String addCondition) {
+    SearchRay(ChessBoard board, ChessPosition startPosition, Direction direction, int maxLen, String breakCondition, String addCondition) {
         this.board = board;
         this.startPosition = startPosition;
         this.direction = direction;
@@ -23,8 +23,8 @@ public class SearchRay {
         Map<String, Function<ChessPosition, Boolean>> rayConds = Map.of(
                 "empty", this.board::isEmptyPos,
                 "notEmpty", this.board::notEmptyPos,
-                "enemy", pos -> this.board.getPiece(pos).isEnemy(this.board.getPiece(this.startPosition)),
-                "friend", pos -> this.board.getPiece(pos).isFriendly(this.board.getPiece(this.startPosition)),
+                "enemy", pos -> this.board.notEmptyPos(pos) && this.board.getPiece(pos).isEnemy(this.board.getPiece(this.startPosition)),
+                "friend", pos -> this.board.notEmptyPos(pos) && this.board.getPiece(pos).isFriendly(this.board.getPiece(this.startPosition)),
                 "enemyOrEmpty", pos -> this.board.isEmptyPos(pos)
                         || this.board.getPiece(pos).isEnemy(this.board.getPiece(this.startPosition))
         );
@@ -35,7 +35,7 @@ public class SearchRay {
         populateRay();
     }
 
-    SearchRay(ChessBoard board, ChessPosition startPosition, AllDirections direction, int maxLen) {
+    SearchRay(ChessBoard board, ChessPosition startPosition, Direction direction, int maxLen) {
         this(board, startPosition, direction, maxLen, "notEmpty", "enemyOrEmpty");
     }
 

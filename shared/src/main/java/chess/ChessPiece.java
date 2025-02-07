@@ -14,7 +14,7 @@ import java.util.Objects;
 public class ChessPiece {
     private final ChessGame.TeamColor color;
     private final ChessPiece.PieceType type;
-    private final ArrayList<AllDirections> moveDirections = new ArrayList<>();
+    private final ArrayList<Direction> moveDirections = new ArrayList<>();
     private int maxMoveDistance;
 
     public ChessPiece(ChessGame.TeamColor pieceColor, ChessPiece.PieceType type) {
@@ -48,6 +48,19 @@ public class ChessPiece {
             case KNIGHT -> {
                 maxMoveDistance = 1;
                 moveDirections.addAll(AllDirections.getKnights());
+            }
+            case PAWN -> {
+                AllDirections forward;
+                if (getTeamColor().equals(ChessGame.TeamColor.WHITE)) {
+                    forward = AllDirections.UP;
+                } else {
+                    forward = AllDirections.DOWN;
+                }
+                moveDirections.add(forward.getDirection());
+//                var forwardLeft = forward.getDirection().plus(AllDirections.LEFT.getDirection());
+//                var forwardRight = forward.getDirection().plus(AllDirections.RIGHT.getDirection());
+//                moveDirections.add(forwardLeft);
+//                moveDirections.add(forwardRight);
             }
         }
     }
@@ -100,64 +113,60 @@ public class ChessPiece {
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         var moves = new ArrayList<ChessMove>();
-        switch (type) {
-            case BISHOP, ROOK, KING, QUEEN, KNIGHT -> {
-                for (var direction : moveDirections) {
-                    var ray = new SearchRay(board, myPosition, direction, maxMoveDistance);
-                    for (var pos : ray.getTiles()) {
-                        moves.add(new ChessMove(myPosition, pos, null));
-                    }
-                }
+        if (type.equals(PieceType.PAWN)) {
+            int row = myPosition.getRow();
+            int col = myPosition.getColumn();
+            boolean promotion_imminent;
+
+            if (getTeamColor().equals(ChessGame.TeamColor.WHITE)) {
+                // UP is forward
+                promotion_imminent = row == 7;
+            } else {
+                // DOWN is forward
+                promotion_imminent = row == 2;
             }
-            case PAWN -> {
-                int row = myPosition.getRow();
-                int col = myPosition.getColumn();
-                boolean first_move = false;
-                boolean promotion_imminent = false;
-                if (getTeamColor().equals(ChessGame.TeamColor.WHITE)) {
-                    // UP is forward
-                    moveDirections.add(AllDirections.UP);
-                    first_move = row == 2;
-                    promotion_imminent = row == 7;
-                } else {
-                    // DOWN is forward
-                    moveDirections.add(AllDirections.DOWN);
-                    first_move = row == 7;
-                    promotion_imminent = row == 2;
-                }
-                int row_offset = moveDirections.getFirst().getRow();
-                int col_offset = moveDirections.getFirst().getCol();
-                var one_ahead = new ChessPosition(row + row_offset, col + col_offset);
-                var two_ahead = new ChessPosition(row + (2 * row_offset), col + (2 * col_offset));
-                var left_ahead = new ChessPosition(row + row_offset, col + col_offset - 1);
-                var right_ahead = new ChessPosition(row + row_offset, col + col_offset + 1);
 
-                if (board.isInBoundsPos(one_ahead) && board.isEmptyPos(one_ahead)) {
-                    moves.add(new ChessMove(myPosition, one_ahead, null));
-                    if (first_move && board.isEmptyPos(two_ahead)) {
-                        moves.add(new ChessMove(myPosition, two_ahead, null));
-                    }
-                }
+            if ((row == 2) || (row == 7)) {
+                maxMoveDistance = 2;
+            } else {
+                maxMoveDistance = 1;
+            }
 
-                for (var pos : List.of(left_ahead, right_ahead)) {
-                    if (board.isInBoundsPos(pos) && board.notEmptyPos(pos) && board.getPiece(pos).isEnemy(this)) {
-                        moves.add(new ChessMove(myPosition, pos, null));
-                    }
-                }
+            var forward = moveDirections.getFirst();
+            var forwardLeft = forward.plus(AllDirections.LEFT.getDirection());
+            var forwardRight = forward.plus(AllDirections.RIGHT.getDirection());
 
-                if (promotion_imminent) {
-                    var tmp = new ArrayList<ChessMove>();
-                    for (var move : moves) {
-                        for (var type : PieceType.values()) {
-                            if (!(type.equals(PieceType.PAWN) || type.equals(PieceType.KING))) {
-                                tmp.add(new ChessMove(move.getStartPosition(), move.getEndPosition(), type));
-                            }
+            var forwardRay = new SearchRay(board, myPosition, forward, maxMoveDistance, "notEmpty", "empty");
+            var forwardLeftRay = new SearchRay(board, myPosition, forwardLeft, 1, "enemyOrEmpty", "enemy");
+            var forwardRightRay = new SearchRay(board, myPosition, forwardRight, 1, "enemyOrEmpty", "enemy");
+
+            var tiles = forwardRay.getTiles();
+            tiles.addAll(forwardLeftRay.getTiles());
+            tiles.addAll(forwardRightRay.getTiles());
+
+            for (var tile : tiles) {
+                moves.add(new ChessMove(myPosition, tile, null));
+            }
+
+            if (promotion_imminent) {
+                var tmp = new ArrayList<ChessMove>();
+                for (var move : moves) {
+                    for (var type : PieceType.values()) {
+                        if (!(type.equals(PieceType.PAWN) || type.equals(PieceType.KING))) {
+                            tmp.add(new ChessMove(move.getStartPosition(), move.getEndPosition(), type));
                         }
                     }
-                    moves = tmp;
                 }
+                moves = tmp;
+            }
 
 
+        } else {
+            for (var direction : moveDirections) {
+                var ray = new SearchRay(board, myPosition, direction, maxMoveDistance);
+                for (var pos : ray.getTiles()) {
+                    moves.add(new ChessMove(myPosition, pos, null));
+                }
             }
         }
         return moves;
