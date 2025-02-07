@@ -153,4 +153,13 @@ public class ChessBoard {
     public void addPiece(ChessPosition position, ChessPiece piece) {
         grid[position.getColumn() - 1][position.getRow() - 1] = piece;
     }
+
+    public void movePiece(ChessPosition startPos, ChessPosition endPos) {
+        addPiece(endPos, getPiece(startPos));
+        removePiece(startPos);
+    }
+
+    public void removePiece(ChessPosition pos) {
+        addPiece(pos, null);
+    }
 }
