@@ -26,6 +26,10 @@ public class ChessBoard {
 
     }
 
+    public ChessBoard(ChessBoard copy) {
+        this.grid = copy.grid.clone();
+    }
+
     @Override
     public int hashCode() {
         return Arrays.deepHashCode(grid);
