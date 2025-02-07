@@ -2,6 +2,7 @@ package chess;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * For a class that can manage a chess game, making moves on a board
@@ -130,7 +131,8 @@ public class ChessGame {
     }
 
     private boolean noMovesLeft(TeamColor teamColor) {
-        for (var pos : board.positionIter()) {
+        for (Iterator<ChessPosition> it = board.positionIterator(); it.hasNext(); ) {
+            var pos = it.next();
             if (board.getPiece(pos).getTeamColor().equals(teamColor)
                 && !validMoves(pos).isEmpty()) {
                 return false;
