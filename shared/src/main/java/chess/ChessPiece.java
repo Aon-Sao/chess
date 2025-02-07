@@ -24,8 +24,8 @@ public class ChessPiece {
     }
 
     private void determineMoveDirections() {
-        var orthogonals = List.of(AllDirections.UP, AllDirections.DOWN, AllDirections.LEFT, AllDirections.RIGHT);
-        var diagonals = List.of(AllDirections.DOWN_LEFT, AllDirections.DOWN_RIGHT, AllDirections.UP_LEFT, AllDirections.UP_RIGHT);
+        var orthogonals = AllDirections.getOrthogonals();
+        var diagonals = AllDirections.getDiagonals();
         switch (type) {
             case BISHOP -> {
                 maxMoveDistance = 8;
@@ -44,6 +44,10 @@ public class ChessPiece {
                 maxMoveDistance = 8;
                 moveDirections.addAll(diagonals);
                 moveDirections.addAll(orthogonals);
+            }
+            case KNIGHT -> {
+                maxMoveDistance = 1;
+                moveDirections.addAll(AllDirections.getKnights());
             }
         }
     }
@@ -97,27 +101,10 @@ public class ChessPiece {
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         var moves = new ArrayList<ChessMove>();
         switch (type) {
-            case BISHOP, ROOK, KING, QUEEN -> {
+            case BISHOP, ROOK, KING, QUEEN, KNIGHT -> {
                 for (var direction : moveDirections) {
                     var ray = new SearchRay(board, myPosition, direction, maxMoveDistance);
                     for (var pos : ray.getTiles()) {
-                        moves.add(new ChessMove(myPosition, pos, null));
-                    }
-                }
-            }
-            case KNIGHT -> {
-                var knightOffsets = List.of(
-                        new int[]{ 1,  2},
-                        new int[]{ 1, -2},
-                        new int[]{ 2,  1},
-                        new int[]{ 2, -1},
-                        new int[]{-1,  2},
-                        new int[]{-1, -2},
-                        new int[]{-2,  1},
-                        new int[]{-2, -1});
-                for (var offset : knightOffsets) {
-                    var pos = new ChessPosition(myPosition.getRow() + offset[0], myPosition.getColumn() + offset[1]);
-                    if (board.isInBoundsPos(pos) && (board.isEmptyPos(pos) || board.getPiece(pos).isEnemy(this))) {
                         moves.add(new ChessMove(myPosition, pos, null));
                     }
                 }
