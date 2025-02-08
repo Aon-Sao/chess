@@ -77,7 +77,8 @@ public class ChessGame {
                 var original_board = board;
                 board = new ChessBoard(board);
                 board.movePiece(move.getStartPosition(), move.getEndPosition());
-                if (!isInCheck(getTeamTurn())) {
+                if (!isInCheck(board.getPiece(move.getEndPosition()).getTeamColor())) {
+//                if (!isInCheck(getTeamTurn())) {
                     moves.add(move);
                 }
                 board = original_board;
@@ -115,10 +116,14 @@ public class ChessGame {
     }
 
     private void advanceTurn() {
-        if (teamTurn.equals(TeamColor.WHITE)) {
-            teamTurn = TeamColor.BLACK;
+        teamTurn = oppositeTeam(getTeamTurn());
+    }
+
+    private TeamColor oppositeTeam(TeamColor teamColor) {
+        if (teamColor.equals(TeamColor.WHITE)) {
+            return TeamColor.BLACK;
         } else {
-            teamTurn = TeamColor.WHITE;
+            return TeamColor.WHITE;
         }
     }
 
