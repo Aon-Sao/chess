@@ -75,13 +75,13 @@ public class ChessGame {
             TeamColor movingPieceColor = board.getPiece(startPosition).getTeamColor();
             ArrayList<ChessMove> moves = new ArrayList<>();
             for (var move : board.getPiece(startPosition).pieceMoves(board, startPosition)) {
-                var original_board = board;
+                var originalBoard = board;
                 board = new ChessBoard(board);
                 board.movePiece(move.getStartPosition(), move.getEndPosition());
                 if (!isInCheck(movingPieceColor)) {
                     moves.add(move);
                 }
-                board = original_board;
+                board = originalBoard;
             }
             return moves;
         }

@@ -111,14 +111,14 @@ public class ChessPiece {
         var moves = new ArrayList<ChessMove>();
         if (type.equals(PieceType.PAWN)) {
             int row = myPosition.getRow();
-            boolean promotion_imminent;
+            boolean promotionImminent;
 
             if (getTeamColor().equals(ChessGame.TeamColor.WHITE)) {
                 // UP is forward
-                promotion_imminent = row == 7;
+                promotionImminent = row == 7;
             } else {
                 // DOWN is forward
-                promotion_imminent = row == 2;
+                promotionImminent = row == 2;
             }
 
             if ((row == 2) || (row == 7)) {
@@ -143,7 +143,7 @@ public class ChessPiece {
                 moves.add(new ChessMove(myPosition, tile, null));
             }
 
-            if (promotion_imminent) {
+            if (promotionImminent) {
                 var tmp = new ArrayList<ChessMove>();
                 for (var move : moves) {
                     for (var type : PieceType.values()) {

@@ -1,27 +1,27 @@
 package chess;
 
 class Direction {
-    private final int row_offset;
-    private final int col_offset;
+    private final int rowOffset;
+    private final int colOffset;
 
     public int getRow() {
-        return row_offset;
+        return rowOffset;
     }
 
     public int getCol() {
-        return col_offset;
+        return colOffset;
     }
 
     public Direction(int row, int col) {
-        row_offset = row;
-        col_offset = col;
+        rowOffset = row;
+        colOffset = col;
     }
 
     public Direction plus(Direction other) {
-        return new Direction(row_offset + other.row_offset, col_offset + other.col_offset);
+        return new Direction(rowOffset + other.rowOffset, colOffset + other.colOffset);
     }
 
     public Direction times(int scalar) {
-        return new Direction(row_offset * scalar, col_offset * scalar);
+        return new Direction(rowOffset * scalar, colOffset * scalar);
     }
 }

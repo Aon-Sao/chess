@@ -56,9 +56,9 @@ public class SearchRay {
     }
 
     private ChessPosition advance(ChessPosition pos) {
-        var row_offset = direction.getRow();
-        var col_offset = direction.getCol();
-        return new ChessPosition(pos.getRow() + row_offset, pos.getColumn() + col_offset);
+        var rowOffset = direction.getRow();
+        var colOffset = direction.getCol();
+        return new ChessPosition(pos.getRow() + rowOffset, pos.getColumn() + colOffset);
     }
 
     public ChessPosition getFinalPos() {
