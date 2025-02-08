@@ -12,7 +12,7 @@ public class SearchRay {
     private final ArrayList<ChessPosition> tiles;
     private final Function<ChessPosition, Boolean> breakCon;
     private final Function<ChessPosition, Boolean> addCon;
-    private ChessPosition threatPos;
+    private ChessPosition finalPos;
 
     SearchRay(ChessBoard board, ChessPosition startPosition, Direction direction, int maxLen, String breakCondition, String addCondition) {
         this.board = board;
@@ -47,6 +47,7 @@ public class SearchRay {
                 tiles.add(currentPos);
             }
             if (breakCon.apply(currentPos)) {
+                finalPos = currentPos;
                 break;
             }
             len++;
@@ -60,8 +61,8 @@ public class SearchRay {
         return new ChessPosition(pos.getRow() + row_offset, pos.getColumn() + col_offset);
     }
 
-    public ChessPosition getThreatPos() {
-        return threatPos;
+    public ChessPosition getFinalPos() {
+        return finalPos;
     }
 
     public ArrayList<ChessPosition> getTiles() {

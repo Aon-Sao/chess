@@ -23,6 +23,10 @@ public class ChessPiece {
         determineMoveDirections();
     }
 
+    public ChessPiece(ChessPiece copy) {
+        this(copy.getTeamColor(), copy.getPieceType());
+    }
+
     private void determineMoveDirections() {
         var orthogonals = AllDirections.getOrthogonals();
         var diagonals = AllDirections.getDiagonals();

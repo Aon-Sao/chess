@@ -93,11 +93,21 @@ public class ChessGame {
      * @throws InvalidMoveException if move is invalid
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
-        if (validMoves(move.getStartPosition()).contains(move)
-            && board.getPiece(move.getStartPosition()).getTeamColor().equals(getTeamTurn())) {
+        boolean moveIsValid = validMoves(move.getStartPosition()).contains(move);
+        boolean movingPieceHasTurn = board.getPiece(move.getStartPosition()).getTeamColor().equals(getTeamTurn());
+        if (moveIsValid && movingPieceHasTurn) {
             board.movePiece(move.getStartPosition(), move.getEndPosition());
         } else {
             throw new InvalidMoveException();
+        }
+        advanceTurn();
+    }
+
+    private void advanceTurn() {
+        if (teamTurn.equals(TeamColor.WHITE)) {
+            teamTurn = TeamColor.BLACK;
+        } else {
+            teamTurn = TeamColor.WHITE;
         }
     }
 
@@ -108,7 +118,35 @@ public class ChessGame {
      * @return True if the specified team is in check
      */
     public boolean isInCheck(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
+        ChessPosition kingPos = getKingPos(teamColor);
+        for (var direction : AllDirections.values()) {
+            var ray = new SearchRay(board, kingPos, direction.getDirection(), 8);
+            var finalPos = ray.getFinalPos();
+            if (finalPos != null) {
+                var threatPiece = board.getPiece(finalPos);
+                if (threatPiece.getTeamColor() != teamColor) {
+                    for (var move : threatPiece.pieceMoves(board, finalPos)) {
+                        if (move.getEndPosition().equals(kingPos)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private ChessPosition getKingPos(TeamColor teamColor) {
+        for (Iterator<ChessPosition> it = board.positionIterator(); it.hasNext(); ) {
+            var pos = it.next();
+            if (board.notEmptyPos(pos)) {
+                var piece = board.getPiece(pos);
+                if (piece.getPieceType().equals(ChessPiece.PieceType.KING) && piece.getTeamColor().equals(teamColor)) {
+                    return pos;
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -135,8 +173,9 @@ public class ChessGame {
     private boolean noMovesLeft(TeamColor teamColor) {
         for (Iterator<ChessPosition> it = board.positionIterator(); it.hasNext(); ) {
             var pos = it.next();
-            if (board.getPiece(pos).getTeamColor().equals(teamColor)
-                && !validMoves(pos).isEmpty()) {
+            var piece = board.getPiece(pos);
+            if (piece != null && piece.getTeamColor().equals(teamColor)
+                && (!(validMoves(pos).isEmpty()))) {
                 return false;
             }
         }

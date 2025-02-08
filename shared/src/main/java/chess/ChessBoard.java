@@ -26,7 +26,14 @@ public class ChessBoard {
     }
 
     public ChessBoard(ChessBoard copy) {
-        this.grid = copy.grid.clone();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                var copyVal = copy.grid[i][j];
+                if (copyVal != null) {
+                    this.grid[i][j] = new ChessPiece(copy.grid[i][j]);
+                }
+            }
+        }
     }
 
     @Override
@@ -64,7 +71,12 @@ public class ChessBoard {
                     row--;
                 }
                 case ' ' -> {
-                    boardArr[i] = getPiece(new ChessPosition(row, column)).toString().toCharArray()[0];
+                    var piece = getPiece(new ChessPosition(row, column));
+                    if (piece != null) {
+                        boardArr[i] = piece.toString().toCharArray()[0];
+                    } else {
+                        boardArr[i] = ' ';
+                    }
                     column++;
                 }
                 case '|' -> {
@@ -73,7 +85,11 @@ public class ChessBoard {
             }
             i++;
         }
-        return Arrays.toString(boardArr);
+        var s = new StringBuilder();
+        for (var c : boardArr) {
+            s.append(c);
+        }
+        return s.toString();
     }
 
     public boolean notEmptyPos(ChessPosition position) {
@@ -188,8 +204,8 @@ public class ChessBoard {
 
     public Iterator<ChessPosition> positionIterator() {
         Collection<ChessPosition> allPos = new ArrayList<>();
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
+        for (int i = 1; i <= grid.length; i++) {
+            for (int j = 1; j <= grid[0].length; j++) {
                 allPos.add(new ChessPosition(i, j));
             }
         }
