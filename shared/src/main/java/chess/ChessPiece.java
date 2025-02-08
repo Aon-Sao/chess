@@ -2,7 +2,6 @@ package chess;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -61,10 +60,6 @@ public class ChessPiece {
                     forward = AllDirections.DOWN;
                 }
                 moveDirections.add(forward.getDirection());
-//                var forwardLeft = forward.getDirection().plus(AllDirections.LEFT.getDirection());
-//                var forwardRight = forward.getDirection().plus(AllDirections.RIGHT.getDirection());
-//                moveDirections.add(forwardLeft);
-//                moveDirections.add(forwardRight);
             }
         }
     }
@@ -116,7 +111,6 @@ public class ChessPiece {
         var moves = new ArrayList<ChessMove>();
         if (type.equals(PieceType.PAWN)) {
             int row = myPosition.getRow();
-            int col = myPosition.getColumn();
             boolean promotion_imminent;
 
             if (getTeamColor().equals(ChessGame.TeamColor.WHITE)) {

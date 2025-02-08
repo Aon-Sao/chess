@@ -1,6 +1,5 @@
 package chess;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,20 +27,8 @@ public enum AllDirections {
         this.direction = direction;
     }
 
-    public int getRow() {
-        return direction.getRow();
-    }
-
-    public int getCol() {
-        return direction.getCol();
-    }
-
     public Direction getDirection() {
         return direction;
-    }
-
-    public Direction plus(AllDirections other) {
-        return this.direction.plus(other.direction);
     }
 
     public static Collection<Direction> getOrthogonals() {
@@ -60,12 +47,6 @@ public enum AllDirections {
                 DOWN_LEFT.direction,
                 DOWN_RIGHT.direction
         );
-    }
-
-    public static ArrayList<Direction> getCardinals() {
-        var ortho = new java.util.ArrayList<>(getOrthogonals());
-        ortho.addAll(getDiagonals());
-        return ortho;
     }
 
     public static Collection<Direction> getKnights() {

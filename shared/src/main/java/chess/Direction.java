@@ -17,10 +17,6 @@ class Direction {
         col_offset = col;
     }
 
-    public Direction getOpposite() {
-        return this.times(-1);
-    }
-
     public Direction plus(Direction other) {
         return new Direction(row_offset + other.row_offset, col_offset + other.col_offset);
     }
