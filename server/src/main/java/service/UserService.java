@@ -70,21 +70,29 @@ public class UserService {
                 .setStatusCode(401)
                 .build();
     }
-    public static UserClump logout(UserClump request) {
-        var authData = AuthDataAcc.getInstance();
-        for (var auth : authData.listAuths()) {
-            if (auth.authToken().equals(request.authToken())) {
-                // Logout
-                authData.clearAuth(auth.authToken());
-                return UserClump.builder()
-                        .setStatusCode(200)
-                        .build();
+
+    public static boolean isAuthorized(UserClump clump) {
+        for (var auth : AuthDataAcc.getInstance().listAuths()) {
+            if (auth.equals(new AuthDataRec(clump.authToken(), clump.username()))) {
+                return true;
             }
         }
-        // Provided authToken not found in DB
-        return UserClump.builder()
-                .setStatusCode(401)
-                .setMessage("Error: unauthorized")
-                .build();
+        return false;
+    }
+
+    public static UserClump logout(UserClump request) {
+        if (isAuthorized(request)) {
+            // Logout
+            AuthDataAcc.getInstance().clearAuth(request.authToken());
+            return UserClump.builder()
+                    .setStatusCode(200)
+                    .build();
+        } else {
+            // Provided authToken not found in DB
+            return UserClump.builder()
+                    .setStatusCode(401)
+                    .setMessage("Error: unauthorized")
+                    .build();
+        }
     }
 }
