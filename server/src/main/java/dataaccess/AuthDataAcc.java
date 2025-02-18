@@ -6,27 +6,27 @@ import java.util.*;
 
 public class AuthDataAcc implements AuthDAO {
     // Singleton
-    private AuthDataAcc instance = null;
+    private static AuthDataAcc instance = null;
     private AuthDataAcc() {
         clearAll();
     }
-    public AuthDataAcc getInstance() {
+    public static AuthDataAcc getInstance() {
         if (instance == null) {
             instance = new AuthDataAcc();
         }
         return instance;
     }
 
-    private Map<UUID, AuthDataRec> auths;
+    private Map<String, AuthDataRec> auths;
 
     @Override
     public void createAuth(AuthDataRec authData) {
-        var id = UUID.randomUUID();
+        var id = UUID.randomUUID().toString();
         auths.put(id, authData);
     }
 
     @Override
-    public AuthDataRec getAuth(UUID id) {
+    public AuthDataRec getAuth(String id) {
         return auths.get(id);
     }
 
@@ -36,14 +36,14 @@ public class AuthDataAcc implements AuthDAO {
     }
 
     @Override
-    public void changeName(UUID id, String username) {
+    public void changeName(String id, String username) {
         var user = getAuth(id);
         user = user.changeUsername(username);
         auths.put(id, user);
     }
 
     @Override
-    public void changeToken(UUID id, String token) {
+    public void changeToken(String id, String token) {
         var user = getAuth(id);
         user = user.changeToken(token);
         auths.put(id, user);
@@ -55,7 +55,7 @@ public class AuthDataAcc implements AuthDAO {
     }
 
     @Override
-    public void clearAuth(UUID id) {
+    public void clearAuth(String id) {
         auths.remove(id);
     }
 }

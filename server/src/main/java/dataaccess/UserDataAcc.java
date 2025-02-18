@@ -6,11 +6,11 @@ import java.util.*;
 
 public class UserDataAcc implements UserDAO {
     // Singleton
-    private UserDataAcc instance = null;
+    private static UserDataAcc instance = null;
     private UserDataAcc() {
         clearAll();
     }
-    public UserDataAcc getInstance() {
+    public static UserDataAcc getInstance() {
         if (instance == null) {
             instance = new UserDataAcc();
         }
