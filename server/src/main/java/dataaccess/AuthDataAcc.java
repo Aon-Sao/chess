@@ -19,6 +19,24 @@ public class AuthDataAcc implements AuthDAO {
 
     private Map<String, AuthDataRec> auths;
 
+    public boolean hasAuth(String authToken) {
+        for (var auth : listAuths()) {
+            if (auth.authToken().equals(authToken)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasUser(String username) {
+        for (var auth : listAuths()) {
+            if (auth.username().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void createAuth(AuthDataRec authData) {
         var id = UUID.randomUUID().toString();

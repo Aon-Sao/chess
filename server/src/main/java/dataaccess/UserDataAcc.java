@@ -19,6 +19,15 @@ public class UserDataAcc implements UserDAO {
 
     private Map<UUID, UserDataRec> users;
 
+    public boolean hasUser(String username) {
+        for (var user : listUsers()) {
+            if (username.equals(user.username())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void createUser(UserDataRec userData) {
         var id = UUID.randomUUID();

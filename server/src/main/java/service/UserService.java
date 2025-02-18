@@ -8,17 +8,24 @@ import model.UserDataRec;
 import java.util.UUID;
 
 public class UserService {
-    private String authorize(String username) {
+    private static String authorize(String username) {
         var authData = AuthDataAcc.getInstance();
         var authToken = UUID.randomUUID().toString();
         authData.createAuth(new AuthDataRec(authToken, username));
         return authToken;
     }
 
-    public UserClump register(UserClump request) {
+    public static UserClump register(UserClump request) {
         var username = request.username();
         var password = request.password();
         var email = request.email();
+
+        if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
+            return UserClump.builder()
+                    .setStatusCode(400)
+                    .setMessage("Error: bad request")
+                    .build();
+        }
 
         var userData = UserDataAcc.getInstance();
         for (var user : userData.listUsers()) {
@@ -41,7 +48,7 @@ public class UserService {
                 .build();
     }
 
-    public UserClump login(UserClump request) {
+    public static UserClump login(UserClump request) {
         var username = request.username();
         var password = request.password();
 
@@ -63,7 +70,7 @@ public class UserService {
                 .setStatusCode(401)
                 .build();
     }
-    public UserClump logout(UserClump request) {
+    public static UserClump logout(UserClump request) {
         var authData = AuthDataAcc.getInstance();
         for (var auth : authData.listAuths()) {
             if (auth.authToken().equals(request.authToken())) {
