@@ -8,22 +8,22 @@ import java.util.UUID;
 
 public interface GameDAO {
     // Create
-    void createGame(GameDataRec gameData);
+    String createGame(GameDataRec gameData);
 
     // Read
-    GameDataRec getGame(UUID id);
+    GameDataRec getGame(String id);
     Collection<GameDataRec> listGames();
 
     // Update
-    void changeGameID(UUID id, int gameID);
-    void changeWhiteUsername(UUID id, String username);
-    void changeBlackUsername(UUID id, String username);
-    void changeGameName(UUID id, String gameName);
-    void changeGameObj(UUID id, ChessGame game);
+    void changeGameID(String id, int gameID);
+    void changeWhiteUsername(String id, String username);
+    void changeBlackUsername(String id, String username);
+    void changeGameName(String id, String gameName);
+    void changeGameObj(String id, ChessGame game);
 
     // Delete
     void clearAll();
-    void clearGame(UUID id);
+    void clearGame(String id);
 
 
 }

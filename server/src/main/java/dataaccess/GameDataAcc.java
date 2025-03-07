@@ -7,27 +7,28 @@ import java.util.*;
 
 public class GameDataAcc implements GameDAO {
     // Singleton
-    private GameDataAcc instance = null;
+    private static GameDataAcc instance = null;
     private GameDataAcc() {
         clearAll();
     }
-    public GameDataAcc getInstance() {
+    public static GameDataAcc getInstance() {
         if (instance == null) {
             instance = new GameDataAcc();
         }
         return instance;
     }
 
-    private Map<UUID, GameDataRec> games;
+    private Map<String, GameDataRec> games;
 
     @Override
-    public void createGame(GameDataRec gameData) {
-        var id = UUID.randomUUID();
+    public String createGame(GameDataRec gameData) {
+        var id = UUID.randomUUID().toString();
         games.put(id, gameData);
+        return id;
     }
 
     @Override
-    public GameDataRec getGame(UUID id) {
+    public GameDataRec getGame(String id) {
         return games.get(id);
     }
 
@@ -37,35 +38,35 @@ public class GameDataAcc implements GameDAO {
     }
 
     @Override
-    public void changeGameID(UUID id, int gameID) {
+    public void changeGameID(String id, int gameID) {
         var game = getGame(id);
         game = game.changeGameID(gameID);
         games.put(id, game);
     }
 
     @Override
-    public void changeWhiteUsername(UUID id, String username) {
+    public void changeWhiteUsername(String id, String username) {
         var game = getGame(id);
         game = game.changeWhiteUsername(username);
         games.put(id, game);
     }
 
     @Override
-    public void changeBlackUsername(UUID id, String username) {
+    public void changeBlackUsername(String id, String username) {
         var game = getGame(id);
         game = game.changeBlackUsername(username);
         games.put(id, game);
     }
 
     @Override
-    public void changeGameName(UUID id, String name) {
+    public void changeGameName(String id, String name) {
         var game = getGame(id);
         game = game.changeGameName(name);
         games.put(id, game);
     }
 
     @Override
-    public void changeGameObj(UUID id, ChessGame gameObj) {
+    public void changeGameObj(String id, ChessGame gameObj) {
         var game = getGame(id);
         game = game.changeGameObj(gameObj);
         games.put(id, game);
@@ -73,11 +74,11 @@ public class GameDataAcc implements GameDAO {
 
     @Override
     public void clearAll() {
-        games = new HashMap<>();
+        games = new HashMap<String, GameDataRec>();
     }
 
     @Override
-    public void clearGame(UUID id) {
+    public void clearGame(String id) {
         games.remove(id);
     }
 }
