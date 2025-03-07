@@ -3,13 +3,12 @@ package service;
 import dataaccess.AuthDataAcc;
 import dataaccess.UserDataAcc;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class UserServiceTests {
     @Test
     public void registerUser() {
-        var request = UserClump.builder()
+        var request = ServiceMessage.builder()
                 .setUsername("test-username")
                 .setPassword("test-password")
                 .setEmail("test-email")
@@ -25,7 +24,7 @@ public class UserServiceTests {
 
     @Test
     public void registerDuplicateUser() {
-        var request = UserClump.builder()
+        var request = ServiceMessage.builder()
                 .setUsername("test-username")
                 .setPassword("test-password")
                 .setEmail("test-email")
@@ -37,7 +36,7 @@ public class UserServiceTests {
 
     @Test
     public void registerNeedsEmail() {
-        var request = UserClump.builder()
+        var request = ServiceMessage.builder()
                 .setUsername("test-username")
                 .setPassword("test-password")
                 .build();
@@ -47,7 +46,7 @@ public class UserServiceTests {
 
     @Test
     public void loginCorrect() {
-        var request = UserClump.builder()
+        var request = ServiceMessage.builder()
                 .setUsername("test-username")
                 .setPassword("test-password")
                 .setEmail("test-email")
@@ -62,13 +61,13 @@ public class UserServiceTests {
 
     @Test
     public void loginIncorrect() {
-        var request = UserClump.builder()
+        var request = ServiceMessage.builder()
                 .setUsername("test-username")
                 .setPassword("test-password")
                 .setEmail("test-email")
                 .build();
         UserService.register(request);
-        var loginRequest = UserClump.builder()
+        var loginRequest = ServiceMessage.builder()
                 .setUsername("test-username")
                 .setPassword("wrong-password")
                 .build();

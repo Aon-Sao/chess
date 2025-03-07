@@ -1,7 +1,7 @@
 package server;
 
 import com.google.gson.Gson;
-import service.UserClump;
+import service.ServiceMessage;
 import service.UserService;
 import spark.*;
 
@@ -29,12 +29,12 @@ public class Server {
         Spark.awaitStop();
     }
 
-    private static UserClump getBody(Request req) {
-        var obj = new Gson().fromJson(req.body(), UserClump.class);
+    private static ServiceMessage getBody(Request req) {
+        var obj = new Gson().fromJson(req.body(), ServiceMessage.class);
         if (obj == null) {
-            obj = UserClump.builder().build();
+            obj = ServiceMessage.builder().build();
         }
-        return UserClump.builder()
+        return ServiceMessage.builder()
                 .setAuthToken(req.headers("Authorization"))
                 .setUsername(obj.username())
                 .setPassword(obj.password())
@@ -44,7 +44,7 @@ public class Server {
                 .build();
     }
 
-    private String makeBody(UserClump clump) {
+    private String makeBody(ServiceMessage clump) {
         return new Gson().toJson(clump);
     }
 
