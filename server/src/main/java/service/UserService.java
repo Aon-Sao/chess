@@ -2,13 +2,9 @@ package service;
 
 import dataaccess.AuthDataAcc;
 import dataaccess.UserDataAcc;
-import model.AuthDataRec;
 import model.UserDataRec;
 
-import java.util.UUID;
-
 import static service.ServiceHelpers.authorize;
-import static service.ServiceHelpers.isAuthorized;
 
 public class UserService {
 
@@ -74,18 +70,9 @@ public class UserService {
 
 
     public static ServiceMessage logout(ServiceMessage request) {
-        if (isAuthorized(request)) {
-            // Logout
-            AuthDataAcc.getInstance().clearAuth(request.authToken());
+        AuthDataAcc.getInstance().clearAuth(request.authToken());
             return ServiceMessage.builder()
                     .setStatusCode(200)
                     .build();
-        } else {
-            // Provided authToken not found in DB
-            return ServiceMessage.builder()
-                    .setStatusCode(401)
-                    .setMessage("Error: unauthorized")
-                    .build();
-        }
     }
 }

@@ -1,6 +1,7 @@
 package server;
 
 import com.google.gson.Gson;
+import dataaccess.AuthDataAcc;
 import service.GameService;
 import service.ServiceHelpers;
 import service.ServiceMessage;
@@ -20,10 +21,28 @@ public class Server {
         Spark.delete("/db",      genericHandler(ServiceHelpers::clearAll));
         Spark.post(  "/user",    genericHandler(UserService::register));
         Spark.post(  "/session", genericHandler(UserService::login));
+
         Spark.delete("/session", genericHandler(UserService::logout));
         Spark.get(   "/game",    genericHandler(GameService::listGames));
         Spark.post(  "/game",    genericHandler(GameService::createGame));
         Spark.put(   "/game",    genericHandler(GameService::joinGame));
+
+        Spark.before((req, res) -> {
+            var method = req.requestMethod();
+            var path = req.pathInfo();
+            if ((method.equals("DELETE") && path.equals("/session"))
+             || (method.equals("GET")    && path.equals("/game"))
+             || (method.equals("POST")   && path.equals("/game"))
+             || (method.equals("PUT")    && path.equals("/game"))) {
+                // Authentication required
+                if (!(ServiceHelpers.isAuthorized(getBody(req)))) {
+                    Spark.halt(401, makeBody(ServiceMessage.builder()
+                            .setStatusCode(401)
+                            .setMessage("Error: unauthorized")
+                            .build()));
+                }
+            }
+        });
 
         //This line initializes the server and can be removed once you have a functioning endpoint 
         Spark.init();
@@ -60,7 +79,7 @@ public class Server {
                 .build();
     }
 
-    private String makeBody(ServiceMessage clump) {
-        return new Gson().toJson(clump);
+    private String makeBody(ServiceMessage msg) {
+        return new Gson().toJson(msg);
     }
 }

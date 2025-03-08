@@ -18,8 +18,6 @@ public class GameService {
     }
 
     public static ServiceMessage createGame(ServiceMessage request) {
-        if (isAuthorized(request)) {
-            // Action
             var name = request.gameName();
             if (name.isEmpty()) {
                 return ServiceMessage.builder()
@@ -35,17 +33,10 @@ public class GameService {
                     new ChessGame());
             var gameData = GameDataAcc.getInstance();
             gameData.createGame(gameRec);
-            // Response
             return ServiceMessage.builder()
                     .setStatusCode(200)
                     .setGameID(id)
                     .build();
-        } else {
-            return ServiceMessage.builder()
-                    .setStatusCode(401)
-                    .setMessage("Error: unauthorized")
-                    .build();
-        }
     }
 
     public static ServiceMessage listGames(ServiceMessage request) { return null; }
