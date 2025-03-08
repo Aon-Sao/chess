@@ -23,7 +23,9 @@ public class ServiceHelpers {
 
     public static boolean isAuthorized(ServiceMessage msg) {
         for (var auth : AuthDataAcc.getInstance().listAuths()) {
-            if (auth.equals(new AuthDataRec(msg.authToken(), msg.username()))) {
+            // We do not check if username matches, because it is not always provided
+            // authTokens should be unique anyways, which is sufficient
+            if (auth.authToken().equals(msg.authToken())) {
                 return true;
             }
         }
