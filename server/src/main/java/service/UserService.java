@@ -7,12 +7,13 @@ import model.UserDataRec;
 
 import java.util.UUID;
 
+import static service.ServiceHelpers.authorize;
+import static service.ServiceHelpers.isAuthorized;
+
 public class UserService {
-    private static String authorize(String username) {
-        var authData = AuthDataAcc.getInstance();
-        var authToken = UUID.randomUUID().toString();
-        authData.createAuth(new AuthDataRec(authToken, username));
-        return authToken;
+
+    public static void clear() {
+        UserDataAcc.getInstance().clearAll();
     }
 
     public static ServiceMessage register(ServiceMessage request) {
@@ -71,14 +72,6 @@ public class UserService {
                 .build();
     }
 
-    public static boolean isAuthorized(ServiceMessage clump) {
-        for (var auth : AuthDataAcc.getInstance().listAuths()) {
-            if (auth.equals(new AuthDataRec(clump.authToken(), clump.username()))) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     public static ServiceMessage logout(ServiceMessage request) {
         if (isAuthorized(request)) {

@@ -6,11 +6,15 @@ import model.GameDataRec;
 
 import java.time.Instant;
 
-import static service.UserService.isAuthorized;
+import static service.ServiceHelpers.isAuthorized;
 
 public class GameService {
     private static int makeGameID(String gameName) {
         return Integer.parseInt(gameName.hashCode() + "" + Instant.now().getEpochSecond());
+    }
+
+    public static void clear() {
+        GameDataAcc.getInstance().clearAll();
     }
 
     public static ServiceMessage createGame(ServiceMessage request) {
@@ -43,4 +47,7 @@ public class GameService {
                     .build();
         }
     }
+
+    public static ServiceMessage listGames(ServiceMessage request) { return null; }
+    public static ServiceMessage joinGame(ServiceMessage request) { return null; }
 }
