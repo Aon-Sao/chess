@@ -1,6 +1,7 @@
 package server;
 
 import com.google.gson.Gson;
+import service.GameService;
 import service.ServiceMessage;
 import service.UserService;
 import spark.*;
@@ -16,6 +17,7 @@ public class Server {
         Spark.post("/user", this::registerUser);
         Spark.post("/session", this::loginUser);
         Spark.delete("/session", this::logoutUser);
+        Spark.post("/game", this::createGame);
 
         //This line initializes the server and can be removed once you have a functioning endpoint 
         Spark.init();
@@ -64,6 +66,13 @@ public class Server {
 
     private Object logoutUser(Request req, Response res) {
         var result = UserService.logout(getBody(req));
+        res.status(result.statusCode());
+        res.body(makeBody(result));
+        return res.body();
+    }
+
+    private Object createGame(Request req, Response res) {
+        var result = GameService.createGame(getBody(req));
         res.status(result.statusCode());
         res.body(makeBody(result));
         return res.body();

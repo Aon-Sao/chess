@@ -13,7 +13,7 @@ public class GameService {
         return Integer.parseInt(gameName.hashCode() + "" + Instant.now().getEpochSecond());
     }
 
-    private static ServiceMessage createGame(ServiceMessage request) {
+    public static ServiceMessage createGame(ServiceMessage request) {
         if (isAuthorized(request)) {
             // Action
             var name = request.gameName();
