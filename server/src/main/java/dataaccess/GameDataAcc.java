@@ -21,10 +21,9 @@ public class GameDataAcc implements GameDAO {
     private Map<String, GameDataRec> games;
 
     @Override
-    public String createGame(GameDataRec gameData) {
+    public void createGame(GameDataRec gameData) {
         var id = UUID.randomUUID().toString();
         games.put(id, gameData);
-        return id;
     }
 
     @Override

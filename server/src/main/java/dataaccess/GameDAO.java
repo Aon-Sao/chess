@@ -4,11 +4,10 @@ import chess.ChessGame;
 import model.GameDataRec;
 
 import java.util.Collection;
-import java.util.UUID;
 
 public interface GameDAO {
     // Create
-    String createGame(GameDataRec gameData);
+    void createGame(GameDataRec gameData);
 
     // Read
     GameDataRec getGame(String id);
