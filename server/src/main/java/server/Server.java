@@ -2,9 +2,12 @@ package server;
 
 import com.google.gson.Gson;
 import service.GameService;
+import service.ServiceHelpers;
 import service.ServiceMessage;
 import service.UserService;
 import spark.*;
+
+import java.util.function.Function;
 
 public class Server {
 
@@ -14,10 +17,13 @@ public class Server {
         Spark.staticFiles.location("web");
 
         // Register your endpoints and handle exceptions here.
-        Spark.post("/user", this::registerUser);
-        Spark.post("/session", this::loginUser);
-        Spark.delete("/session", this::logoutUser);
-        Spark.post("/game", this::createGame);
+        Spark.delete("/db",      genericHandler(ServiceHelpers::clearAll));
+        Spark.post(  "/user",    genericHandler(UserService::register));
+        Spark.post(  "/session", genericHandler(UserService::login));
+        Spark.delete("/session", genericHandler(UserService::logout));
+        Spark.get(   "/game",    genericHandler(GameService::listGames));
+        Spark.post(  "/game",    genericHandler(GameService::createGame));
+        Spark.put(   "/game",    genericHandler(GameService::joinGame));
 
         //This line initializes the server and can be removed once you have a functioning endpoint 
         Spark.init();
@@ -29,6 +35,14 @@ public class Server {
     public void stop() {
         Spark.stop();
         Spark.awaitStop();
+    }
+
+    private Route genericHandler(Function<ServiceMessage, ServiceMessage> func) {
+        return (req, res) -> {
+            var result = func.apply(getBody(req));
+            res.status(result.statusCode());
+            return makeBody(result);
+        };
     }
 
     private static ServiceMessage getBody(Request req) {
@@ -48,33 +62,5 @@ public class Server {
 
     private String makeBody(ServiceMessage clump) {
         return new Gson().toJson(clump);
-    }
-
-    private Object registerUser(Request req, Response res) {
-        var result = UserService.register(getBody(req));
-        res.status(result.statusCode());
-        res.body(makeBody(result));
-        return res.body();
-    }
-
-    private Object loginUser(Request req, Response res) {
-        var result = UserService.login(getBody(req));
-        res.status(result.statusCode());
-        res.body(makeBody(result));
-        return res.body();
-    }
-
-    private Object logoutUser(Request req, Response res) {
-        var result = UserService.logout(getBody(req));
-        res.status(result.statusCode());
-        res.body(makeBody(result));
-        return res.body();
-    }
-
-    private Object createGame(Request req, Response res) {
-        var result = GameService.createGame(getBody(req));
-        res.status(result.statusCode());
-        res.body(makeBody(result));
-        return res.body();
     }
 }
