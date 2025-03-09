@@ -77,4 +77,27 @@ public class UserServiceTests {
         Assertions.assertFalse(authData.hasAuth(result.authToken()));
         Assertions.assertFalse(authData.hasUser(result.username()));
     }
+
+    @Test
+    public void logoutExistingSession() {
+        var request = ServiceMessage.builder()
+                .setUsername("test-username")
+                .setPassword("test-password")
+                .setEmail("test-email")
+                .build();
+        var result = UserService.register(request);
+        UserService.logout(ServiceMessage.builder()
+                .setAuthToken(result.authToken())
+                .build());
+        var authData = AuthDataAcc.getInstance();
+        Assertions.assertTrue(authData.listAuths().isEmpty());
+    }
+
+    @Test
+    public void logoutBadToken() {
+        var result = UserService.logout(ServiceMessage.builder()
+                .setAuthToken("bad-auth-token")
+                .build());
+        Assertions.assertEquals(401, result.statusCode());
+    }
 }
