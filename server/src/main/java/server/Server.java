@@ -1,6 +1,9 @@
 package server;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import dataaccess.AuthDataAcc;
 import service.GameService;
 import service.ServiceHelpers;
@@ -8,6 +11,7 @@ import service.ServiceMessage;
 import service.UserService;
 import spark.*;
 
+import java.util.Map;
 import java.util.function.Function;
 
 public class Server {
@@ -90,6 +94,13 @@ public class Server {
     }
 
     private String makeBody(ServiceMessage msg) {
-        return new Gson().toJson(msg);
+        var jsonObj = new JsonObject();
+        var jsonElem = JsonParser.parseString(new Gson().toJson(msg.games()));
+        jsonObj.add("games", jsonElem);
+        var jsonObj2 = new Gson().toJsonTree(msg.toMap()).getAsJsonObject();
+        for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
+            jsonObj2.add(entry.getKey(), entry.getValue());
+        }
+        return jsonObj2.toString();
     }
 }

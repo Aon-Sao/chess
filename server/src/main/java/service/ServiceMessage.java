@@ -5,6 +5,7 @@ import model.GameDataRec;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 public class ServiceMessage {
@@ -30,6 +31,43 @@ public class ServiceMessage {
         this.gameID = builder.gameID;
         this.statusCode = builder.statusCode;
         this.games = builder.games;
+    }
+
+    public HashMap<String, String> toMap() {
+        HashMap<String, String> m = new HashMap<>();
+        if (!username.isEmpty()) {
+            m.put("username", username);
+        }
+        if (!password.isEmpty()) {
+            m.put("password", password);
+        }
+        if (!email.isEmpty()) {
+            m.put("email", email);
+        }
+        if (!authToken.isEmpty()) {
+            m.put("authToken", authToken);
+        }
+        if (!message.isEmpty()) {
+            m.put("message", message);
+        }
+        if (!playerColor.isEmpty()) {
+            m.put("playerColor", playerColor);
+        }
+        if (!gameName.isEmpty()) {
+            m.put("gameName", gameName);
+        }
+        if (gameID != 0) {
+            m.put("gameID", gameID + "");
+        }
+        if (statusCode != 0) {
+            m.put("statusCode", statusCode + "");
+        }
+        if (!games.isEmpty()) {
+            m.put("games", games.toString());
+        }
+//        m.put("games", games.toString());
+
+        return m;
     }
 
     public static Builder builder() {
@@ -86,7 +124,7 @@ public class ServiceMessage {
         private String gameName = "";
         private int gameID = 0;
         private int statusCode = 0;
-        private Collection<GameDataRec> games = new ArrayList<GameDataRec>();
+        private Collection<GameDataRec> games = new ArrayList<>();
 
         private boolean validate() {
             if (!(List.of("WHITE", "BLACK", "").contains(playerColor))) {

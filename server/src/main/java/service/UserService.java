@@ -17,7 +17,9 @@ public class UserService {
         var password = request.password();
         var email = request.email();
 
-        if ((username == null || username.isEmpty()) || password.isEmpty() || email.isEmpty()) {
+        if ((username == null || username.isEmpty())
+                || (password == null || password.isEmpty())
+                || email.isEmpty()) {
             return ServiceHelpers.StockResponses.BAD_REQUEST.value();
         }
 

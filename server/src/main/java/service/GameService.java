@@ -54,9 +54,6 @@ public class GameService {
         // Strip game instance from records to avoid including the board in the response
         // Game board state should not be exposed by this method
         games = new ArrayList<>(games.stream().map((g) -> g.changeGameObj(null)).toList());
-        // Ensure usernames serialize when null
-        games = new ArrayList<>(games.stream().map((g) -> g.changeWhiteUsername(g.whiteUsername() + "")).toList());
-        games = new ArrayList<>(games.stream().map((g) -> g.changeBlackUsername(g.blackUsername() + "")).toList());
 
         return ServiceMessage.builder()
                 .setStatusCode(200)
