@@ -36,10 +36,7 @@ public class Server {
              || (method.equals("PUT")    && path.equals("/game"))) {
                 // Authentication required
                 if (!(ServiceHelpers.isAuthorized(getBody(req)))) {
-                    Spark.halt(401, makeBody(ServiceMessage.builder()
-                            .setStatusCode(401)
-                            .setMessage("Error: unauthorized")
-                            .build()));
+                    Spark.halt(401, makeBody(ServiceHelpers.StockResponses.UNAUTHORIZED.value()));
                 }
             }
         });

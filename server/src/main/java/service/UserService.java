@@ -18,10 +18,7 @@ public class UserService {
         var email = request.email();
 
         if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
-            return ServiceMessage.builder()
-                    .setStatusCode(400)
-                    .setMessage("Error: bad request")
-                    .build();
+            return ServiceHelpers.StockResponses.BAD_REQUEST.value();
         }
 
         var userData = UserDataAcc.getInstance();
@@ -29,10 +26,7 @@ public class UserService {
             if (user.username().equals(username)
                 || user.email().equals(email)) {
                 // Username or email in use
-                return ServiceMessage.builder()
-                        .setMessage("Error: already taken")
-                        .setStatusCode(403)
-                        .build();
+                return ServiceHelpers.StockResponses.ALREADY_TAKEN.value();
             }
         }
         // Good to go
@@ -62,10 +56,7 @@ public class UserService {
                         .build();
             }
         }
-        return ServiceMessage.builder()
-                .setMessage("Error: unauthorized")
-                .setStatusCode(401)
-                .build();
+        return ServiceHelpers.StockResponses.UNAUTHORIZED.value();
     }
 
 

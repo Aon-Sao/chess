@@ -31,4 +31,27 @@ public class ServiceHelpers {
         }
         return false;
     }
+
+    public enum StockResponses {
+        BAD_REQUEST(ServiceMessage.builder()
+                .setStatusCode(400)
+                .setMessage("Error: bad request")
+                .build()),
+        UNAUTHORIZED(ServiceMessage.builder()
+                .setStatusCode(401)
+                .setMessage("Error: unauthorized")
+                .build()),
+        ALREADY_TAKEN(ServiceMessage.builder()
+                .setStatusCode(403)
+                .setMessage("Error: already taken")
+                .build());
+
+        StockResponses(ServiceMessage msg) {
+            this.msg = msg;
+        }
+        private final ServiceMessage msg;
+        public ServiceMessage value() {
+            return msg;
+        }
+    }
 }
