@@ -3,6 +3,7 @@ package dataaccess;
 import model.AuthDataRec;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class AuthDataAcc implements AuthDAO {
     // Singleton
@@ -18,6 +19,16 @@ public class AuthDataAcc implements AuthDAO {
     }
 
     private Map<String, AuthDataRec> auths;
+
+    public String findAuthByAuthToken(String authToken) {
+        AtomicReference<String> key = new AtomicReference<>();
+        auths.forEach((k, v) -> {
+            if (v.authToken().equals(authToken)) {
+                key.set(k);
+            }
+        });
+        return key.get();
+    }
 
     public boolean hasAuth(String authToken) {
         for (var auth : listAuths()) {
