@@ -9,7 +9,6 @@ public interface AuthDAO {
     void createAuth(AuthDataRec authData);
 
     // Read
-    AuthDataRec getAuth(String id);
     Collection<AuthDataRec> listAuths();
 
     // Delete

@@ -10,7 +10,6 @@ public interface UserDAO {
     void createUser(UserDataRec userData);
 
     // Read
-    UserDataRec getUser(UUID id);
     Collection<UserDataRec> listUsers();
 
     // Delete

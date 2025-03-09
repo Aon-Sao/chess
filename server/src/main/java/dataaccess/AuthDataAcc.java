@@ -55,11 +55,6 @@ public class AuthDataAcc implements AuthDAO {
     }
 
     @Override
-    public AuthDataRec getAuth(String id) {
-        return auths.get(id);
-    }
-
-    @Override
     public Collection<AuthDataRec> listAuths() {
         return new ArrayList<>(auths.values());
     }

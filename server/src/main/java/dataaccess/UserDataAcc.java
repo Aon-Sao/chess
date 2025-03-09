@@ -35,11 +35,6 @@ public class UserDataAcc implements UserDAO {
     }
 
     @Override
-    public UserDataRec getUser(UUID id) {
-        return users.get(id);
-    }
-
-    @Override
     public Collection<UserDataRec> listUsers() {
         return new ArrayList<>(users.values());
     }
