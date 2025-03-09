@@ -4,6 +4,7 @@ import chess.ChessGame;
 import model.GameDataRec;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class GameDataAcc implements GameDAO {
     // Singleton
@@ -19,6 +20,19 @@ public class GameDataAcc implements GameDAO {
     }
 
     private HashMap<String, GameDataRec> games;
+
+    public String findGameByGameID(int gameID) {
+        // Using AtomicReference allows us to modify the value held
+        // by `key`, which is "captured" by the lambda, without
+        // introducing concurrency issues
+        AtomicReference<String> key = new AtomicReference<>();
+        games.forEach((k, v) -> {
+            if (v.gameID() == gameID) {
+                key.set(k);
+            }
+        });
+        return key.get();
+    }
 
     @Override
     public void createGame(GameDataRec gameData) {
