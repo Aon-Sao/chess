@@ -23,4 +23,8 @@ public record GameDataRec(int gameID, String whiteUsername, String blackUsername
     public GameDataRec changeGameObj(ChessGame game) {
         return new GameDataRec(gameID, whiteUsername, blackUsername, gameName, game);
     }
+
+    public GameDataRec copy() {
+        return new GameDataRec(gameID, whiteUsername, blackUsername, gameName, game);
+    }
 }
