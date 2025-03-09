@@ -13,7 +13,7 @@ import static service.ServiceHelpers.isAuthorized;
 
 public class GameService {
     private static int makeGameID(String gameName) {
-        int newID = 0;
+        int newID = 1;
         var games = GameDataAcc.getInstance().listGames();
         HashSet<Integer> usedIDs = new HashSet<>(games.stream().map(GameDataRec::gameID).toList());
         while (usedIDs.contains(newID) && (newID != -1)) {
@@ -70,7 +70,7 @@ public class GameService {
         String gameUUID = gameData.findGameByGameID(request.gameID());
         var game = gameData.getGame(gameUUID);
 
-        if ((game == null) || (!(List.of("BLACK", "WHITE").contains(request.playerColor())))) {
+        if ((request.gameID() == 0) || (game == null) || request.playerColor() == null || (!(List.of("BLACK", "WHITE").contains(request.playerColor())))) {
             return ServiceHelpers.StockResponses.BAD_REQUEST.value();
         }
         if (((request.playerColor().equals("WHITE")) && (game.whiteUsername() != null))
