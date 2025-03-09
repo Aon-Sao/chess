@@ -14,6 +14,16 @@ public class ServiceHelpers {
                 .build();
     }
 
+    public static String getUsernameByAuthToken(String authToken) {
+        var authData = AuthDataAcc.getInstance();
+        for (var auth : authData.listAuths()) {
+            if (auth.authToken().equals(authToken)) {
+                return auth.username();
+            }
+        }
+        return null;
+    }
+
     protected static String authorize(String username) {
         var authData = AuthDataAcc.getInstance();
         var authToken = UUID.randomUUID().toString();
