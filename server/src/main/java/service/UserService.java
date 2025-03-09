@@ -17,7 +17,7 @@ public class UserService {
         var password = request.password();
         var email = request.email();
 
-        if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
+        if ((username == null || username.isEmpty()) || password.isEmpty() || email.isEmpty()) {
             return ServiceHelpers.StockResponses.BAD_REQUEST.value();
         }
 
@@ -61,7 +61,9 @@ public class UserService {
 
 
     public static ServiceMessage logout(ServiceMessage request) {
-        AuthDataAcc.getInstance().clearAuth(request.authToken());
+        var authData = AuthDataAcc.getInstance();
+        var authUUID = authData.findAuthByAuthToken(request.authToken());
+        authData.clearAuth(authUUID);
             return ServiceMessage.builder()
                     .setStatusCode(200)
                     .build();
