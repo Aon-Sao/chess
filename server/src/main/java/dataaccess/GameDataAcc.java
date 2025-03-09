@@ -18,7 +18,7 @@ public class GameDataAcc implements GameDAO {
         return instance;
     }
 
-    private Map<String, GameDataRec> games;
+    private HashMap<String, GameDataRec> games;
 
     @Override
     public void createGame(GameDataRec gameData) {
