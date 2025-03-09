@@ -9,6 +9,7 @@ public class ServiceHelpers {
     public static ServiceMessage clearAll(ServiceMessage request) {
         UserService.clear();
         GameService.clear();
+        AuthDataAcc.getInstance().clearAll();
         return ServiceMessage.builder()
                 .setStatusCode(200)
                 .build();
