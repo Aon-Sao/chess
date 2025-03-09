@@ -44,6 +44,15 @@ public class Server {
             }
         });
 
+        Spark.exception(Exception.class, (e, req, res) -> {
+            res.status(500);
+            res.body(makeBody(ServiceMessage.builder()
+                    .setStatusCode(500)
+                    .setMessage("Error: " + e.getMessage())
+                    .build()));
+            e.printStackTrace();
+        });
+
         //This line initializes the server and can be removed once you have a functioning endpoint 
         Spark.init();
 
@@ -76,6 +85,10 @@ public class Server {
                 .setEmail(obj.email())
                 .setMessage(obj.message())
                 .setStatusCode(obj.statusCode())
+                .setPlayerColor(obj.playerColor())
+                .setGameName(obj.gameName())
+                .setGameID(obj.gameID())
+                .setGames(obj.games())
                 .build();
     }
 
