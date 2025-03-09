@@ -1,6 +1,10 @@
 package service;
 
 
+import model.GameDataRec;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ServiceMessage {
@@ -13,6 +17,7 @@ public class ServiceMessage {
     private final String gameName;
     private final int gameID;
     private final int statusCode;
+    private final Collection<GameDataRec> games;
 
     private ServiceMessage(Builder builder) {
         this.username = builder.username;
@@ -24,6 +29,7 @@ public class ServiceMessage {
         this.gameName = builder.gameName;
         this.gameID = builder.gameID;
         this.statusCode = builder.statusCode;
+        this.games = builder.games;
     }
 
     public static Builder builder() {
@@ -66,6 +72,10 @@ public class ServiceMessage {
         return statusCode;
     }
 
+    public Collection<GameDataRec> games() {
+        return games;
+    }
+
     public static class Builder {
         private String username = "";
         private String password = "";
@@ -76,6 +86,7 @@ public class ServiceMessage {
         private String gameName = "";
         private int gameID = 0;
         private int statusCode = 0;
+        private Collection<GameDataRec> games = new ArrayList<GameDataRec>();
 
         private boolean validate() {
             if (!(List.of("WHITE", "BLACK", "").contains(playerColor))) {
@@ -135,6 +146,11 @@ public class ServiceMessage {
 
         public Builder setStatusCode(int statusCode) {
             this.statusCode = statusCode;
+            return this;
+        }
+
+        public Builder setGames(Collection<GameDataRec> games) {
+            this.games = games;
             return this;
         }
     }
