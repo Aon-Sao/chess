@@ -45,33 +45,7 @@ public class UserDataAcc implements UserDAO {
     }
 
     @Override
-    public void changeName(UUID id, String username) {
-        var user = getUser(id);
-        user = user.changeUsername(username);
-        users.put(id, user);
-    }
-
-    @Override
-    public void changePass(UUID id, String pass) {
-        var user = getUser(id);
-        user = user.changePassword(pass);
-        users.put(id, user);
-    }
-
-    @Override
-    public void changeEmail(UUID id, String email) {
-        var user = getUser(id);
-        user = user.changeEmail(email);
-        users.put(id, user);
-    }
-
-    @Override
     public void clearAll() {
         users = new HashMap<>();
-    }
-
-    @Override
-    public void clearUser(UUID id) {
-        users.remove(id);
     }
 }

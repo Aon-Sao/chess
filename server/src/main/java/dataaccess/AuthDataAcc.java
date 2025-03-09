@@ -65,20 +65,6 @@ public class AuthDataAcc implements AuthDAO {
     }
 
     @Override
-    public void changeName(String id, String username) {
-        var user = getAuth(id);
-        user = user.changeUsername(username);
-        auths.put(id, user);
-    }
-
-    @Override
-    public void changeToken(String id, String token) {
-        var user = getAuth(id);
-        user = user.changeToken(token);
-        auths.put(id, user);
-    }
-
-    @Override
     public void clearAll() {
         auths = new HashMap<>();
     }

@@ -51,13 +51,6 @@ public class GameDataAcc implements GameDAO {
     }
 
     @Override
-    public void changeGameID(String id, int gameID) {
-        var game = getGame(id);
-        game = game.changeGameID(gameID);
-        games.put(id, game);
-    }
-
-    @Override
     public void changeWhiteUsername(String id, String username) {
         var game = getGame(id);
         game = game.changeWhiteUsername(username);
@@ -72,26 +65,7 @@ public class GameDataAcc implements GameDAO {
     }
 
     @Override
-    public void changeGameName(String id, String name) {
-        var game = getGame(id);
-        game = game.changeGameName(name);
-        games.put(id, game);
-    }
-
-    @Override
-    public void changeGameObj(String id, ChessGame gameObj) {
-        var game = getGame(id);
-        game = game.changeGameObj(gameObj);
-        games.put(id, game);
-    }
-
-    @Override
     public void clearAll() {
         games = new HashMap<>();
-    }
-
-    @Override
-    public void clearGame(String id) {
-        games.remove(id);
     }
 }
