@@ -13,14 +13,8 @@ public interface UserDAO {
     UserDataRec getUser(UUID id);
     Collection<UserDataRec> listUsers();
 
-    // Update
-    void changeName(UUID id, String username);
-    void changePass(UUID id, String pass);
-    void changeEmail(UUID id, String email);
-
     // Delete
     void clearAll();
-    void clearUser(UUID id);
 
 
 }

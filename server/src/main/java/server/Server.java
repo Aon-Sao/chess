@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import dataaccess.AuthDataAcc;
 import service.GameService;
 import service.ServiceHelpers;
 import service.ServiceMessage;
@@ -22,12 +21,12 @@ public class Server {
         Spark.staticFiles.location("web");
 
         // Register your endpoints and handle exceptions here.
-        Spark.delete("/db",      genericHandler(ServiceHelpers::clearAll));
+        Spark.delete("/db",      genericHandler(request1 -> ServiceHelpers.clearAll()));
         Spark.post(  "/user",    genericHandler(UserService::register));
         Spark.post(  "/session", genericHandler(UserService::login));
 
         Spark.delete("/session", genericHandler(UserService::logout));
-        Spark.get(   "/game",    genericHandler(GameService::listGames));
+        Spark.get(   "/game",    genericHandler(request -> GameService.listGames()));
         Spark.post(  "/game",    genericHandler(GameService::createGame));
         Spark.put(   "/game",    genericHandler(GameService::joinGame));
 

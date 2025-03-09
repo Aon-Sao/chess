@@ -12,10 +12,6 @@ public interface AuthDAO {
     AuthDataRec getAuth(String id);
     Collection<AuthDataRec> listAuths();
 
-    // Update
-    void changeName(String id, String username);
-    void changeToken(String id, String token);
-
     // Delete
     void clearAll();
     void clearAuth(String id);

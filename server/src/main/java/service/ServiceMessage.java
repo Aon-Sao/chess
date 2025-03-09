@@ -6,7 +6,6 @@ import model.GameDataRec;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
 public class ServiceMessage {
     private final String username;
@@ -125,18 +124,6 @@ public class ServiceMessage {
         private int gameID = 0;
         private int statusCode = 0;
         private Collection<GameDataRec> games = new ArrayList<>();
-
-        private boolean validate() {
-            if (!(List.of("WHITE", "BLACK", "").contains(playerColor))) {
-                return false;
-            }
-
-            if (!(List.of(0, 200, 400, 401, 403, 500).contains(statusCode))) {
-                return false;
-            }
-
-            return true;
-        }
 
         public ServiceMessage build() {
             return new ServiceMessage(this);

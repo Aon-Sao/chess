@@ -87,7 +87,7 @@ public class GameDataAcc implements GameDAO {
 
     @Override
     public void clearAll() {
-        games = new HashMap<String, GameDataRec>();
+        games = new HashMap<>();
     }
 
     @Override

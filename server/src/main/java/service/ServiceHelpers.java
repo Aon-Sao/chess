@@ -6,7 +6,7 @@ import model.AuthDataRec;
 import java.util.UUID;
 
 public class ServiceHelpers {
-    public static ServiceMessage clearAll(ServiceMessage request) {
+    public static ServiceMessage clearAll() {
         UserService.clear();
         GameService.clear();
         AuthDataAcc.getInstance().clearAll();

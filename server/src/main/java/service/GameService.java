@@ -1,18 +1,13 @@
 package service;
 
 import chess.ChessGame;
-import com.google.gson.Gson;
 import dataaccess.GameDataAcc;
 import model.GameDataRec;
 
-import java.time.Instant;
 import java.util.*;
 
-import static java.util.stream.Collectors.toList;
-import static service.ServiceHelpers.isAuthorized;
-
 public class GameService {
-    private static int makeGameID(String gameName) {
+    private static int makeGameID() {
         int newID = 1;
         var games = GameDataAcc.getInstance().listGames();
         HashSet<Integer> usedIDs = new HashSet<>(games.stream().map(GameDataRec::gameID).toList());
@@ -34,7 +29,7 @@ public class GameService {
             if (name.isEmpty()) {
                 return ServiceHelpers.StockResponses.BAD_REQUEST.value();
             }
-            var id = makeGameID(name);
+            var id = makeGameID();
             var gameRec = new GameDataRec(id,
                     null,
                     null,
@@ -48,7 +43,7 @@ public class GameService {
                     .build();
     }
 
-    public static ServiceMessage listGames(ServiceMessage request) {
+    public static ServiceMessage listGames() {
         var games = GameDataAcc.getInstance().listGames();
         games = new ArrayList<>(games.stream().map(GameDataRec::copy).toList()); // Copy
         // Strip game instance from records to avoid including the board in the response
