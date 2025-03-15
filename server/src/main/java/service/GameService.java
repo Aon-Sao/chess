@@ -24,7 +24,8 @@ public class GameService {
         GameDataAcc.getInstance().clearAll();
     }
 
-    public static ServiceMessage createGame(ServiceMessage request) {
+    public static ServiceMessage createGame(ServiceMessage msg) {
+        return ServiceHelpers.authWrapper((request) -> {
             var name = request.gameName();
             if (name.isEmpty()) {
                 return ServiceHelpers.StockResponses.BAD_REQUEST.value();
@@ -41,46 +42,51 @@ public class GameService {
                     .setStatusCode(200)
                     .setGameID(id)
                     .build();
+        }).apply((msg));
     }
 
-    public static ServiceMessage listGames() {
-        var games = GameDataAcc.getInstance().listGames();
-        games = new ArrayList<>(games.stream().map(GameDataRec::copy).toList()); // Copy
-        // Strip game instance from records to avoid including the board in the response
-        // Game board state should not be exposed by this method
-        games = new ArrayList<>(games.stream().map((g) -> g.changeGameObj(null)).toList());
+    public static ServiceMessage listGames(ServiceMessage msg) {
+        return ServiceHelpers.authWrapper((request) -> {
+            var games = GameDataAcc.getInstance().listGames();
+            games = new ArrayList<>(games.stream().map(GameDataRec::copy).toList()); // Copy
+            // Strip game instance from records to avoid including the board in the response
+            // Game board state should not be exposed by this method
+            games = new ArrayList<>(games.stream().map((g) -> g.changeGameObj(null)).toList());
 
-        return ServiceMessage.builder()
-                .setStatusCode(200)
-                .setGames(games)
-                .build();
+            return ServiceMessage.builder()
+                    .setStatusCode(200)
+                    .setGames(games)
+                    .build();
+        }).apply(msg);
     }
 
     public static ServiceMessage joinGame(ServiceMessage request) {
-        String username = ServiceHelpers.getUsernameByAuthToken(request.authToken());
-        var gameData = GameDataAcc.getInstance();
-        String gameUUID = gameData.findGameByGameID(request.gameID());
-        var game = gameData.getGame(gameUUID);
+        return ServiceHelpers.authWrapper((msg) -> {
+            String username = ServiceHelpers.getUsernameByAuthToken(request.authToken());
+            var gameData = GameDataAcc.getInstance();
+            String gameUUID = gameData.findGameByGameID(request.gameID());
+            var game = gameData.getGame(gameUUID);
 
-        if ((request.gameID() == 0)
-                || (game == null)
-                || request.playerColor() == null
-                || (!(List.of("BLACK", "WHITE").contains(request.playerColor())))) {
-            return ServiceHelpers.StockResponses.BAD_REQUEST.value();
-        }
-        if (((request.playerColor().equals("WHITE")) && (game.whiteUsername() != null))
-            || ((request.playerColor().equals("BLACK")) && (game.blackUsername() != null))) {
-            return ServiceHelpers.StockResponses.ALREADY_TAKEN.value();
-        }
+            if ((request.gameID() == 0)
+                    || (game == null)
+                    || request.playerColor() == null
+                    || (!(List.of("BLACK", "WHITE").contains(request.playerColor())))) {
+                return ServiceHelpers.StockResponses.BAD_REQUEST.value();
+            }
+            if (((request.playerColor().equals("WHITE")) && (game.whiteUsername() != null))
+                    || ((request.playerColor().equals("BLACK")) && (game.blackUsername() != null))) {
+                return ServiceHelpers.StockResponses.ALREADY_TAKEN.value();
+            }
 
-        if (request.playerColor().equals("WHITE")) {
-            gameData.changeWhiteUsername(gameUUID, username);
-        } else {
-            gameData.changeBlackUsername(gameUUID, username);
-        }
+            if (request.playerColor().equals("WHITE")) {
+                gameData.changeWhiteUsername(gameUUID, username);
+            } else {
+                gameData.changeBlackUsername(gameUUID, username);
+            }
 
-        return ServiceMessage.builder()
-                .setStatusCode(200)
-                .build();
+            return ServiceMessage.builder()
+                    .setStatusCode(200)
+                    .build();
+        }).apply(request);
     }
 }
