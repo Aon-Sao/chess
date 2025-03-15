@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import dataaccess.DataAccessException;
+import dataaccess.DatabaseManager;
 import service.GameService;
 import service.ServiceHelpers;
 import service.ServiceMessage;
@@ -39,8 +41,11 @@ public class Server {
             e.printStackTrace();
         });
 
-        //This line initializes the server and can be removed once you have a functioning endpoint 
-        Spark.init();
+        try {
+            DatabaseManager.createDatabase();
+        } catch (DataAccessException e) {
+            throw new RuntimeException(e.getMessage());
+        }
 
         Spark.awaitInitialization();
         return Spark.port();
