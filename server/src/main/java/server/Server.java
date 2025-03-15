@@ -21,28 +21,14 @@ public class Server {
         Spark.staticFiles.location("web");
 
         // Register your endpoints and handle exceptions here.
-        Spark.delete("/db",      genericHandler(request1 -> ServiceHelpers.clearAll()));
+        Spark.delete("/db",      genericHandler(ServiceHelpers::clearAll));
         Spark.post(  "/user",    genericHandler(UserService::register));
         Spark.post(  "/session", genericHandler(UserService::login));
 
         Spark.delete("/session", genericHandler(UserService::logout));
-        Spark.get(   "/game",    genericHandler(request -> GameService.listGames()));
+        Spark.get(   "/game",    genericHandler(GameService::listGames));
         Spark.post(  "/game",    genericHandler(GameService::createGame));
         Spark.put(   "/game",    genericHandler(GameService::joinGame));
-
-        Spark.before((req, res) -> {
-            var method = req.requestMethod();
-            var path = req.pathInfo();
-            if ((method.equals("DELETE") && path.equals("/session"))
-             || (method.equals("GET")    && path.equals("/game"))
-             || (method.equals("POST")   && path.equals("/game"))
-             || (method.equals("PUT")    && path.equals("/game"))) {
-                // Authentication required
-                if (!(ServiceHelpers.isAuthorized(getBody(req)))) {
-                    Spark.halt(401, makeBody(ServiceHelpers.StockResponses.UNAUTHORIZED.value()));
-                }
-            }
-        });
 
         Spark.exception(Exception.class, (e, req, res) -> {
             res.status(500);
