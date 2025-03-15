@@ -1,6 +1,8 @@
 package dataaccess;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class DatabaseManager {
@@ -42,6 +44,27 @@ public class DatabaseManager {
             var conn = DriverManager.getConnection(CONNECTION_URL, USER, PASSWORD);
             try (var preparedStatement = conn.prepareStatement(statement)) {
                 preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
+        }
+        createTables();
+    }
+
+    private static void createTables() throws DataAccessException {
+        var createStatements = new ArrayList<>(List.of(
+                "CREATE TABLE IF NOT EXISTS AuthData ( " +
+                        "`id` int NOT NULL AUTO_INCREMENT, " +
+                        "`authToken` varchar(256) NOT NULL, " +
+                        "`username` varchar(256) NOT NULL, " +
+                        "PRIMARY KEY (`id`) )"
+        ));
+
+        try(var conn = DatabaseManager.getConnection()) {
+            for (var statement : createStatements) {
+                try (var preparedStatement = conn.prepareStatement(statement)) {
+                    preparedStatement.execute();
+                }
             }
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
