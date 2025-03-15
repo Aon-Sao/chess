@@ -4,6 +4,7 @@ import dataaccess.AuthDataAcc;
 import model.AuthDataRec;
 
 import java.util.UUID;
+import java.util.function.Function;
 
 public class ServiceHelpers {
     public static ServiceMessage clearAll() {
@@ -13,6 +14,11 @@ public class ServiceHelpers {
         return ServiceMessage.builder()
                 .setStatusCode(200)
                 .build();
+    }
+
+    // Optionally take an argument, which we discard, for similarity with other service functions
+    public static ServiceMessage clearAll(ServiceMessage msg) {
+        return clearAll();
     }
 
     public static String getUsernameByAuthToken(String authToken) {
@@ -35,12 +41,22 @@ public class ServiceHelpers {
     public static boolean isAuthorized(ServiceMessage msg) {
         for (var auth : AuthDataAcc.getInstance().listAuths()) {
             // We do not check if username matches, because it is not always provided
-            // authTokens should be unique anyways, which is sufficient
+            // authTokens should be unique anyway, which is sufficient
             if (auth.authToken().equals(msg.authToken())) {
                 return true;
             }
         }
         return false;
+    }
+
+    public static Function<ServiceMessage, ServiceMessage> authWrapper(Function<ServiceMessage, ServiceMessage> func) {
+        return (msg) -> {
+            if (isAuthorized(msg)) {
+                return func.apply(msg);
+            } else {
+                return StockResponses.UNAUTHORIZED.value();
+            }
+        };
     }
 
     public enum StockResponses {
