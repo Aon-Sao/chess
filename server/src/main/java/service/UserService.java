@@ -63,11 +63,13 @@ public class UserService {
 
 
     public static ServiceMessage logout(ServiceMessage request) {
-        var authData = AuthDataAcc.getInstance();
-        var authUUID = authData.findAuthByAuthToken(request.authToken());
-        authData.clearAuth(authUUID);
+        return ServiceHelpers.authWrapper((msg) -> {
+            var authData = AuthDataAcc.getInstance();
+            var authUUID = authData.findAuthByAuthToken(request.authToken());
+            authData.clearAuth(authUUID);
             return ServiceMessage.builder()
                     .setStatusCode(200)
                     .build();
+        }).apply(request);
     }
 }
