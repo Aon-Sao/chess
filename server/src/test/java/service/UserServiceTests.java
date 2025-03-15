@@ -80,6 +80,8 @@ public class UserServiceTests {
 
     @Test
     public void logoutExistingSession() {
+        // Start with clear db
+        ServiceHelpers.clearAll();
         var request = ServiceMessage.builder()
                 .setUsername("test-username")
                 .setPassword("test-password")
