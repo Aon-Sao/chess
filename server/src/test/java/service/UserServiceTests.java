@@ -1,11 +1,22 @@
 package service;
 
 import dataaccess.AuthDataAcc;
+import dataaccess.GameDataAcc;
 import dataaccess.UserDataAcc;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class UserServiceTests {
+
+    @BeforeEach
+    public void initEach() {
+        // Make sure all data stores are clean
+        AuthDataAcc.getInstance().clearAll();
+        GameDataAcc.getInstance().clearAll();
+        UserDataAcc.getInstance().clearAll();
+    }
+
     @Test
     public void registerUser() {
         var request = ServiceMessage.builder()
