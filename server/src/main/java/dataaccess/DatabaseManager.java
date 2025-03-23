@@ -69,6 +69,12 @@ public class DatabaseManager {
                         "`id` int NOT NULL AUTO_INCREMENT, " +
                         "`authToken` varchar(256) NOT NULL, " +
                         "`username` varchar(256) NOT NULL, " +
+                        "PRIMARY KEY (`id`) )",
+                "CREATE TABLE IF NOT EXISTS UserData ( " +
+                        "`id` int NOT NULL AUTO_INCREMENT, " +
+                        "`username` varchar(256) NOT NULL, " +
+                        "`password` varchar(256) NOT NULL, " +
+                        "`email` varchar(256) NOT NULL, " +
                         "PRIMARY KEY (`id`) )"
         ));
 
