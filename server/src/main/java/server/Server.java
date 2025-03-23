@@ -61,6 +61,9 @@ public class Server {
     }
 
     public void stop() {
+        try {
+            DatabaseConnectionPool.getInstance().shutdown();
+        } catch (DataAccessException ignored) { }
         Spark.stop();
         Spark.awaitStop();
     }
