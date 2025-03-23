@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dataaccess.DataAccessException;
+import dataaccess.DatabaseConnectionPool;
 import dataaccess.DatabaseManager;
 import service.GameService;
 import service.ServiceHelpers;
@@ -33,6 +34,14 @@ public class Server {
         Spark.put(   "/game",    genericHandler(GameService::joinGame));
 
         Spark.exception(Exception.class, (e, req, res) -> {
+            try {
+                DatabaseConnectionPool.getInstance().shutdown();
+            } catch (DataAccessException ignored) {
+                // At this point, we're already in exception-land.
+                // If the database connections don't shutdown cleanly,
+                // too bad. Programs that are bad-exiting should NOT
+                // flail as they die.
+            }
             res.status(500);
             res.body(makeBody(ServiceMessage.builder()
                     .setStatusCode(500)
@@ -42,7 +51,7 @@ public class Server {
         });
 
         try {
-            DatabaseManager.createDatabase();
+            DatabaseManager.init();
         } catch (DataAccessException e) {
             throw new RuntimeException(e.getMessage());
         }
