@@ -4,14 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
 public class DatabaseConnectionPool {
     private final String dbName;
     private final String username;
     private final String password;
     private final String url;
-    private final int maxSize;
     private ArrayList<Connection> freeConnections;
     private ArrayList<Connection> ownedConnections;
 
@@ -25,7 +24,7 @@ public class DatabaseConnectionPool {
         this.username = connPoolBuilder.username;
         this.password = connPoolBuilder.password;
         this.url = connPoolBuilder.url;
-        this.maxSize = connPoolBuilder.maxSize;
+        int maxSize = connPoolBuilder.maxSize;
 
         ownedConnections = new ArrayList<>();
         freeConnections = new ArrayList<>();
@@ -48,7 +47,11 @@ public class DatabaseConnectionPool {
         private int maxSize;
 
         private boolean validate() {
-            return !List.of(dbName, url, password, url, maxSize).contains(null);
+            return (dbName != null)
+                    && (username != null)
+                    && (password != null)
+                    && (url != null)
+                    && (maxSize != 0);
         }
 
         public DatabaseConnectionPool build() throws DataAccessException {
@@ -95,15 +98,20 @@ public class DatabaseConnectionPool {
     public Connection leaseConnection() throws DataAccessException {
         try {
             // Look for a valid, free connection
-            for (var conn : freeConnections) {
+            // Use of an iterator avoids concurrent modification exceptions
+            for (Iterator<Connection> iterator = freeConnections.iterator(); iterator.hasNext();) {
+                Connection conn = iterator.next();
                 if (conn.isValid(10)) {
                     ownedConnections.add(conn);
+                    freeConnections.remove(conn);
                     return conn;
                 } else {
                     // If we find an invalid connection, replace it
-                    freeConnections.addLast(createConnection());
+                    freeConnections.remove(conn);
+                    Connection newConn = createConnection();
+                    ownedConnections.add(newConn);
+                    return newConn;
                 }
-                freeConnections.remove(conn);
             }
         } catch (SQLException ignored) {
             // This exception should only be thrown where isValid is passed some
@@ -122,7 +130,9 @@ public class DatabaseConnectionPool {
         freeConnections.add(conn);
     }
     private Connection createConnection() throws DataAccessException {
-        try (var conn = DriverManager.getConnection(url, username, password)) {
+        try { // A try with resources here would close connections before I every use them;
+            var conn = DriverManager.getConnection(url, username, password);
+            conn.setCatalog(dbName);
             return conn;
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
