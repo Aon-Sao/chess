@@ -1,8 +1,12 @@
 package model;
 
 import chess.ChessGame;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
-public record GameDataRec(int gameID, String whiteUsername, String blackUsername, String gameName, ChessGame game) {
+import java.util.Map;
+
+public record GameDataRec(int gameID, String whiteUsername, String blackUsername, String gameName, ChessGame game) implements hasFromMap {
 
     public GameDataRec changeWhiteUsername(String whiteUsername) {
         return new GameDataRec(gameID, whiteUsername, blackUsername, gameName, game);
@@ -18,5 +22,16 @@ public record GameDataRec(int gameID, String whiteUsername, String blackUsername
 
     public GameDataRec copy() {
         return new GameDataRec(gameID, whiteUsername, blackUsername, gameName, game);
+    }
+
+    public JsonObject toJson() {
+        return (JsonObject) new Gson().toJsonTree(this);
+    }
+    public static GameDataRec fromJson(JsonObject json) {
+        return new Gson().fromJson(json.getAsString(), GameDataRec.class);
+    }
+
+    public GameDataRec fromMap(Map<String, Object> m) {
+        return new GameDataRec((int) m.get("gameID"), (String) m.get("whiteUsername"), (String) m.get("blackUsername"), (String) m.get("gameName"), (ChessGame) m.get("game"));
     }
 }
