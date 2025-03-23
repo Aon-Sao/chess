@@ -19,17 +19,17 @@ public class ServiceMessage {
     private final int statusCode;
     private final Collection<GameDataRec> games;
 
-    private ServiceMessage(Builder builder) {
-        this.username = builder.username;
-        this.password = builder.password;
-        this.email = builder.email;
-        this.authToken = builder.authToken;
-        this.message = builder.message;
-        this.playerColor = builder.playerColor;
-        this.gameName = builder.gameName;
-        this.gameID = builder.gameID;
-        this.statusCode = builder.statusCode;
-        this.games = builder.games;
+    private ServiceMessage(SMBuilder SMBuilder) {
+        this.username = SMBuilder.username;
+        this.password = SMBuilder.password;
+        this.email = SMBuilder.email;
+        this.authToken = SMBuilder.authToken;
+        this.message = SMBuilder.message;
+        this.playerColor = SMBuilder.playerColor;
+        this.gameName = SMBuilder.gameName;
+        this.gameID = SMBuilder.gameID;
+        this.statusCode = SMBuilder.statusCode;
+        this.games = SMBuilder.games;
     }
 
     public HashMap<String, String> toMap() {
@@ -69,8 +69,8 @@ public class ServiceMessage {
         return m;
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public static SMBuilder builder() {
+        return new SMBuilder();
     }
 
     public String username() {
@@ -113,7 +113,7 @@ public class ServiceMessage {
         return games;
     }
 
-    public static class Builder {
+    public static class SMBuilder {
         private String username = "";
         private String password = "";
         private String email = "";
@@ -129,52 +129,52 @@ public class ServiceMessage {
             return new ServiceMessage(this);
         }
 
-        public Builder setUsername(String username) {
+        public SMBuilder setUsername(String username) {
             this.username = username;
             return this;
         }
 
-        public Builder setPassword(String password) {
+        public SMBuilder setPassword(String password) {
             this.password = password;
             return this;
         }
 
-        public Builder setEmail(String email) {
+        public SMBuilder setEmail(String email) {
             this.email = email;
             return this;
         }
 
-        public Builder setAuthToken(String authToken) {
+        public SMBuilder setAuthToken(String authToken) {
             this.authToken = authToken;
             return this;
         }
 
-        public Builder setMessage(String message) {
+        public SMBuilder setMessage(String message) {
             this.message = message;
             return this;
         }
 
-        public Builder setPlayerColor(String playerColor) {
+        public SMBuilder setPlayerColor(String playerColor) {
             this.playerColor = playerColor;
             return this;
         }
 
-        public Builder setGameName(String gameName) {
+        public SMBuilder setGameName(String gameName) {
             this.gameName = gameName;
             return this;
         }
 
-        public Builder setGameID(int gameID) {
+        public SMBuilder setGameID(int gameID) {
             this.gameID = gameID;
             return this;
         }
 
-        public Builder setStatusCode(int statusCode) {
+        public SMBuilder setStatusCode(int statusCode) {
             this.statusCode = statusCode;
             return this;
         }
 
-        public Builder setGames(Collection<GameDataRec> games) {
+        public SMBuilder setGames(Collection<GameDataRec> games) {
             this.games = games;
             return this;
         }
