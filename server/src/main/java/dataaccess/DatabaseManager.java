@@ -64,7 +64,7 @@ public class DatabaseManager {
     }
 
     private static void createTables() throws DataAccessException {
-        var createStatements = new ArrayList<>(List.of(
+        var createStatements = new ArrayList<String>(List.of(
                 "CREATE TABLE IF NOT EXISTS AuthData ( " +
                         "`id` int NOT NULL AUTO_INCREMENT, " +
                         "`authToken` varchar(256) NOT NULL, " +
