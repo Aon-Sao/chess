@@ -41,10 +41,21 @@ public class DatabaseManager {
     static void createDatabase() throws DataAccessException {
         try {
             var statement = "CREATE DATABASE IF NOT EXISTS " + DATABASE_NAME;
-
             var conn = DriverManager.getConnection(CONNECTION_URL, USER, PASSWORD);
             try (var preparedStatement = conn.prepareStatement(statement)) {
                 preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
+        }
+    }
+
+    public static void dropDatabase() throws DataAccessException {
+        try {
+            var statement = "DROP DATABASE IF EXISTS " + DATABASE_NAME;
+            var conn = DriverManager.getConnection(CONNECTION_URL, USER, PASSWORD);
+            try (var prepareStatement = conn.prepareStatement(statement)) {
+                prepareStatement.execute();
             }
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
