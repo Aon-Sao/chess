@@ -142,7 +142,7 @@ public class DatabaseConnectionPool {
     public void shutdown() throws DataAccessException {
         try {
             for (var conn : ownedConnections) {
-                releaseConnection(conn);
+                conn.close();
             }
             for (var conn : freeConnections) {
                 conn.close();
