@@ -3,6 +3,7 @@ package model;
 import chess.ChessGame;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.Map;
 
@@ -32,6 +33,11 @@ public record GameDataRec(int gameID, String whiteUsername, String blackUsername
     }
 
     public GameDataRec fromMap(Map<String, Object> m) {
-        return new GameDataRec((int) m.get("gameID"), (String) m.get("whiteUsername"), (String) m.get("blackUsername"), (String) m.get("gameName"), (ChessGame) m.get("game"));
+        return new GameDataRec(
+                (int) m.get("gameID"),
+                (String) m.get("whiteUsername"),
+                (String) m.get("blackUsername"),
+                (String) m.get("gameName"),
+                new Gson().fromJson((String) m.get("game"), ChessGame.class));
     }
 }
