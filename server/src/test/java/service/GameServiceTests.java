@@ -181,7 +181,6 @@ public class GameServiceTests {
         var listResult = GameService.listGames(ServiceMessage.builder()
                 .setAuthToken(authToken)
                 .build());
-        System.out.println(listResult.games().stream().toList().getFirst().whiteUsername());
         Assertions.assertTrue(listResult.games().stream().toList().getFirst().whiteUsername().contains("test-username"));
         Assertions.assertNull(listResult.games().stream().toList().getFirst().blackUsername());
     }
