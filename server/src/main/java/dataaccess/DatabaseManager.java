@@ -53,13 +53,15 @@ public class DatabaseManager {
 
     public static void init() throws DataAccessException {
         createDatabase();
-        DatabaseConnectionPool.builder()
-                .setDBName(DATABASE_NAME)
-                .setUsername(USER)
-                .setPassword(PASSWORD)
-                .setUrl(CONNECTION_URL)
-                .setMaxSize(5)
-                .build();
+        if (DatabaseConnectionPool.getInstance() == null) {
+            DatabaseConnectionPool.builder()
+                    .setDBName(DATABASE_NAME)
+                    .setUsername(USER)
+                    .setPassword(PASSWORD)
+                    .setUrl(CONNECTION_URL)
+                    .setMaxSize(5)
+                    .build();
+        }
         createTables();
     }
 
@@ -75,6 +77,14 @@ public class DatabaseManager {
                         "`username` varchar(256) NOT NULL, " +
                         "`password` varchar(256) NOT NULL, " +
                         "`email` varchar(256) NOT NULL, " +
+                        "PRIMARY KEY (`id`) )",
+                "CREATE TABLE IF NOT EXISTS GameData ( " +
+                        "`id` int NOT NULL AUTO_INCREMENT, " +
+                        "`gameID` int NOT NULL, " +
+                        "`whiteUsername` varchar(256) NOT NULL, " +
+                        "`blackUsername` varchar(256) NOT NULL, " +
+                        "`gameName` varchar(256) NOT NULL, " +
+                        "`game` varchar(256) NOT NULL, " +
                         "PRIMARY KEY (`id`) )"
         ));
 
