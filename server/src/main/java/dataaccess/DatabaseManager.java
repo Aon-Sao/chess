@@ -95,7 +95,7 @@ public class DatabaseManager {
                         "`whiteUsername` varchar(256) NOT NULL, " +
                         "`blackUsername` varchar(256) NOT NULL, " +
                         "`gameName` varchar(256) NOT NULL, " +
-                        "`game` varchar(256) NOT NULL, " +
+                        "`game` text NOT NULL, " +
                         "PRIMARY KEY (`id`) )"
         ));
 
