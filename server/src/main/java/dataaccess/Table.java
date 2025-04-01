@@ -116,4 +116,19 @@ public class Table {
         return ret;
     }
 
+    public boolean drop() throws DataAccessException {
+        Connection conn = null;
+        var ret = false;
+        try {
+            conn = DatabaseConnectionPool.getInstance().leaseConnection();
+            var statement = conn.prepareStatement("DROP table " + name);
+            ret = statement.execute();
+        } catch (SQLException | DataAccessException e) {
+            throw new DataAccessException(e.getMessage());
+        } finally {
+            DatabaseConnectionPool.getInstance().releaseConnection(conn);
+        }
+        return ret;
+    }
+
 }
