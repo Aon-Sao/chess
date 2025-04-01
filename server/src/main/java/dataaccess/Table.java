@@ -11,29 +11,12 @@ import java.util.*;
 public class Table {
     private final String name;
     private final ArrayList<String> headers;
-    private final String creationString;
     private final hasFromMap record;
 
-    public Table(String name, hasFromMap record, String creationString) {
+    public Table(String name, hasFromMap record) {
         this.name = name;
         this.headers = new ArrayList<String>(Arrays.stream(record.getClass().getRecordComponents()).map(RecordComponent::getName).toList());
-        this.creationString = creationString;
         this.record = record;
-    }
-
-    public boolean createInDatabase() throws DataAccessException {
-        Connection conn = null;
-        boolean ret;
-        try {
-            conn = DatabaseConnectionPool.getInstance().leaseConnection();
-            // TODO: Horrible security risk
-            ret = conn.prepareStatement(this.creationString).execute();
-        } catch (SQLException | DataAccessException e) {
-            throw new DataAccessException(e.getMessage());
-        } finally {
-            DatabaseConnectionPool.getInstance().releaseConnection(conn);
-        }
-        return ret;
     }
 
     public boolean insert(List<String> data) throws DataAccessException {
@@ -41,7 +24,6 @@ public class Table {
         boolean ret;
         try {
             conn = DatabaseConnectionPool.getInstance().leaseConnection();
-            // TODO: String interpolation bad
             var statement = conn.prepareStatement(
                     "INSERT INTO " + name + " (" +
                             String.join(", ", headers) +
@@ -68,7 +50,6 @@ public class Table {
         var ret = new ArrayList<Object>();
         try {
             conn = DatabaseConnectionPool.getInstance().leaseConnection();
-            // TODO: String interpolation bad
             var statement = conn.prepareStatement("SELECT * FROM " + name);
             statement.execute();
             var results = statement.getResultSet();
@@ -105,7 +86,6 @@ public class Table {
         var ret = false;
         try {
             conn = DatabaseConnectionPool.getInstance().leaseConnection();
-            // TODO: String interpolation bad
             var statement = conn.prepareStatement("TRUNCATE " + name);
             ret = statement.execute();
         } catch (SQLException | DataAccessException e) {
