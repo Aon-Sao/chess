@@ -90,10 +90,10 @@ public class Table {
             var type = metaData.getColumnTypeName(i);
             var name = metaData.getColumnName(i);
             if (!name.equals("id")) { // Skip the id column
-                if (type.equals("INT")) {
-                    data.put(name, res.getInt(i));
-                } else if (type.equals("VARCHAR")) {
-                    data.put(name, res.getString(i));
+                switch (type) {
+                    case "INT" -> data.put(name, res.getInt(i));
+                    case "VARCHAR" -> data.put(name, res.getString(i));
+                    case "TEXT" -> data.put(name, res.getString(i));
                 }
             }
         }
