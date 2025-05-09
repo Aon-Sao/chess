@@ -9,7 +9,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e2911c74-d636-4446-8206-d2aaf6272b9e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/service/GameService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +69,7 @@
     "Application.Run Server.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.BishopMoveTests.executor": "Run",
+    "JUnit.CastlingTests and 1 more.executor": "Run",
     "JUnit.ChessGameTests and 4 more.executor": "Run",
     "JUnit.ChessPositionTests and 3 more.executor": "Run",
     "JUnit.Cumulative.executor": "Run",
@@ -114,13 +116,13 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "radical",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/lars/common/college/wi25/cs240/coursework/chess",
+    "last_opened_file_path": "/home/lars/common/college/wi25/cs240/coursework/chess/server/src/main/java/service",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
@@ -134,14 +136,19 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/server/src/main/java/service" />
+      <recent name="$PROJECT_DIR$/shared/src/main/java/model" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="service" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="service" />
       <recent name="chess" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.Phase 1">
+  <component name="RunManager" selected="JUnit.StandardAPITests">
     <configuration name="Cumulative" type="JUnit" factoryName="JUnit">
       <module name="server" />
       <option name="MAIN_CLASS_NAME" value="" />
@@ -152,6 +159,20 @@
         <pattern testClass="service.GameServiceTests" />
         <pattern testClass="service.ServiceHelpersTests" />
         <pattern testClass="service.UserServiceTests" />
+      </patterns>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="RunConfigurationTask" enabled="true" run_configuration_name="Phase 1" run_configuration_type="JUnit" />
+      </method>
+    </configuration>
+    <configuration name="Extra Credit (Phase 1)" type="JUnit" factoryName="JUnit">
+      <module name="shared" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="pattern" />
+      <patterns>
+        <pattern testClass="passoff.chess.extracredit.CastlingTests" />
+        <pattern testClass="passoff.chess.extracredit.EnPassantTests" />
       </patterns>
       <method v="2">
         <option name="Make" enabled="true" />
@@ -195,11 +216,33 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="StandardAPITests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoff.server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoff.server" />
+      <option name="MAIN_CLASS_NAME" value="passoff.server.StandardAPITests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
+      <item itemvalue="JUnit.Extra Credit (Phase 1)" />
       <item itemvalue="JUnit.Phase 1" />
       <item itemvalue="JUnit.Phase 0" />
       <item itemvalue="JUnit.Cumulative" />
+      <item itemvalue="JUnit.StandardAPITests" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.StandardAPITests" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -224,7 +267,7 @@
       <workItem from="1746032387905" duration="3009000" />
       <workItem from="1746138498441" duration="4828000" />
       <workItem from="1746320058962" duration="82000" />
-      <workItem from="1746734315485" duration="10285000" />
+      <workItem from="1746734315485" duration="12345000" />
     </task>
     <servers />
   </component>
