@@ -6,6 +6,9 @@ Whenever I instructed Intellij to run the BishopMoveTests using a clean copy of 
 
 Maven does not do the least surprising thing. I know we are learning maven later. I'll reconfigure not to use it.
 
+## Singleton DAOs
+According to my research, there are better approaches than making my DAO implementations use the singleton pattern. I could make everything static in the DAO, essentially using it just as a namespace; except I am required to have DAO interfaces, and this is not compatibile. I could use a dependency injection framework, like Spring; but I am not allowed to add dependencies. So I will leave my singleton patterns be and stop trying to refactor. I could hide the getInstance calls, but every public instance method would need to delegate to a private static method, which adds lots of boilerplate. Perhaps where the actual data stores (memory, DB) are static/single, it doesn't matter whether the DAO instances interacting with them are also single, so long as there is no monkey-patching.
+
 # TODO
 * Verify copy constructor for ChessBoard copies grid
 * Verify copy constructor for ChessPiece copies maxMoveDistance
