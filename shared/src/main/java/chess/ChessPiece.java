@@ -23,6 +23,10 @@ public class ChessPiece {
         determineMoveDirections();
     }
 
+    public ChessPiece(ChessPiece copy) {
+        this(copy.getTeamColor(), copy.getPieceType());
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(color, type, moveDirections, maxMoveDistance);

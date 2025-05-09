@@ -1,8 +1,6 @@
 package chess;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * A chessboard that can hold and rearrange chess pieces.
@@ -23,6 +21,17 @@ public class ChessBoard {
 
     public ChessBoard() {
         
+    }
+
+    public ChessBoard(ChessBoard copy) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                var copyVal = copy.grid[i][j];
+                if (copyVal != null) {
+                    this.grid[i][j] = new ChessPiece(copy.grid[i][j]);
+                }
+            }
+        }
     }
 
     @Override
@@ -160,6 +169,25 @@ public class ChessBoard {
         var row = position.getRow();
         var col = position.getColumn();
         return (row <= 8) && (row >= 1) && (col <= 8) && (col >= 1);
+    }
+
+    public Iterator<ChessPosition> positionIterator() {
+        Collection<ChessPosition> allPos = new ArrayList<>();
+        for (int i = 1; i <= grid.length; i++) {
+            for (int j = 1; j <= grid[0].length; j++) {
+                allPos.add(new ChessPosition(i, j));
+            }
+        }
+        return allPos.iterator();
+    }
+
+    public void movePiece(ChessPosition startPos, ChessPosition endPos) {
+        addPiece(endPos, getPiece(startPos));
+        removePiece(startPos);
+    }
+
+    public void removePiece(ChessPosition pos) {
+        addPiece(pos, null);
     }
 
 }

@@ -10,9 +10,8 @@
     <list default="true" id="e2911c74-d636-4446-8206-d2aaf6272b9e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shared/src/main/java/chess/ChessBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/chess/ChessBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/main/java/chess/ChessMove.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/chess/ChessMove.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/main/java/chess/ChessGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/chess/ChessGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shared/src/main/java/chess/ChessPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/chess/ChessPiece.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/main/java/chess/ChessPosition.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/chess/ChessPosition.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +48,7 @@
     <setting file="file://$PROJECT_DIR$/shared/src/main/java/model/UserDataRec.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="Security Analysis" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -71,6 +70,7 @@
     "Application.Run Server.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.BishopMoveTests.executor": "Run",
+    "JUnit.ChessGameTests and 4 more.executor": "Run",
     "JUnit.ChessPositionTests and 3 more.executor": "Run",
     "JUnit.Cumulative.executor": "Run",
     "JUnit.DatabaseTests.executor": "Run",
@@ -143,42 +143,7 @@
       <recent name="chess" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.Phase 0">
-    <configuration name="Run Server" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="server" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BishopMoveTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="shared" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="passoff.chess.piecemoves.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="passoff.chess.piecemoves" />
-      <option name="MAIN_CLASS_NAME" value="passoff.chess.piecemoves.BishopMoveTests" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="class" />
-      <patterns>
-        <pattern testClass="passoff.chess.ChessPositionTests" />
-        <pattern testClass="passoff.chess.ChessMoveTests" />
-        <pattern testClass="passoff.chess.piecemoves.KnightMoveTests" />
-        <pattern testClass="passoff.chess.piecemoves.KingMoveTests" />
-        <pattern testClass="passoff.chess.ChessBoardTests" />
-        <pattern testClass="passoff.chess.piecemoves.QueenMoveTests" />
-        <pattern testClass="passoff.chess.piecemoves.RookMoveTests" />
-        <pattern testClass="passoff.chess.ChessPieceTests" />
-        <pattern testClass="passoff.chess.piecemoves.BishopMoveTests" />
-        <pattern testClass="passoff.chess.piecemoves.PawnMoveTests" />
-      </patterns>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.Phase 1">
     <configuration name="Cumulative" type="JUnit" factoryName="JUnit">
       <module name="server" />
       <option name="MAIN_CLASS_NAME" value="" />
@@ -193,21 +158,6 @@
       <method v="2">
         <option name="Make" enabled="true" />
         <option name="RunConfigurationTask" enabled="true" run_configuration_name="Phase 1" run_configuration_type="JUnit" />
-      </method>
-    </configuration>
-    <configuration name="DatabaseTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="passoff.server.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="passoff.server" />
-      <option name="MAIN_CLASS_NAME" value="passoff.server.DatabaseTests" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="Phase 0" type="JUnit" factoryName="JUnit">
@@ -237,67 +187,21 @@
       <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="pattern" />
       <patterns>
+        <pattern testClass="passoff.chess.game.ChessGameTests" />
         <pattern testClass="passoff.chess.game.FullGameTest" />
         <pattern testClass="passoff.chess.game.GameStatusTests" />
         <pattern testClass="passoff.chess.game.MakeMoveTests" />
         <pattern testClass="passoff.chess.game.ValidMovesTests" />
-        <pattern testClass="passoff.chess.piece.*" />
-        <pattern testClass="passoff.chess.piece.BishopMoveTests" />
-        <pattern testClass="passoff.chess.piece.KingMoveTests" />
-        <pattern testClass="passoff.chess.piece.KnightMoveTests" />
-        <pattern testClass="passoff.chess.piece.PawnMoveTests" />
-        <pattern testClass="passoff.chess.piece.QueenMoveTests" />
-        <pattern testClass="passoff.chess.piece.RookMoveTests" />
-        <pattern testClass="passoff.chess.ChessBoardTests" />
-        <pattern testClass="passoff.chess.ChessMoveTests" />
-        <pattern testClass="passoff.chess.ChessPositionTests" />
       </patterns>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TmpTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TmpTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="passoff.server in server" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="passoff.server.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="passoff.server" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
-      <item itemvalue="Application.Run Server" />
-      <item itemvalue="JUnit.Phase 0" />
       <item itemvalue="JUnit.Phase 1" />
+      <item itemvalue="JUnit.Phase 0" />
       <item itemvalue="JUnit.Cumulative" />
-      <item itemvalue="JUnit.BishopMoveTests" />
-      <item itemvalue="JUnit.DatabaseTests" />
-      <item itemvalue="JUnit.passoff.server in server" />
-      <item itemvalue="JUnit.TmpTest" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JUnit.BishopMoveTests" />
-        <item itemvalue="JUnit.DatabaseTests" />
-        <item itemvalue="JUnit.passoff.server in server" />
-        <item itemvalue="JUnit.TmpTest" />
-        <item itemvalue="Application.Run Server" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -322,7 +226,7 @@
       <workItem from="1746032387905" duration="3009000" />
       <workItem from="1746138498441" duration="4828000" />
       <workItem from="1746320058962" duration="82000" />
-      <workItem from="1746734315485" duration="8299000" />
+      <workItem from="1746734315485" duration="9346000" />
     </task>
     <servers />
   </component>

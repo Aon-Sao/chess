@@ -7,4 +7,5 @@ Whenever I instructed Intellij to run the BishopMoveTests using a clean copy of 
 Maven does not do the least surprising thing. I know we are learning maven later. I'll reconfigure not to use it.
 
 # TODO
-* Write tests. Lots of tests.
+* Verify copy constructor for ChessBoard copies grid
+* Verify copy constructor for ChessPiece copies maxMoveDistance
