@@ -1,5 +1,9 @@
 package chess;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Objects;
+
 /**
  * A chessboard that can hold and rearrange chess pieces.
  * <p>
@@ -8,8 +12,30 @@ package chess;
  */
 public class ChessBoard {
 
+    private ChessPiece[][] grid = new ChessPiece[8][8];
+    public static final Map<Character, ChessPiece.PieceType> CHAR_TO_TYPE_MAP = Map.of(
+            'p', ChessPiece.PieceType.PAWN,
+            'n', ChessPiece.PieceType.KNIGHT,
+            'r', ChessPiece.PieceType.ROOK,
+            'q', ChessPiece.PieceType.QUEEN,
+            'k', ChessPiece.PieceType.KING,
+            'b', ChessPiece.PieceType.BISHOP);
+
     public ChessBoard() {
         
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(grid);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof ChessBoard that)) {
+            return false;
+        }
+        return Objects.deepEquals(grid, that.grid);
     }
 
     /**
@@ -19,7 +45,7 @@ public class ChessBoard {
      * @param piece    the piece to add
      */
     public void addPiece(ChessPosition position, ChessPiece piece) {
-        throw new RuntimeException("Not implemented");
+        grid[position.getColumn() - 1][position.getRow() - 1] = piece;
     }
 
     /**
@@ -30,7 +56,7 @@ public class ChessBoard {
      * position
      */
     public ChessPiece getPiece(ChessPosition position) {
-        throw new RuntimeException("Not implemented");
+        return grid[position.getColumn() - 1][position.getRow() - 1];
     }
 
     /**
@@ -38,6 +64,102 @@ public class ChessBoard {
      * (How the game of chess normally starts)
      */
     public void resetBoard() {
-        throw new RuntimeException("Not implemented");
+        var board = fromString("""
+                |r|n|b|q|k|b|n|r|
+                |p|p|p|p|p|p|p|p|
+                | | | | | | | | |
+                | | | | | | | | |
+                | | | | | | | | |
+                | | | | | | | | |
+                |P|P|P|P|P|P|P|P|
+                |R|N|B|Q|K|B|N|R|
+                """);
+        var tmp = board.grid;
+        board.grid = null;
+        this.grid = tmp;
     }
+
+    private static ChessBoard fromString(String boardText) {
+        var board = new ChessBoard();
+        int row = 8;
+        int column = 1;
+        for (var c : boardText.toCharArray()) {
+            switch (c) {
+                case '\n' -> {
+                    column = 1;
+                    row--;
+                }
+                case ' ' -> column++;
+                case '|' -> {
+                }
+                default -> {
+                    ChessGame.TeamColor color = Character.isLowerCase(c) ? ChessGame.TeamColor.BLACK : ChessGame.TeamColor.WHITE;
+                    var type = CHAR_TO_TYPE_MAP.get(Character.toLowerCase(c));
+                    var position = new ChessPosition(row, column);
+                    var piece = new ChessPiece(color, type);
+                    board.addPiece(position, piece);
+                    column++;
+                }
+            }
+        }
+        return board;
+    }
+
+    public String toString() {
+        var boardText = """
+                | | | | | | | | |
+                | | | | | | | | |
+                | | | | | | | | |
+                | | | | | | | | |
+                | | | | | | | | |
+                | | | | | | | | |
+                | | | | | | | | |
+                | | | | | | | | |
+                """;
+        int row = 8;
+        int column = 1;
+        var boardArr = boardText.toCharArray();
+        int i = 0;
+        for (var c : boardArr) {
+            switch (c) {
+                case '\n' -> {
+                    column = 1;
+                    row--;
+                }
+                case ' ' -> {
+                    var piece = getPiece(new ChessPosition(row, column));
+                    if (piece != null) {
+                        boardArr[i] = piece.toString().toCharArray()[0];
+                    } else {
+                        boardArr[i] = ' ';
+                    }
+                    column++;
+                }
+                case '|' -> {
+                }
+                default -> column++;
+            }
+            i++;
+        }
+        var s = new StringBuilder();
+        for (var c : boardArr) {
+            s.append(c);
+        }
+        return s.toString();
+    }
+
+    public boolean notEmptyPos(ChessPosition position) {
+        return !isEmptyPos(position);
+    }
+
+    public boolean isEmptyPos(ChessPosition position) {
+        return getPiece(position) == null;
+    }
+
+    public boolean isInBoundsPos(ChessPosition position) {
+        var row = position.getRow();
+        var col = position.getColumn();
+        return (row <= 8) && (row >= 1) && (col <= 8) && (col >= 1);
+    }
+
 }
