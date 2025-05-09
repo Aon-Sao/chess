@@ -1,6 +1,7 @@
 package service;
 
 import dataaccess.AuthDataAcc;
+import dataaccess.DataAccessException;
 import model.AuthDataRec;
 
 import java.util.UUID;
@@ -47,6 +48,16 @@ public class ServiceHelpers {
             }
         }
         return false;
+    }
+
+    public static Function<ServiceMessage, ServiceMessage> exceptionWrapper(LambdasCanThrow<ServiceMessage, ServiceMessage> func) {
+        return (msg) -> {
+            try {
+                return (ServiceMessage) func.apply(msg);
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        };
     }
 
     public static Function<ServiceMessage, ServiceMessage> authWrapper(Function<ServiceMessage, ServiceMessage> func) {
