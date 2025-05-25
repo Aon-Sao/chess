@@ -33,7 +33,7 @@ public class GameService {
     public static ServiceMessage createGame(ServiceMessage msg) {
         return ServiceHelpers.authWrapper((request) -> {
             var name = request.gameName();
-            if (name.isEmpty()) {
+            if (name == null || name.isEmpty()) {
                 return ServiceHelpers.StockResponses.BAD_REQUEST.value();
             }
             var id = makeGameID();
