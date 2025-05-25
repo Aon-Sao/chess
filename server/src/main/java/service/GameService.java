@@ -1,6 +1,7 @@
 package service;
 
 import chess.ChessGame;
+import dataaccess.DataAccessException;
 import dataaccess.GameDAOMem;
 import model.GameDataRec;
 
@@ -30,7 +31,7 @@ public class GameService {
         new GameDAOMem().clearAll();
     }
 
-    public static ServiceMessage createGame(ServiceMessage msg) {
+    public static ServiceMessage createGame(ServiceMessage msg) throws DataAccessException {
         return ServiceHelpers.authWrapper((request) -> {
             var name = request.gameName();
             if (name == null || name.isEmpty()) {
@@ -50,7 +51,7 @@ public class GameService {
         }).apply((msg));
     }
 
-    public static ServiceMessage listGames(ServiceMessage msg) {
+    public static ServiceMessage listGames(ServiceMessage msg) throws DataAccessException {
         return ServiceHelpers.authWrapper((request) -> {
             var games = new GameDAOMem().listGames();
             games = new ArrayList<>(games.stream().map(GameDataRec::copy).toList()); // Copy
@@ -65,11 +66,18 @@ public class GameService {
         }).apply(msg);
     }
 
-    public static ServiceMessage joinGame(ServiceMessage request) {
-        return ServiceHelpers.authWrapper(ServiceHelpers.exceptionWrapper((msg) -> {
+    public static ServiceMessage joinGame(ServiceMessage request) throws DataAccessException {
+        return ServiceHelpers.authWrapper((msg) -> {
             String username = ServiceHelpers.getUsernameByAuthToken(request.authToken());
             var gameData = new GameDAOMem();
-            var game = gameData.getGame(request.gameID());
+
+            // There's probably a better way, I think it is called Optional
+            GameDataRec game;
+            try {
+                game = gameData.getGame(request.gameID());
+            } catch (DataAccessException e) {
+                game = null;
+            }
 
             if ((request.gameID() == 0)
                     || (game == null)
@@ -87,6 +95,6 @@ public class GameService {
             return ServiceMessage.builder()
                     .setStatusCode(200)
                     .build();
-        })).apply(request);
+        }).apply(request);
     }
 }

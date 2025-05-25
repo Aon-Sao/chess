@@ -1,6 +1,7 @@
 package service;
 
 import dataaccess.AuthDAOMem;
+import dataaccess.DataAccessException;
 import dataaccess.GameDAOMem;
 import dataaccess.UserDAOMem;
 import org.junit.jupiter.api.Assertions;
@@ -18,7 +19,7 @@ public class GameServiceTests {
     }
 
     @Test
-    public void createGame200() {
+    public void createGame200() throws DataAccessException {
         var loginResult = UserService.register(ServiceMessage.builder()
                 .setUsername("test-username")
                 .setPassword("test-password")
@@ -36,7 +37,7 @@ public class GameServiceTests {
     }
 
     @Test
-    public void createGameBadAuth() {
+    public void createGameBadAuth() throws DataAccessException {
         var authToken = "badAuthToken";
         var createResult = GameService.createGame(ServiceMessage.builder()
                 .setAuthToken(authToken)
@@ -48,7 +49,7 @@ public class GameServiceTests {
     }
 
     @Test
-    public void listGames200() {
+    public void listGames200() throws DataAccessException {
         var loginResult = UserService.register(ServiceMessage.builder()
                 .setUsername("test-username")
                 .setPassword("test-password")
@@ -85,7 +86,7 @@ public class GameServiceTests {
     }
 
     @Test
-    public void listGamesBadAuth() {
+    public void listGamesBadAuth() throws DataAccessException {
         var authToken = "badAuthToken";
         var listResult = GameService.listGames(ServiceMessage.builder()
                 .setAuthToken(authToken)
@@ -96,7 +97,7 @@ public class GameServiceTests {
     }
 
     @Test
-    public void joinGame200() {
+    public void joinGame200() throws DataAccessException {
         var loginResult = UserService.register(ServiceMessage.builder()
                 .setUsername("test-username")
                 .setPassword("test-password")
@@ -124,7 +125,7 @@ public class GameServiceTests {
     }
 
     @Test
-    public void joinGame400() {
+    public void joinGame400() throws DataAccessException {
         var loginResult = UserService.register(ServiceMessage.builder()
                 .setUsername("test-username")
                 .setPassword("test-password")
@@ -152,7 +153,7 @@ public class GameServiceTests {
     }
 
     @Test
-    public void joinGame403() {
+    public void joinGame403() throws DataAccessException {
         var loginResult = UserService.register(ServiceMessage.builder()
                 .setUsername("test-username")
                 .setPassword("test-password")

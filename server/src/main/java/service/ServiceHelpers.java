@@ -50,7 +50,7 @@ public class ServiceHelpers {
         return false;
     }
 
-    public static Function<ServiceMessage, ServiceMessage> exceptionWrapper(LambdasCanThrow<ServiceMessage, ServiceMessage> func) {
+    public static LambdasCanThrow<ServiceMessage, ServiceMessage> exceptionWrapper(LambdasCanThrow<ServiceMessage, ServiceMessage> func) {
         return (msg) -> {
             try {
                 return (ServiceMessage) func.apply(msg);
@@ -60,7 +60,7 @@ public class ServiceHelpers {
         };
     }
 
-    public static Function<ServiceMessage, ServiceMessage> authWrapper(Function<ServiceMessage, ServiceMessage> func) {
+    public static LambdasCanThrow<ServiceMessage, ServiceMessage> authWrapper(LambdasCanThrow<ServiceMessage, ServiceMessage> func) {
         return (msg) -> {
             if (isAuthorized(msg)) {
                 return func.apply(msg);

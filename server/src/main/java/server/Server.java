@@ -40,7 +40,7 @@ public class Server {
         Spark.awaitStop();
     }
 
-    private Route genericHandler(Function<ServiceMessage, ServiceMessage> func) {
+    private Route genericHandler(LambdasCanThrow<ServiceMessage, ServiceMessage> func) {
         return (req, res) -> {
             var result = func.apply(getBody(req));
             res.status(result.statusCode());

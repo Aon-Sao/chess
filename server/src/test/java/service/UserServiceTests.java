@@ -1,6 +1,7 @@
 package service;
 
 import dataaccess.AuthDAOMem;
+import dataaccess.DataAccessException;
 import dataaccess.GameDAOMem;
 import dataaccess.UserDAOMem;
 import model.AuthDataRec;
@@ -61,7 +62,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void loginCorrect() {
+    public void loginCorrect() throws DataAccessException {
         var request = ServiceMessage.builder()
                 .setUsername("test-username")
                 .setPassword("test-password")
@@ -78,7 +79,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void loginIncorrect() {
+    public void loginIncorrect() throws DataAccessException {
         var request = ServiceMessage.builder()
                 .setUsername("test-username")
                 .setPassword("test-password")
@@ -97,7 +98,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void logoutExistingSession() {
+    public void logoutExistingSession() throws DataAccessException {
         // Start with clear db
         ServiceHelpers.clearAll();
         var request = ServiceMessage.builder()
@@ -114,7 +115,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void logoutBadToken() {
+    public void logoutBadToken() throws DataAccessException {
         var result = UserService.logout(ServiceMessage.builder()
                 .setAuthToken("bad-auth-token")
                 .build());

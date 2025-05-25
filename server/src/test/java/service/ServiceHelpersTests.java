@@ -1,6 +1,7 @@
 package service;
 
 import dataaccess.AuthDAOMem;
+import dataaccess.DataAccessException;
 import dataaccess.GameDAOMem;
 import dataaccess.UserDAOMem;
 import org.junit.jupiter.api.Assertions;
@@ -18,7 +19,7 @@ public class ServiceHelpersTests {
     }
 
     @Test
-    public void testClearAll() {
+    public void testClearAll() throws DataAccessException {
         var userData = new UserDAOMem();
         var authData = new AuthDAOMem();
         var gameData = new GameDAOMem();

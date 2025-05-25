@@ -1,6 +1,7 @@
 package service;
 
 import dataaccess.AuthDAOMem;
+import dataaccess.DataAccessException;
 import dataaccess.UserDAOMem;
 import model.UserDataRec;
 
@@ -62,13 +63,13 @@ public class UserService {
     }
 
 
-    public static ServiceMessage logout(ServiceMessage request) {
-        return ServiceHelpers.authWrapper(ServiceHelpers.exceptionWrapper((msg) -> {
+    public static ServiceMessage logout(ServiceMessage request) throws DataAccessException {
+        return ServiceHelpers.authWrapper((msg) -> {
             var authData = new AuthDAOMem();
             authData.removeAuth(request.authToken());
             return ServiceMessage.builder()
                     .setStatusCode(200)
                     .build();
-        })).apply(request);
+        }).apply(request);
     }
 }
