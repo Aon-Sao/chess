@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UserDAOMem implements UserDAO {
 
-    private static List<UserDataRec> users;
+    private static List<UserDataRec> users = new ArrayList<>();
 
     private static UserDataRec findUser(String username) throws DataAccessException {
         for (var user : users) {
@@ -41,6 +41,6 @@ public class UserDAOMem implements UserDAO {
 
     @Override
     public void clearAll() {
-        users = List.of();
+        users = new ArrayList<>();
     }
 }

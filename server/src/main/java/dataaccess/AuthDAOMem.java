@@ -8,7 +8,7 @@ import java.util.List;
 
 public class AuthDAOMem implements AuthDAO {
 
-    private static List<AuthDataRec> auths;
+    private static List<AuthDataRec> auths = new ArrayList<>();
 
     private static AuthDataRec findAuth(String authToken) throws DataAccessException {
         for (var auth : auths) {
@@ -45,6 +45,6 @@ public class AuthDAOMem implements AuthDAO {
 
     @Override
     public void clearAll() {
-        auths = List.of();
+        auths = new ArrayList<>();
     }
 }

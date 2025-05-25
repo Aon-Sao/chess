@@ -9,7 +9,7 @@ import java.util.List;
 
 public class GameDAOMem implements GameDAO {
 
-    private static List<GameDataRec> games;
+    private static List<GameDataRec> games = new ArrayList<>();
 
     private static GameDataRec findGame(int gameID) throws DataAccessException {
         for (var game : games) {
@@ -58,6 +58,6 @@ public class GameDAOMem implements GameDAO {
 
     @Override
     public void clearAll() {
-        games = List.of();
+        games = new ArrayList<>();
     }
 }
