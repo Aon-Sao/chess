@@ -1,7 +1,7 @@
 package service;
 
-import dataaccess.AuthDataAcc;
-import dataaccess.UserDataAcc;
+import dataaccess.AuthDAOMem;
+import dataaccess.UserDAOMem;
 import model.UserDataRec;
 
 import static service.ServiceHelpers.authorize;
@@ -9,7 +9,7 @@ import static service.ServiceHelpers.authorize;
 public class UserService {
 
     public static void clear() {
-        UserDataAcc.getInstance().clearAll();
+        new UserDAOMem().clearAll();
     }
 
     public static ServiceMessage register(ServiceMessage request) {
@@ -23,7 +23,7 @@ public class UserService {
             return ServiceHelpers.StockResponses.BAD_REQUEST.value();
         }
 
-        var userData = UserDataAcc.getInstance();
+        var userData = new UserDAOMem();
         for (var user : userData.listUsers()) {
             if (user.username().equals(username)
                 || user.email().equals(email)) {
@@ -45,7 +45,7 @@ public class UserService {
         var username = request.username();
         var password = request.password();
 
-        var userData = UserDataAcc.getInstance();
+        var userData = new UserDAOMem();
         for (var user : userData.listUsers()) {
             if (user.username().equals(username)
             && user.password().equals(password)) {
@@ -63,13 +63,12 @@ public class UserService {
 
 
     public static ServiceMessage logout(ServiceMessage request) {
-        return ServiceHelpers.authWrapper((msg) -> {
-            var authData = AuthDataAcc.getInstance();
-            var authUUID = authData.findAuthByAuthToken(request.authToken());
-            authData.clearAuth(authUUID);
+        return ServiceHelpers.authWrapper(ServiceHelpers.exceptionWrapper((msg) -> {
+            var authData = new AuthDAOMem();
+            authData.removeAuth(request.authToken());
             return ServiceMessage.builder()
                     .setStatusCode(200)
                     .build();
-        }).apply(request);
+        })).apply(request);
     }
 }
