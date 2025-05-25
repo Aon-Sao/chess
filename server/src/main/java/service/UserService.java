@@ -46,6 +46,11 @@ public class UserService {
         var username = request.username();
         var password = request.password();
 
+        if ((username == null || username.isEmpty())
+                || (password == null || password.isEmpty())) {
+            return ServiceHelpers.StockResponses.BAD_REQUEST.value();
+        }
+
         var userData = new UserDAOMem();
         for (var user : userData.listUsers()) {
             if (user.username().equals(username)
