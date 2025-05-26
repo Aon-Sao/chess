@@ -20,10 +20,6 @@ public class ServiceHelpersTests {
 
     @Test
     public void testClearAll() throws DataAccessException {
-        var userData = new UserDAOMem();
-        var authData = new AuthDAOMem();
-        var gameData = new GameDAOMem();
-
         // Create a user
         UserService.register(ServiceMessage.builder()
                 .setUsername("test-username")
@@ -40,8 +36,8 @@ public class ServiceHelpersTests {
         ServiceHelpers.clearAll();
 
         // Should be empty
-        Assertions.assertTrue(userData.listUsers().isEmpty());
-        Assertions.assertTrue(authData.listAuths().isEmpty());
-        Assertions.assertTrue(gameData.listGames().isEmpty());
+        Assertions.assertTrue(new UserDAOMem().listUsers().isEmpty());
+        Assertions.assertTrue(new AuthDAOMem().listAuths().isEmpty());
+        Assertions.assertTrue(new GameDAOMem().listGames().isEmpty());
     }
 }
