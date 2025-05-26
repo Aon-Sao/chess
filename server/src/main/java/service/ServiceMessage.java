@@ -4,7 +4,6 @@ package service;
 import model.GameDataRec;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 
 public class ServiceMessage {
@@ -17,7 +16,7 @@ public class ServiceMessage {
     private final String gameName;
     private final int gameID;
     private final int statusCode;
-    private final Collection<GameDataRec> games;
+    private final ArrayList<GameDataRec> games;
 
     private ServiceMessage(SMBuilder SMBuilder) {
         this.username = SMBuilder.username;
@@ -109,7 +108,7 @@ public class ServiceMessage {
         return statusCode;
     }
 
-    public Collection<GameDataRec> games() {
+    public ArrayList<GameDataRec> games() {
         return games;
     }
 
@@ -123,7 +122,7 @@ public class ServiceMessage {
         private String gameName = "";
         private int gameID = 0;
         private int statusCode = 0;
-        private Collection<GameDataRec> games = new ArrayList<>();
+        private ArrayList<GameDataRec> games = new ArrayList<>();
 
         public ServiceMessage build() {
             return new ServiceMessage(this);
@@ -174,7 +173,7 @@ public class ServiceMessage {
             return this;
         }
 
-        public SMBuilder setGames(Collection<GameDataRec> games) {
+        public SMBuilder setGames(ArrayList<GameDataRec> games) {
             this.games = games;
             return this;
         }

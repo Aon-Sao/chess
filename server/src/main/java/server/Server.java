@@ -8,7 +8,6 @@ import spark.*;
 import service.*;
 
 import java.util.Map;
-import java.util.function.Function;
 
 public class Server {
 

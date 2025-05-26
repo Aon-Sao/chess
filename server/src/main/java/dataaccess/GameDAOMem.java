@@ -4,7 +4,6 @@ import chess.ChessGame;
 import model.GameDataRec;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class GameDAOMem implements GameDAO {
@@ -35,7 +34,7 @@ public class GameDAOMem implements GameDAO {
     }
     
     @Override
-    public Collection<GameDataRec> listGames() {
+    public ArrayList<GameDataRec> listGames() {
         return new ArrayList<>(games);
     }
 

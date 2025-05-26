@@ -53,7 +53,7 @@ public class GameService {
 
     public static ServiceMessage listGames(ServiceMessage msg) throws DataAccessException {
         return ServiceHelpers.authWrapper((request) -> {
-            var games = new GameDAOMem().listGames();
+            ArrayList<GameDataRec> games = new GameDAOMem().listGames();
             games = new ArrayList<>(games.stream().map(GameDataRec::copy).toList()); // Copy
             // Strip game instance from records to avoid including the board in the response
             // Game board state should not be exposed by this method
