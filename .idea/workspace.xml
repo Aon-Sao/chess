@@ -8,10 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2911c74-d636-4446-8206-d2aaf6272b9e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notes.md" beforeDir="false" afterPath="$PROJECT_DIR$/notes.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/service/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/service/ServiceHelpers.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/service/ServiceHelpers.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +46,7 @@
     <setting file="file://$PROJECT_DIR$/shared/src/main/java/model/UserDataRec.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="Security Analysis" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -69,6 +67,7 @@
     "Application.Main.executor": "Run",
     "Application.Run Server.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.All in server.executor": "Run",
     "JUnit.BishopMoveTests.executor": "Run",
     "JUnit.CastlingTests and 1 more.executor": "Run",
     "JUnit.ChessGameTests and 4 more.executor": "Run",
@@ -78,7 +77,10 @@
     "JUnit.DatabaseTests.persistenceTest.executor": "Run",
     "JUnit.EqualsTestingUtility and 10 more.executor": "Run",
     "JUnit.FullGameTest and 13 more.executor": "Run",
+    "JUnit.GameDAOTests and 4 more.executor": "Run",
+    "JUnit.GameDAOTests.executor": "Run",
     "JUnit.GameServiceTests.executor": "Run",
+    "JUnit.GameServiceTests.joinGame403.executor": "Debug",
     "JUnit.GameStatusTests.blackCheck.executor": "Run",
     "JUnit.GameStatusTests.checkmateNotStalemate.executor": "Run",
     "JUnit.MakeMoveTests.invalidMakeMoveInCheck.executor": "Run",
@@ -101,21 +103,22 @@
     "JUnit.TmpTest.printGameJson.executor": "Run",
     "JUnit.UserServiceTests and 1 more.executor": "Run",
     "JUnit.UserServiceTests.executor": "Run",
-    "JUnit.UserServiceTests.loginCorrect.executor": "Run",
-    "JUnit.UserServiceTests.logoutExistingSession.executor": "Run",
+    "JUnit.UserServiceTests.loginCorrect.executor": "Debug",
+    "JUnit.UserServiceTests.logoutExistingSession.executor": "Debug",
     "JUnit.UserServiceTests.registerDuplicateUser.executor": "Run",
     "JUnit.UserServiceTests.registerNeedsEmail.executor": "Run",
-    "JUnit.UserServiceTests.registerUser.executor": "Run",
+    "JUnit.UserServiceTests.registerUser.executor": "Debug",
     "JUnit.ValidMovesTests.rookPinnedToKing.executor": "Run",
     "JUnit.passoff.chess in shared.executor": "Run",
     "JUnit.passoff.server in server.executor": "Run",
     "JUnit.passoff.server.* and 1 more.executor": "Run",
+    "JUnit.service in server.executor": "Run",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "radical",
+    "git-widget-placeholder": "update-tests",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/lars/common/college/wi25/cs240/coursework/chess/server/src/main/java/service",
     "node.js.detected.package.eslint": "true",
@@ -127,7 +130,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "editor.preferences.completion",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -149,21 +152,19 @@
       <recent name="chess" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.StandardAPITests">
-    <configuration name="Cumulative" type="JUnit" factoryName="JUnit">
+  <component name="RunManager" selected="Compound.Cumulative">
+    <configuration name="Cumulative" type="CompoundRunConfigurationType">
+      <toRun name="Phase 0" type="JUnit" />
+      <toRun name="Phase 1" type="JUnit" />
+      <toRun name="Phase 3" type="JUnit" />
+      <method v="2" />
+    </configuration>
+    <configuration name="All in server" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="pattern" />
-      <patterns>
-        <pattern testClass="passoff.server.StandardAPITests" />
-        <pattern testClass="service.GameServiceTests" />
-        <pattern testClass="service.ServiceHelpersTests" />
-        <pattern testClass="service.UserServiceTests" />
-      </patterns>
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
-        <option name="RunConfigurationTask" enabled="true" run_configuration_name="Phase 1" run_configuration_type="JUnit" />
       </method>
     </configuration>
     <configuration name="Extra Credit (Phase 1)" type="JUnit" factoryName="JUnit">
@@ -178,6 +179,21 @@
       <method v="2">
         <option name="Make" enabled="true" />
         <option name="RunConfigurationTask" enabled="true" run_configuration_name="Phase 1" run_configuration_type="JUnit" />
+      </method>
+    </configuration>
+    <configuration name="GameServiceTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.GameServiceTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="Phase 0" type="JUnit" factoryName="JUnit">
@@ -217,6 +233,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Phase 3" type="JUnit" factoryName="JUnit">
+      <module name="server" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="pattern" />
+      <patterns>
+        <pattern testClass="dataaccess.GameDAOTests" />
+        <pattern testClass="passoff.server.StandardAPITests" />
+        <pattern testClass="service.GameServiceTests" />
+        <pattern testClass="service.ServiceHelpersTests" />
+        <pattern testClass="service.UserServiceTests" />
+      </patterns>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="StandardAPITests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
@@ -232,15 +264,38 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UserServiceTests.logoutExistingSession" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.UserServiceTests" />
+      <option name="METHOD_NAME" value="logoutExistingSession" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
-      <item itemvalue="JUnit.Extra Credit (Phase 1)" />
-      <item itemvalue="JUnit.Phase 1" />
+      <item itemvalue="Compound.Cumulative" />
       <item itemvalue="JUnit.Phase 0" />
-      <item itemvalue="JUnit.Cumulative" />
+      <item itemvalue="JUnit.Phase 1" />
+      <item itemvalue="JUnit.Phase 3" />
+      <item itemvalue="JUnit.Extra Credit (Phase 1)" />
+      <item itemvalue="JUnit.GameServiceTests" />
+      <item itemvalue="JUnit.UserServiceTests.logoutExistingSession" />
+      <item itemvalue="JUnit.All in server" />
       <item itemvalue="JUnit.StandardAPITests" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.GameServiceTests" />
+        <item itemvalue="JUnit.UserServiceTests.logoutExistingSession" />
+        <item itemvalue="JUnit.All in server" />
         <item itemvalue="JUnit.StandardAPITests" />
       </list>
     </recent_temporary>
@@ -248,8 +303,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.25410.129" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-IU-251.25410.129" />
       </set>
     </attachedChunks>
   </component>
@@ -268,7 +323,12 @@
       <workItem from="1746032387905" duration="3009000" />
       <workItem from="1746138498441" duration="4828000" />
       <workItem from="1746320058962" duration="82000" />
-      <workItem from="1746734315485" duration="21677000" />
+      <workItem from="1746734315485" duration="24217000" />
+      <workItem from="1748131671376" duration="40000" />
+      <workItem from="1748131720069" duration="9047000" />
+      <workItem from="1748141361976" duration="3280000" />
+      <workItem from="1748287348689" duration="6609000" />
+      <workItem from="1748293966753" duration="5498000" />
     </task>
     <servers />
   </component>
@@ -288,5 +348,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
