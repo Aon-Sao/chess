@@ -8,15 +8,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2911c74-d636-4446-8206-d2aaf6272b9e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/dataaccess/DatabaseManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/resources/db.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/starter-code/3-web-api/passoff/server/DatabaseTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/a46c23ed-85f3-4c5e-ab99-bcf3efbcbad1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a46c23ed-85f3-4c5e-ab99-bcf3efbcbad1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/test/java/passoff" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -353,7 +347,7 @@
       <workItem from="1748141361976" duration="3280000" />
       <workItem from="1748287348689" duration="6609000" />
       <workItem from="1748293966753" duration="9084000" />
-      <workItem from="1749480441940" duration="5815000" />
+      <workItem from="1749480441940" duration="7487000" />
     </task>
     <servers />
   </component>
