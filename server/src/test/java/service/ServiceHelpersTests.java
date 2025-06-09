@@ -1,9 +1,6 @@
 package service;
 
-import dataaccess.AuthDAOMem;
-import dataaccess.DataAccessException;
-import dataaccess.GameDAOMem;
-import dataaccess.UserDAOMem;
+import dataaccess.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,11 +8,11 @@ import org.junit.jupiter.api.Test;
 public class ServiceHelpersTests {
 
     @BeforeEach
-    public void initEach() {
+    public void initEach() throws DataAccessException {
         // Make sure all data stores are clean
         new AuthDAOMem().clearAll();
         new GameDAOMem().clearAll();
-        new UserDAOMem().clearAll();
+        new UserDAODB().clearAll();
     }
 
     @Test
@@ -36,7 +33,7 @@ public class ServiceHelpersTests {
         ServiceHelpers.clearAll();
 
         // Should be empty
-        Assertions.assertTrue(new UserDAOMem().listUsers().isEmpty());
+        Assertions.assertTrue(new UserDAODB().listUsers().isEmpty());
         Assertions.assertTrue(new AuthDAOMem().listAuths().isEmpty());
         Assertions.assertTrue(new GameDAOMem().listGames().isEmpty());
     }

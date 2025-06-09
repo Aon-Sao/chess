@@ -1,9 +1,6 @@
 package service;
 
-import dataaccess.AuthDAOMem;
-import dataaccess.DataAccessException;
-import dataaccess.GameDAOMem;
-import dataaccess.UserDAOMem;
+import dataaccess.*;
 import model.AuthDataRec;
 import model.UserDataRec;
 import org.junit.jupiter.api.Assertions;
@@ -13,16 +10,16 @@ import org.junit.jupiter.api.Test;
 public class UserServiceTests {
 
     @BeforeEach
-    public void initEach() {
+    public void initEach() throws DataAccessException {
         // Make sure all data stores are clean
         new AuthDAOMem().clearAll();
         new GameDAOMem().clearAll();
-        new UserDAOMem().clearAll();
+        new UserDAODB().clearAll();
     }
 
     @Test
-    public void registerUserCorrectly() {
-        var userData = new UserDAOMem();
+    public void registerUserCorrectly() throws DataAccessException {
+        var userData = new UserDAODB();
         var authData = new AuthDAOMem();
         var user1 = new UserDataRec(
                 "test-username-1",
@@ -42,8 +39,8 @@ public class UserServiceTests {
     }
 
     @Test
-    public void registerDuplicateUsername() {
-        var userData = new UserDAOMem();
+    public void registerDuplicateUsername() throws DataAccessException {
+        var userData = new UserDAODB();
         var authData = new AuthDAOMem();
         var user1 = new UserDataRec(
                 "test-username-1",
@@ -78,8 +75,8 @@ public class UserServiceTests {
     }
 
     @Test
-    public void registerDuplicatePassword() {
-        var userData = new UserDAOMem();
+    public void registerDuplicatePassword() throws DataAccessException {
+        var userData = new UserDAODB();
         var authData = new AuthDAOMem();
         var user1 = new UserDataRec(
                 "test-username-1",
@@ -114,8 +111,8 @@ public class UserServiceTests {
     }
 
     @Test
-    public void registerDuplicateEmail() {
-        var userData = new UserDAOMem();
+    public void registerDuplicateEmail() throws DataAccessException {
+        var userData = new UserDAODB();
         var authData = new AuthDAOMem();
         var user1 = new UserDataRec(
                 "test-username-1",
@@ -150,8 +147,8 @@ public class UserServiceTests {
     }
 
     @Test
-    public void registerNeedsUsername() {
-        var userData = new UserDAOMem();
+    public void registerNeedsUsername() throws DataAccessException {
+        var userData = new UserDAODB();
         var authData = new AuthDAOMem();
         var request = ServiceMessage.builder()
                 .setPassword("test-password")
@@ -164,8 +161,8 @@ public class UserServiceTests {
     }
 
     @Test
-    public void registerNeedsPassword() {
-        var userData = new UserDAOMem();
+    public void registerNeedsPassword() throws DataAccessException {
+        var userData = new UserDAODB();
         var authData = new AuthDAOMem();
         var request = ServiceMessage.builder()
                 .setUsername("test-username")
@@ -178,8 +175,8 @@ public class UserServiceTests {
     }
 
     @Test
-    public void registerNeedsEmail() {
-        var userData = new UserDAOMem();
+    public void registerNeedsEmail() throws DataAccessException {
+        var userData = new UserDAODB();
         var authData = new AuthDAOMem();
         var request = ServiceMessage.builder()
                 .setUsername("test-username")

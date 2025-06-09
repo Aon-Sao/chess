@@ -8,7 +8,7 @@ import java.util.UUID;
 import java.util.function.Function;
 
 public class ServiceHelpers {
-    public static ServiceMessage clearAll() {
+    public static ServiceMessage clearAll() throws DataAccessException {
         UserService.clear();
         GameService.clear();
         new AuthDAOMem().clearAll();
@@ -18,7 +18,7 @@ public class ServiceHelpers {
     }
 
     // Optionally take an argument, which we discard, for similarity with other service functions
-    public static ServiceMessage clearAll(ServiceMessage msg) {
+    public static ServiceMessage clearAll(ServiceMessage msg) throws DataAccessException {
         return clearAll();
     }
 

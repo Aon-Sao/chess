@@ -1,9 +1,6 @@
 package service;
 
-import dataaccess.AuthDAOMem;
-import dataaccess.DataAccessException;
-import dataaccess.GameDAOMem;
-import dataaccess.UserDAOMem;
+import dataaccess.*;
 import model.AuthDataRec;
 import model.UserDataRec;
 import org.junit.jupiter.api.Assertions;
@@ -14,7 +11,7 @@ import java.util.List;
 
 public class GameServiceTests {
 
-    private static List<Object> makeUsers() {
+    private static List<Object> makeUsers() throws DataAccessException {
         var user1 = new UserDataRec("test-user-1", "test-pass-1", "test-email-1");
         var user2 = new UserDataRec("test-user-2", "test-pass-2", "test-email-2");
         var auth1 = new AuthDataRec(UserService.register(
@@ -35,11 +32,11 @@ public class GameServiceTests {
     }
 
     @BeforeEach
-    public void initEach() {
+    public void initEach() throws DataAccessException {
         // Make sure all data stores are clean
         new AuthDAOMem().clearAll();
         new GameDAOMem().clearAll();
-        new UserDAOMem().clearAll();
+        new UserDAODB().clearAll();
     }
 
     @Test

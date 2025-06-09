@@ -2,6 +2,7 @@ package service;
 
 import dataaccess.AuthDAOMem;
 import dataaccess.DataAccessException;
+import dataaccess.UserDAODB;
 import dataaccess.UserDAOMem;
 import model.UserDataRec;
 
@@ -9,11 +10,11 @@ import static service.ServiceHelpers.authorize;
 
 public class UserService {
 
-    public static void clear() {
-        new UserDAOMem().clearAll();
+    public static void clear() throws DataAccessException {
+        new UserDAODB().clearAll();
     }
 
-    public static ServiceMessage register(ServiceMessage request) {
+    public static ServiceMessage register(ServiceMessage request) throws DataAccessException {
         var username = request.username();
         var password = request.password();
         var email = request.email();
@@ -24,7 +25,7 @@ public class UserService {
             return ServiceHelpers.StockResponses.BAD_REQUEST.value();
         }
 
-        var userData = new UserDAOMem();
+        var userData = new UserDAODB();
         for (var user : userData.listUsers()) {
             if (user.username().equals(username)
                 || user.email().equals(email)) {
@@ -42,7 +43,7 @@ public class UserService {
                 .build();
     }
 
-    public static ServiceMessage login(ServiceMessage request) {
+    public static ServiceMessage login(ServiceMessage request) throws DataAccessException {
         var username = request.username();
         var password = request.password();
 
@@ -51,7 +52,7 @@ public class UserService {
             return ServiceHelpers.StockResponses.BAD_REQUEST.value();
         }
 
-        var userData = new UserDAOMem();
+        var userData = new UserDAODB();
         for (var user : userData.listUsers()) {
             if (user.username().equals(username)
             && user.password().equals(password)) {
