@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import dataaccess.DataAccessException;
+import dataaccess.DatabaseManager;
 import spark.*;
 import service.*;
 
@@ -29,6 +31,13 @@ public class Server {
 
         //This line initializes the server and can be removed once you have a functioning endpoint 
         Spark.init();
+
+        try {
+            DatabaseManager.init();
+        } catch (DataAccessException e) {
+            // Later, I should make the application revert to the memory implementations if it can't get a database
+            throw new RuntimeException(e.getMessage());
+        }
 
         Spark.awaitInitialization();
         return Spark.port();
