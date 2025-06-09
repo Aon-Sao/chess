@@ -12,7 +12,7 @@ public class UserServiceTests {
     @BeforeEach
     public void initEach() throws DataAccessException {
         // Make sure all data stores are clean
-        new AuthDAOMem().clearAll();
+        new AuthDAODB().clearAll();
         new GameDAOMem().clearAll();
         new UserDAODB().clearAll();
     }
@@ -20,7 +20,7 @@ public class UserServiceTests {
     @Test
     public void registerUserCorrectly() throws DataAccessException {
         var userData = new UserDAODB();
-        var authData = new AuthDAOMem();
+        var authData = new AuthDAODB();
         var user1 = new UserDataRec(
                 "test-username-1",
                 "test-password-1",
@@ -41,7 +41,7 @@ public class UserServiceTests {
     @Test
     public void registerDuplicateUsername() throws DataAccessException {
         var userData = new UserDAODB();
-        var authData = new AuthDAOMem();
+        var authData = new AuthDAODB();
         var user1 = new UserDataRec(
                 "test-username-1",
                 "test-password-1",
@@ -77,7 +77,7 @@ public class UserServiceTests {
     @Test
     public void registerDuplicatePassword() throws DataAccessException {
         var userData = new UserDAODB();
-        var authData = new AuthDAOMem();
+        var authData = new AuthDAODB();
         var user1 = new UserDataRec(
                 "test-username-1",
                 "test-password-1",
@@ -113,7 +113,7 @@ public class UserServiceTests {
     @Test
     public void registerDuplicateEmail() throws DataAccessException {
         var userData = new UserDAODB();
-        var authData = new AuthDAOMem();
+        var authData = new AuthDAODB();
         var user1 = new UserDataRec(
                 "test-username-1",
                 "test-password-1",
@@ -149,7 +149,7 @@ public class UserServiceTests {
     @Test
     public void registerNeedsUsername() throws DataAccessException {
         var userData = new UserDAODB();
-        var authData = new AuthDAOMem();
+        var authData = new AuthDAODB();
         var request = ServiceMessage.builder()
                 .setPassword("test-password")
                 .setEmail("test-email")
@@ -163,7 +163,7 @@ public class UserServiceTests {
     @Test
     public void registerNeedsPassword() throws DataAccessException {
         var userData = new UserDAODB();
-        var authData = new AuthDAOMem();
+        var authData = new AuthDAODB();
         var request = ServiceMessage.builder()
                 .setUsername("test-username")
                 .setEmail("test-email")
@@ -177,7 +177,7 @@ public class UserServiceTests {
     @Test
     public void registerNeedsEmail() throws DataAccessException {
         var userData = new UserDAODB();
-        var authData = new AuthDAOMem();
+        var authData = new AuthDAODB();
         var request = ServiceMessage.builder()
                 .setUsername("test-username")
                 .setPassword("test-password")
@@ -190,7 +190,7 @@ public class UserServiceTests {
 
     @Test
     public void loginCorrect() throws DataAccessException {
-        var authData = new AuthDAOMem();
+        var authData = new AuthDAODB();
         var user1 = new UserDataRec(
                 "test-username-1",
                 "test-password-1",
@@ -222,7 +222,7 @@ public class UserServiceTests {
 
     @Test
     public void loginBadPassword() throws DataAccessException {
-        var authData = new AuthDAOMem();
+        var authData = new AuthDAODB();
         var user1 = new UserDataRec(
                 "test-username-1",
                 "test-password-1",
@@ -254,7 +254,7 @@ public class UserServiceTests {
 
     @Test
     public void loginNoUsername() throws DataAccessException {
-        var authData = new AuthDAOMem();
+        var authData = new AuthDAODB();
         var user1 = new UserDataRec(
                 "test-username-1",
                 "test-password-1",
@@ -285,7 +285,7 @@ public class UserServiceTests {
 
     @Test
     public void logoutExistingSession() throws DataAccessException {
-        var authData = new AuthDAOMem();
+        var authData = new AuthDAODB();
         var user1 = new UserDataRec(
                 "test-username-1",
                 "test-password-1",

@@ -34,7 +34,7 @@ public class GameServiceTests {
     @BeforeEach
     public void initEach() throws DataAccessException {
         // Make sure all data stores are clean
-        new AuthDAOMem().clearAll();
+        new AuthDAODB().clearAll();
         new GameDAOMem().clearAll();
         new UserDAODB().clearAll();
     }

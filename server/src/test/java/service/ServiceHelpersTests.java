@@ -10,7 +10,7 @@ public class ServiceHelpersTests {
     @BeforeEach
     public void initEach() throws DataAccessException {
         // Make sure all data stores are clean
-        new AuthDAOMem().clearAll();
+        new AuthDAODB().clearAll();
         new GameDAOMem().clearAll();
         new UserDAODB().clearAll();
     }
@@ -34,7 +34,7 @@ public class ServiceHelpersTests {
 
         // Should be empty
         Assertions.assertTrue(new UserDAODB().listUsers().isEmpty());
-        Assertions.assertTrue(new AuthDAOMem().listAuths().isEmpty());
+        Assertions.assertTrue(new AuthDAODB().listAuths().isEmpty());
         Assertions.assertTrue(new GameDAOMem().listGames().isEmpty());
     }
 }

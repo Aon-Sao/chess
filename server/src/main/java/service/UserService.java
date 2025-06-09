@@ -1,9 +1,6 @@
 package service;
 
-import dataaccess.AuthDAOMem;
-import dataaccess.DataAccessException;
-import dataaccess.UserDAODB;
-import dataaccess.UserDAOMem;
+import dataaccess.*;
 import model.UserDataRec;
 
 import static service.ServiceHelpers.authorize;
@@ -71,7 +68,7 @@ public class UserService {
 
     public static ServiceMessage logout(ServiceMessage request) throws DataAccessException {
         return ServiceHelpers.authWrapper((msg) -> {
-            var authData = new AuthDAOMem();
+            var authData = new AuthDAODB();
             authData.removeAuth(request.authToken());
             return ServiceMessage.builder()
                     .setStatusCode(200)

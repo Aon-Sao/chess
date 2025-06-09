@@ -1,5 +1,6 @@
 package service;
 
+import dataaccess.AuthDAODB;
 import dataaccess.AuthDAOMem;
 import dataaccess.DataAccessException;
 import model.AuthDataRec;
@@ -11,7 +12,7 @@ public class ServiceHelpers {
     public static ServiceMessage clearAll() throws DataAccessException {
         UserService.clear();
         GameService.clear();
-        new AuthDAOMem().clearAll();
+        new AuthDAODB().clearAll();
         return ServiceMessage.builder()
                 .setStatusCode(200)
                 .build();
@@ -22,8 +23,8 @@ public class ServiceHelpers {
         return clearAll();
     }
 
-    public static String getUsernameByAuthToken(String authToken) {
-        var authData = new AuthDAOMem();
+    public static String getUsernameByAuthToken(String authToken) throws DataAccessException {
+        var authData = new AuthDAODB();
         for (var auth : authData.listAuths()) {
             if (auth.authToken().equals(authToken)) {
                 return auth.username();
@@ -32,15 +33,15 @@ public class ServiceHelpers {
         return null;
     }
 
-    protected static String authorize(String username) {
-        var authData = new AuthDAOMem();
+    protected static String authorize(String username) throws DataAccessException {
+        var authData = new AuthDAODB();
         var authToken = UUID.randomUUID().toString();
         authData.addAuth(new AuthDataRec(authToken, username));
         return authToken;
     }
 
-    public static boolean isAuthorized(ServiceMessage msg) {
-        for (var auth : new AuthDAOMem().listAuths()) {
+    public static boolean isAuthorized(ServiceMessage msg) throws DataAccessException {
+        for (var auth : new AuthDAODB().listAuths()) {
             // We do not check if username matches, because it is not always provided
             // authTokens should be unique anyway, which is sufficient
             if (auth.authToken().equals(msg.authToken())) {
