@@ -13,7 +13,7 @@ public class UserServiceTests {
     public void initEach() throws DataAccessException {
         // Make sure all data stores are clean
         new AuthDAODB().clearAll();
-        new GameDAOMem().clearAll();
+        new GameDAODB().clearAll();
         new UserDAODB().clearAll();
     }
 

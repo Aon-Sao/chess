@@ -35,7 +35,7 @@ public class GameServiceTests {
     public void initEach() throws DataAccessException {
         // Make sure all data stores are clean
         new AuthDAODB().clearAll();
-        new GameDAOMem().clearAll();
+        new GameDAODB().clearAll();
         new UserDAODB().clearAll();
     }
 
@@ -46,7 +46,7 @@ public class GameServiceTests {
                 .setAuthToken(authToken)
                 .setGameName("gameName")
                 .build());
-        var gameData = new GameDAOMem();
+        var gameData = new GameDAODB();
         Assertions.assertEquals(200, createResult.statusCode());
         Assertions.assertEquals(1, gameData.listGames().size());
     }
@@ -59,7 +59,7 @@ public class GameServiceTests {
                 .setAuthToken(authToken)
                 .setGameName("gameName")
                 .build());
-        var gameData = new GameDAOMem();
+        var gameData = new GameDAODB();
         Assertions.assertEquals(401, createResult.statusCode());
         Assertions.assertTrue(gameData.listGames().isEmpty());
     }
@@ -70,7 +70,7 @@ public class GameServiceTests {
         var createResult = GameService.createGame(ServiceMessage.builder()
                 .setAuthToken(authToken)
                 .build());
-        var gameData = new GameDAOMem();
+        var gameData = new GameDAODB();
         Assertions.assertEquals(400, createResult.statusCode());
         Assertions.assertTrue(gameData.listGames().isEmpty());
     }
@@ -78,7 +78,7 @@ public class GameServiceTests {
     @Test
     public void listGames200() throws DataAccessException {
         var authToken = ((AuthDataRec) makeUsers().get(1)).authToken();
-        var gameData = new GameDAOMem();
+        var gameData = new GameDAODB();
         var listResult = GameService.listGames(ServiceMessage.builder()
                 .setAuthToken(authToken)
                 .build());

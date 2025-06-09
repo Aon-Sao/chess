@@ -2,6 +2,7 @@ package service;
 
 import chess.ChessGame;
 import dataaccess.DataAccessException;
+import dataaccess.GameDAODB;
 import dataaccess.GameDAOMem;
 import model.GameDataRec;
 
@@ -14,9 +15,9 @@ import static chess.ChessGame.TeamColor.BLACK;
 import static chess.ChessGame.TeamColor.WHITE;
 
 public class GameService {
-    private static int makeGameID() {
+    private static int makeGameID() throws DataAccessException {
         int newID = 1;
-        var games = new GameDAOMem().listGames();
+        var games = new GameDAODB().listGames();
         HashSet<Integer> usedIDs = new HashSet<>(games.stream().map(GameDataRec::gameID).toList());
         while (usedIDs.contains(newID) && (newID != -1)) {
             newID++;
@@ -27,8 +28,8 @@ public class GameService {
         return newID;
     }
 
-    public static void clear() {
-        new GameDAOMem().clearAll();
+    public static void clear() throws DataAccessException {
+        new GameDAODB().clearAll();
     }
 
     public static ServiceMessage createGame(ServiceMessage msg) throws DataAccessException {
@@ -43,7 +44,7 @@ public class GameService {
                     null,
                     name,
                     new ChessGame());
-            new GameDAOMem().createGame(gameRec);
+            new GameDAODB().createGame(gameRec);
             return ServiceMessage.builder()
                     .setStatusCode(200)
                     .setGameID(id)
@@ -53,7 +54,7 @@ public class GameService {
 
     public static ServiceMessage listGames(ServiceMessage msg) throws DataAccessException {
         return ServiceHelpers.authWrapper((request) -> {
-            ArrayList<GameDataRec> games = new GameDAOMem().listGames();
+            ArrayList<GameDataRec> games = new GameDAODB().listGames();
             games = new ArrayList<>(games.stream().map(GameDataRec::copy).toList()); // Copy
             // Strip game instance from records to avoid including the board in the response
             // Game board state should not be exposed by this method
@@ -69,7 +70,7 @@ public class GameService {
     public static ServiceMessage joinGame(ServiceMessage request) throws DataAccessException {
         return ServiceHelpers.authWrapper((msg) -> {
             String username = ServiceHelpers.getUsernameByAuthToken(request.authToken());
-            var gameData = new GameDAOMem();
+            var gameData = new GameDAODB();
 
             // There's probably a better way, I think it is called Optional
             GameDataRec game;
