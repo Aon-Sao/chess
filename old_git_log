@@ -1,0 +1,1116 @@
+commit 9e01ec7dfd6843617fa272a1b90569bbb1aa90e2
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Jun 9 16:54:54 2025 -0500
+
+    changed table creation to allow null values for whiteUsername and blackUsername
+
+commit fdf3324ecd824c203d350c96d3d4b2338e5c2d95
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Jun 9 16:54:27 2025 -0500
+
+    swapped use of GameDAOMem for GameDAODB, propagated exceptions
+
+commit 8b4c7637575ac17237ae618ce6db03ce9ff76fec
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Jun 9 16:42:45 2025 -0500
+
+    implemented GameDAO for DB, updated signatures in GameDAO
+
+commit 4f7a69b93764b9bb305534a3b79e58e0b1b081b5
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Jun 9 16:21:28 2025 -0500
+
+    swapped use of AuthDAOMem for AuthDAODB, propagated exceptions
+
+commit b6e76396f12569be2a68bfabacd77ac4c39bdf76
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Jun 9 16:16:06 2025 -0500
+
+    implemented AuthDAO for DB, updated signatures in AuthDAO
+
+commit dd7fe41734922640c92e2406009e17ae403b501e
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Jun 9 16:04:27 2025 -0500
+
+    swapped use of UserDAOMem for UserDAODB, propagated exceptions
+
+commit 253e6a50ac46c813dbafa4f18f431474b1dc92f0
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Jun 9 15:50:48 2025 -0500
+
+    implemented UserDAO for DB, updated signatures in UserDAO
+
+commit 7d608f65be83b090d00f3f8675314b61039e831c
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Jun 9 14:27:12 2025 -0500
+
+    remove .idea/dataSources from tracking
+
+commit 7d8aea14780ba563a6ec6fa21f0d321a83d76b01
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Jun 9 14:15:41 2025 -0500
+
+    added database init call to Spark server startup
+
+commit 340750f97b74bd674897facc95afa3ec593c581d
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Jun 9 12:59:22 2025 -0500
+
+    ported over DatabaseManager without connection pooling
+
+commit 55f5041a7e64135a386686bb906be7ec9b7c1dba
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Jun 9 12:58:37 2025 -0500
+
+    did phase 4 getting started
+
+commit 5a94285477702033f919bba494ca7862721279f8
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon May 26 19:01:59 2025 -0500
+
+    some IDE xml files I had floating around
+
+commit f78c2930a30c8e86617edd69d25b36d1f1f8df69
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon May 26 18:03:57 2025 -0500
+
+    improved GameService test coverage and composition
+
+commit 75d6d8b1a194cd885e2c50f657bfbbc589df27ac
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon May 26 16:54:08 2025 -0500
+
+    made listGames return ArrayList instead of Collection
+
+commit 0764b4b1dc5992a7303188eb086875ca4b6ca590
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon May 26 15:35:21 2025 -0500
+
+    improve test coverage and consistency. tests need to be refactored to be DRY
+
+commit e8cd594ec80b0f901e345bc8b6d504831e2e5958
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon May 26 15:34:38 2025 -0500
+
+    cleanup extra variables
+
+commit 4fec2352da4f4b1578e4c39d24cea57059e965e8
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat May 24 22:19:23 2025 -0500
+
+    added null/empty checks to login service
+
+commit 85d95094b2b67d755495ec658c452c7713703ac0
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat May 24 22:16:46 2025 -0500
+
+    simplified error handling in lambdas
+
+commit 6e32ecf9778e9381691ca7a68cf7717c4566e951
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat May 24 21:58:24 2025 -0500
+
+    added a null check
+
+commit fdb694e1891cb814554276d050e585fedc243958
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat May 24 21:48:10 2025 -0500
+
+    refactored UserServiceTests to keep DAO interfaces smaller
+
+commit e6ea5e19198b3a4ba7fd54924576c55adc04c8b2
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat May 24 21:28:21 2025 -0500
+
+    copied over service tests and did basic regex adaptation for the new DAO design
+
+commit f1232e3fff735e6aeb223bd5fa87655cb49995f1
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat May 24 20:49:27 2025 -0500
+
+    corrected use of immutable type in clear functions, initialized class fields
+
+commit bf2de1b33f559969729155122d33af95e927f486
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat May 24 20:46:06 2025 -0500
+
+    adapted UserService to work with AuthDAOMem and UserDAOMem
+
+commit 8f3c5e760a1e39a167d693f71739d096f04ddd58
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat May 24 20:41:42 2025 -0500
+
+    added UserDAO and UserDAOMem
+
+commit 99eac012b20b94332d31cc0fdf18a121d0b4e75e
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat May 24 20:34:45 2025 -0500
+
+    adapted ServiceHelpers to work with AuthDAOMem
+
+commit f692f923e31f3389329b6d767f347360cb0bae29
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat May 24 20:29:55 2025 -0500
+
+    added AuthDAO and AuthDAOMem impl (both are small)
+
+commit fd934b5c8eb05bef2933dc693cbf2433bad95974
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat May 24 20:09:33 2025 -0500
+
+    Added GameDAOTests to ensure Mem impl is effectively static
+
+commit 3e3cb30697fc3f1c2522274c5cf7733144b6e5b3
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri May 9 11:18:23 2025 -0500
+
+    updated GameService based on GameDAOMem impl
+
+commit df968085c51c8174ee51aa181eb021bb22ae204c
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri May 9 11:17:55 2025 -0500
+
+    wrote an interface allowing lambdas to throw, and a method to convert their checked exceptions to runtime exceptions. not quite satisfied
+
+commit 5e746d417025edf306f299fe2c82cc7db305aaf2
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri May 9 09:44:02 2025 -0500
+
+    added GameDAO memory implementation
+
+commit 0104ed8781c21994ea816a8202d59665a9d07445
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri May 9 09:43:26 2025 -0500
+
+    added GameDAO interface
+
+commit aa119e8e968f27765aa414438c609166a9780ace
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Thu May 8 19:29:39 2025 -0600
+
+    partial transfer of phase 3 code, considering changing data access
+
+commit 8280ec7df15f3ca3cb592204c9043052707d00d5
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Thu May 8 18:47:27 2025 -0600
+
+    completed phase 3 getting-started
+
+commit c5a6e8973e30de791f8ff97c03e8baa60c4daa47
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Thu May 8 18:36:42 2025 -0600
+
+    add hashcode and equals for ChessGame
+
+commit cf29f00e84a96535203d2aed432a24a30715a1a4
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Thu May 8 18:36:20 2025 -0600
+
+    transfer phase 1 code from working branch
+
+commit 4fe270c340e1c75c5caf7d19dc1ed85d225c3962
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Thu May 8 18:19:44 2025 -0600
+
+    symlink in the phase 1 tests
+
+commit 8e745bb198b58ab752522c37ddd9be50ce8c861b
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Thu May 8 18:15:10 2025 -0600
+
+    transfer phase 0 code from working branch
+
+commit 9ad1d4671be15b9762d04c7b9fa537beb9233b02
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Thu May 8 15:36:04 2025 -0600
+
+    add staff notes
+
+commit 7ed56895f77e08f52a9d335972d2e926a4bf3846
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Thu May 8 15:30:19 2025 -0600
+
+    take it from the top
+
+commit e2d5dabbcce3238e8ae14c6c4d71a2a6cd655193
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Tue Apr 1 00:22:59 2025 -0600
+
+    removed creation strings from Table class
+
+commit 1864930e43f61f6159ad1ee650093f1098599ca9
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Mar 31 23:50:23 2025 -0600
+
+    corrected DBCPool shutdown to avoid concurrent modification
+
+commit 453fd99097b3fdb663fcbd1222195835703e5de1
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Mar 31 23:49:54 2025 -0600
+
+    removed errant print statement
+
+commit e73bc8a5ccda366bd31f5918419cbb3d919ddecf
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Mar 31 23:42:41 2025 -0600
+
+    let GameDataRec be created from map with game json
+
+commit 7cc7297f82f57c1146354391915a87c90d20a77c
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Mar 31 23:40:39 2025 -0600
+
+    if -> switch, added text case
+
+commit 5aefbef24c2cbb7de2c2692ff1fc620377df84b8
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Mar 31 23:40:10 2025 -0600
+
+    changed game column to text so json fits
+
+commit fde00eb1289d42abe692b8e66a51697c908e976d
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Mar 31 23:02:10 2025 -0600
+
+    added drop method for database
+
+commit 8e2f51d9538494797e90004cff549a93dde9b734
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Mar 31 22:50:19 2025 -0600
+
+    added drop method to Table class
+
+commit 941c501b7f84e220d8e1c0898cda46f4b56c0fcd
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Mar 31 22:41:46 2025 -0600
+
+    added Table class to dynamically create DAOs for records
+
+commit e49b21a344883a85e678a39c45fcf61ae0d110ea
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Mar 31 22:37:56 2025 -0600
+
+    added GameData table creation to DB init
+
+commit dd6bd34427ba43d5417e2870fbadda08cb0a8743
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sun Mar 23 16:14:13 2025 -0600
+
+    specified type of an ArrayList
+
+commit 6195126102eb7c5ff0abbea0d496a75a3ebd0787
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sun Mar 23 16:13:04 2025 -0600
+
+    added toJson, fromJson, and fromMap methods to the record classes
+
+commit e5f5ebffb737da3d7df5f8deedf24e5350534788
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sun Mar 23 16:12:31 2025 -0600
+
+    created an interface that gets in the way as much as it helps because javac insists on yelling at me if I try to call the fromMap method I've defined on all my records if I don't also make them implement said interface
+
+commit ad5cb86033fe82822a689fa5106925e1620718e2
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sun Mar 23 16:05:43 2025 -0600
+
+    added creation string for user data table
+
+commit daaf57d08e08dc02d5c9533a8f6e3a89583b5793
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 22 20:11:09 2025 -0600
+
+    added DB cleanup to server stop method
+
+commit cf3a67c3783bcde1fbd327d9c37d5b64c7dcded7
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 22 20:03:49 2025 -0600
+
+    added DB cleanup to Spark exception handler
+
+commit 5642a765ea0782115d2e6961b84982edae0e02d6
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 22 20:03:10 2025 -0600
+
+    split out init function
+
+commit 98fdfd7a31d93b53398f5fda52ee84d8ab03fb20
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 22 20:02:44 2025 -0600
+
+    fixed concurrent modificatoin exception
+
+commit 8743cdea32f1f64fb391aba6ca2ff7d28c56021b
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 22 20:02:00 2025 -0600
+
+    renamed ServiceMessage builder for clarity
+
+commit 1f7079c32a9c6e39307ad04f4f0509a4ae44e46c
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 15 15:48:46 2025 -0600
+
+    implemented connection pooling. should have split into at least two commits
+
+commit d20129cd2a2a28e21d10b031ce96abbba8542f79
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 15 14:16:40 2025 -0600
+
+    wrote createTables. for now it just does authData
+
+commit 79039e0a9383e07febcc6b582b2e814cc4e0f338
+Merge: 3e3df94 86c48b2
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 15 04:35:49 2025 -0600
+
+    merge fix
+
+commit 86c48b243f020a5aafc25da5f62c50d36767b496
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 15 04:26:11 2025 -0600
+
+    made createDatabase public so the Server can execute it on startup
+
+commit 3e3df94a39777b0d044762793340c2d29d0e9532
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 15 03:53:44 2025 -0600
+
+    made DatabaseManager follow advice about try-with-resources
+
+commit fbb76d3de34f853585e86b71e9edc1de24e5002a
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 15 02:47:59 2025 -0600
+
+    changed db.properties to use spurious dedicated user NOT root
+
+commit 71d3ed3e5f6c925a804598ed996bc2420fedd8a0
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 14 21:24:07 2025 -0600
+
+    added sql and bcrypt dependencies
+
+commit e2032d2d81cdc767277eafce7ebbe9fdaa6b69b1
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 14 21:21:41 2025 -0600
+
+    phase 4 setup
+
+commit c312ba7b4f0fe68c96deb451a1dec55e04bd5b70
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 14 21:16:03 2025 -0600
+
+    addec GameServiceTests
+
+commit 2c8ddbfe182430a942e03630e9059aef1f8c6852
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 14 20:49:33 2025 -0600
+
+    use BeforeEach to clear all data stores for tests
+
+commit 179dd9e9c7a56733d6a6d9312a3fa1c61b3129fc
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 14 20:19:25 2025 -0600
+
+    logoutExistingSession should start with a clean DB
+
+commit 105e4780577c248f0cddb460a9bda1d713c649b5
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 14 19:51:18 2025 -0600
+
+    wrapped logout endpoint with authWrapper
+
+commit 9be4cde0e6ebde2911fb9728b3af583cd56bf2e0
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 14 19:49:10 2025 -0600
+
+    removed Spark middleware responsible for authentication
+
+commit bf6a6795d32ff1e05f7f05b25aa0c17859bc2d30
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 14 19:47:53 2025 -0600
+
+    wrapped GameService methods with authWrapper
+
+commit 669eb43b3b776c99cc0ef3b7fe36c7eb63c715ec
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 14 19:47:09 2025 -0600
+
+    wrote authWrapper
+
+commit e1282e36372d5244069f933e4d88d4c47cc3edca
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 22:55:28 2025 -0700
+
+    added positive test for the clear endpoint
+
+commit c5e20d01f0930d0a781138265ed3c4c1d02bd482
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 22:51:21 2025 -0700
+
+    added logout tests. they do not pass because I am using spark middleware to handle auth. the application behaves correctly, but is incompatible with the required testing structure.
+
+commit 4dbfdeda12a8a453d6bba61e4fad6aa5a041738c
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 22:32:46 2025 -0700
+
+    remove unused imports
+
+commit 9fa2c7447eb9aee4873be0e7f8b0f24bd431f5c6
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 22:31:04 2025 -0700
+
+    removed unused methods
+
+commit b668afda7dcbbd56c731bddf7234f4336d2890ed
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 22:29:02 2025 -0700
+
+    shorten overlong line
+
+commit 1be5f22e41da3b4f24b4ac25826f4b88725cd5cc
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 22:28:26 2025 -0700
+
+    removed unused methods
+
+commit d14e1734eef967585a1708a962ae6fb456a18537
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 22:26:31 2025 -0700
+
+    removed unused methods
+
+commit d29b31e5bc9bdc2d53a67ec1a3d6885d9054b4f8
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 22:24:22 2025 -0700
+
+    minor cleanup
+
+commit c67947e8340768644513f7a033b5679957df3894
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 22:10:32 2025 -0700
+
+    Passes all StandardAPITests. Needs cleanup. Needs more tests.
+
+commit a8f0a8ad888e489749b1624ad746bfa6533227e4
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 20:38:49 2025 -0700
+
+    corrected auth clearing in UserService
+
+commit 62f34480dc375f1ef10341e1215ca00ce031dd21
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 20:37:17 2025 -0700
+
+    made ServiceHelpers clearAll handle clearing AuthData
+
+commit 7918e3ddf6e7e10a0ec3f077fca588747e25b87c
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 20:36:50 2025 -0700
+
+    added null checks to GameService
+
+commit 5f22bd96abe7b5a27f872de6956a10bb2380c0a8
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 20:36:20 2025 -0700
+
+    added a lookup function to AuthDataAcc
+
+commit d8c15dc79401347470def54b3284caf37b11e12e
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 19:35:56 2025 -0700
+
+    finished Game endpoints
+
+commit e08b111c9c96704da6925995b0d2776aaed79785
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 19:35:38 2025 -0700
+
+    added a lookup function to GameDataAcc
+
+commit 6a13ac36c1bddb2e143d3d4e9c7f25ca969f46dc
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 18:59:13 2025 -0700
+
+    added getUsernameByAuthToken method to ServiceHelpers
+
+commit 100a0c534c831cdb2c42ac29da311ef9a4da7266
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 18:43:15 2025 -0700
+
+    migrate common responses to enum
+
+commit 41e65dccf15a4f9ade8b7bd134fd8e58533c1c7e
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 18:10:49 2025 -0700
+
+    added games field to Service Message
+
+commit 77310286338f63892f3ef4c7eccae08cc5007ec9
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 18:09:58 2025 -0700
+
+    added exception handling, deserialized new fields
+
+commit 4950d2b48566ff0b0ea8dbb1b5a78700eeeb2dd1
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 18:08:34 2025 -0700
+
+    specified which map implementation to use
+
+commit fef3557097d18a248d2e3af62582d7d4a852bdfb
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Mar 8 18:08:13 2025 -0700
+
+    added copy method for GameDataRec
+
+commit d21b448ddc0522562430fc2dc50cfb6b25fd7686
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 7 19:42:22 2025 -0700
+
+    moved authorization to middleware
+
+commit 81ee8d052e5a1cdf5def9798faef7fbbf37fe660
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 7 19:42:07 2025 -0700
+
+    fixed isAuthorized to only check authTokens
+
+commit f1516a28b2f2cec41d259c4cf22bb1d10896bb79
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 7 18:32:20 2025 -0700
+
+    stubbed remaining endpoints. implemented clear. moved common service code to helper class
+
+commit 9d424c7046eff354c78500299dcc88793d5eb5ce
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 7 17:57:17 2025 -0700
+
+    added remaining endpoints to server and excised repeated code
+
+commit 24b3e0d7acdc86ce39c46db46d3fa25dfadbb33b
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 7 17:06:08 2025 -0700
+
+    made createGame public and added handler to Server
+
+commit f949068bce62bda3a150a435ec6f53471383d261
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 7 17:03:54 2025 -0700
+
+    implemented create game endpoint
+
+commit fb93897b8880ee83130655a2adc246fea20bc036
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 7 17:03:19 2025 -0700
+
+    createGame should be void, id is generated by the service
+
+commit 56576ec7758de150ec0886dba57bf5c5f681e3aa
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 7 16:33:41 2025 -0700
+
+    type migration UUID -> String, made createGame return id
+
+commit ea7ccaaa1e78a0fdcf841a4b97bd9be59a16f127
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Mar 7 15:02:20 2025 -0700
+
+    added fields to UserClump and renamed it to ServiceMessage
+
+commit 30b32aa594e1e708a0d406abbdf6aa0b2c7e1281
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Thu Feb 27 17:57:40 2025 -0700
+
+    use jbr-21 instead of corretto-21 for nixos
+
+commit 082045d16b9e3bb36a14e778fd19b83174f60284
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Tue Feb 18 12:05:51 2025 -0700
+
+    split out isAuthorized method
+
+commit f03e54be61696a39e94b63aa3fd6814f3a2bc0fe
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Tue Feb 18 10:44:57 2025 -0700
+
+    added User endpoints to server
+
+commit 7ec5f4222b1a311aeb2e022f7aa7a7bbc80b6bf4
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Tue Feb 18 09:50:58 2025 -0700
+
+    wrote and passed tests for UserService
+
+commit c41737912248d2d1472df9651cb4dfe55f997a02
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Feb 17 22:12:41 2025 -0700
+
+    draft of UserService, needs testing
+
+commit 7fa0c47d8d1c487fc9820f5586e8ebfe421b579d
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Feb 17 18:02:41 2025 -0700
+
+    implemented AuthData access object
+
+commit dc85ef9d8da666bff78552c71c977ee5bbae8112
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Feb 17 18:02:27 2025 -0700
+
+    defined AuthDAO interface
+
+commit 743ebc4c103ad4a03325388ff5b516a60cb7bc9c
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Feb 17 18:02:05 2025 -0700
+
+    added 'setters' to AuthData record
+
+commit 784a09b5a624e62efec536e8a7add97d58a54de1
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Feb 17 17:55:45 2025 -0700
+
+    implemented GameData access object
+
+commit 483bc845ad01b6567a9738738d0919d723e452d6
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Feb 17 17:55:26 2025 -0700
+
+    defined GameDAO interface
+
+commit d07703c86f6ddfe8dafab413f141cdd5bd4c01e3
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Feb 17 17:55:13 2025 -0700
+
+    added 'setters' to GameData record
+
+commit 7d78237a8100c705a0357e12c269c68d2f06d6ae
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Feb 17 17:32:42 2025 -0700
+
+    implemented UserData access object
+
+commit 8b34d5b89ddae574a7265d7a48bf91d92aad7440
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Feb 17 17:32:20 2025 -0700
+
+    wrote 'setters' for UserData records
+
+commit 174514aac3b5ea59ac3e533b82aa967f8e8ce31d
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Feb 17 17:31:53 2025 -0700
+
+    wrote UserDAO interface
+
+commit f819e8ac5c78e96a80440b43acf1d1899189f3a8
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Feb 17 16:08:29 2025 -0700
+
+    added bare data model classes
+
+commit 228a8a1eb196f1b7790f2855566153e399a27526
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Feb 17 16:01:54 2025 -0700
+
+    completed phase 3 setup
+
+commit 9e4f9fc15abff5131b30aacd705dfd7ead96805a
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Feb 7 20:10:17 2025 -0700
+
+    adhere to naming conventions
+
+commit 87e46f67f989d4554188d7ad16fbd9b0da22285c
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Feb 7 20:07:03 2025 -0700
+
+    cleanup
+
+commit 76422be0f399992e848f90143ba9c4c65e38cf3e
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Feb 7 19:57:21 2025 -0700
+
+    improved readability
+
+commit 3f861055ec36093a622a398fa1b411ed82609321
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Feb 7 19:39:55 2025 -0700
+
+    validMoves now uses the color of the piece at startPosition instead of getTeamTurn
+
+commit 5d04ba45ba2aa4129ffbf673b40263aa2bb5c2cc
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Feb 7 17:39:39 2025 -0700
+
+    made makeMove handle promotion
+
+commit 2eb9ea6b4ff6a4e04dacbc53b09b16788b56d6a7
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Feb 7 17:39:13 2025 -0700
+
+    made any same color and type chess pieces equal
+
+commit 7af897b6962f6f9f41b70df2a4885a5f79a53714
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Feb 7 17:14:53 2025 -0700
+
+    fixed some null checks and copying errors
+
+commit 746293e661faa3d73861e40c0a4689b1f394d83e
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Feb 7 15:29:36 2025 -0700
+
+    made pawn use search rays, adapted how some classes interact
+
+commit 8c5faf5ccec08d12c41b7639d4053b09ad04327a
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Feb 7 14:51:38 2025 -0700
+
+    gave search ray break and add condition params
+
+commit 3072ba1be6db51850aa54d90dd01f8ba5e0dade0
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Feb 7 13:11:28 2025 -0700
+
+    merged knight case
+
+commit 8427c6e066d2cad10387a1fce3f6dbe8d3ee5a1b
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Feb 7 13:06:22 2025 -0700
+
+    updated ChessPiece to match
+
+commit 5a8550056b1b3d5f6eb7f703d172cefe36009386
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Feb 7 13:05:37 2025 -0700
+
+    updated SearchRay to match
+
+commit 25deed3439ac5fee2ebc4ab17c8f5f012667cb46
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Feb 7 13:04:44 2025 -0700
+
+    reworked Directions
+
+commit f028a91ed4a87470ec63966b4a63096c1b05986a
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Thu Feb 6 23:54:20 2025 -0700
+
+    set up initial game state in ChessGame constructor
+
+commit c0e797b7249f85ff16287d906edb3d54f994d491
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Thu Feb 6 23:52:50 2025 -0700
+
+    added iterators to ChessBoard, updated noMovesLeft
+
+commit 31831ccad783726918a5ee34b84bb6bee35e6a39
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Thu Feb 6 23:19:22 2025 -0700
+
+    made ChessBoard copyable
+
+commit cd147d585f0847676a89ec46188ea424c2e34888
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Thu Feb 6 23:16:59 2025 -0700
+
+    implemented noMovesLeft
+
+commit 07336465e5cb25dfe7b5ccaebbe9ff374528eb0a
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Thu Feb 6 23:11:56 2025 -0700
+
+    implemented makeMove
+
+commit 88981149b1babb1bb13bf370784676c5f1fda0b0
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Thu Feb 6 23:06:08 2025 -0700
+
+    implemented validMoves
+
+commit c465ac21872fff5a8d09c63e3fe35c57b1fdd5a1
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Thu Feb 6 23:05:57 2025 -0700
+
+    added movePiece and removePiece
+
+commit 9e0f2e1a465310f0a1f0793629a3e74ad15ece7a
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 29 14:33:29 2025 -0700
+
+    filled out getters and setters
+
+commit bdc68ee3485d19870327cc0009273f6e6415de6d
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 29 13:56:07 2025 -0700
+
+    formatting
+
+commit 9eaecb810b64a0b0bffba04630966740cc5a9879
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 29 13:20:28 2025 -0700
+
+    replaced project with clean phase 0 implementation from when I was practicing for the exam
+
+commit eba8a9f030a5a7cfd0a4c52f6c709ca62a08db90
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Jan 27 16:05:25 2025 -0700
+
+    restored a semblance of stability. Remember to use .equals() instead of ==
+
+commit 30463302d0cb0d3b727270803b598895663c7c0d
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Mon Jan 27 13:34:54 2025 -0700
+
+    intermediate commit. Methods have been defined in ChessGame that require ChessPiece and SearchRay to handle pawns and knights better. Some methods have been reordered based on edit frequency.
+
+commit f48565122fd6a3690aa1d07ed6c46cf6dfe2630a
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 21:20:29 2025 -0700
+
+    swapped row/col major
+
+commit f357515267fae7f47e9cddf0c2be00dfb30740da
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 21:11:49 2025 -0700
+
+    be more consistent with row/col/x/y
+
+commit fa31380679c351d18f432002fcd0ca383e2889b0
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 21:11:23 2025 -0700
+
+    give search ray a getter for threat pieces
+
+commit 41702747465cbb39c021cc4e24ae55681163272d
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 19:37:00 2025 -0700
+
+    implemented isInCheck
+
+commit a385bc84777e5fe0231e3187eab84f6f9c95b7ff
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 19:23:56 2025 -0700
+
+    made ChessBoard iterable, implemented a findPiece method
+
+commit 23e12c9d913f8e8b8dfead00677db2af9de65245
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 18:24:00 2025 -0700
+
+    added two movement getters to ChessPiece
+
+commit fe04577ae93a3ba138a52ca721d4995be772ba3c
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 17:56:31 2025 -0700
+
+    implemented some getters and setters
+
+commit ef28e281b469ca45f517f70adcb7e717238264fc
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 17:56:19 2025 -0700
+
+    fixed copy constructor
+
+commit c1d56577e0305090dee35265a42c62cf79125040
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 17:47:38 2025 -0700
+
+    changed how validMoves checks future board states
+
+commit ed2c16cad0d8523195e74d28acc663faeb1c5acf
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 17:44:11 2025 -0700
+
+    implemented makeMove and validMoves
+
+commit 89d7fa605b6516ea137f2701e67e34c5853c1190
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 17:43:57 2025 -0700
+
+    added copy constructors
+
+commit 32be0e978561409312e43e8c6f17110cf6d115cb
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 17:01:21 2025 -0700
+
+    added tests for phase 1
+
+commit f51501697afb6098dc465fdb3d103df8c0411708
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 17:00:45 2025 -0700
+
+    updated intellij settings to follow 150 character line limit
+
+commit 77f589bb087f7822c82e5467b26f661886181c0f
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 16:59:10 2025 -0700
+
+    corrected method / constant / variable names
+
+commit c4da84f4ca011381c3f0a457b59d005218b1f8a1
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 16:49:10 2025 -0700
+
+    corrected lines longer than 150 chars
+
+commit 387966b4946c5bba0c058cdbeee3f25857d2a445
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 16:28:49 2025 -0700
+
+    made fields final where suggested by the IDE
+
+commit b96e97f411f1085961e43685d09a86cb9b903ef5
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 16:23:04 2025 -0700
+
+    refactor resetBoard to use fromString
+
+commit 9402fe1f8e378623f53bb2e54345728e72697ef0
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 16:17:47 2025 -0700
+
+    implement toString and resetBoard for ChessBoard
+
+commit 6a76e66cc884e1a95ec57693229eada76b6e4f2d
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 22 16:16:43 2025 -0700
+
+    implement equals, hashCode, and toString for ChessPiece
+
+commit d24322ebb8e1c47a9d2439cd9cacd75b08452514
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 15 16:20:24 2025 -0700
+
+    implement pawn moves
+
+commit e6ba60972cc47b8ab3127ba53e550b9e71da5ecf
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 15 15:34:35 2025 -0700
+
+    implement knight moves
+
+commit 7aee87d7f3a124f018a6e8635b6df3f092fbfc9e
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Jan 11 17:09:29 2025 -0700
+
+    tidying up
+
+commit 0788891e96c10f79b8ab35a27d54ebb14812c217
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Jan 11 16:57:08 2025 -0700
+
+    implemented max ray distance
+
+commit 8d95b0fd8ff111fec3a1a2842c60fd19bfff0692
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Jan 11 16:48:07 2025 -0700
+
+    made Bishop, King, Queen, Rook aware of own move patterns
+
+commit 13ceefd8bba5565f05b883fbc686b0365896cf12
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Jan 11 16:32:02 2025 -0700
+
+    added capturing to SearchRay. All BishopMoveTests pass
+
+commit 57cde27c4b98daccb2cdf722ec0e09dc703fae46
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Jan 11 16:22:54 2025 -0700
+
+    got bishopMoveUntilEdge working by itself
+
+commit 63d33cd6aa36d5abe1c4b70a76b4733ed40f710a
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Jan 11 16:22:16 2025 -0700
+
+    implemented basic search ray
+
+commit 856537c2313ea2e907dc54758f72bf4c85f67c9c
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Jan 11 16:21:12 2025 -0700
+
+    generated equals and hash for ChessMove and ChessPosition
+
+commit c44d79c22bbf77dc643f5d9636ea89ba99445748
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Jan 11 16:10:56 2025 -0700
+
+    fix isEmptyPosition
+
+commit 5bd5910ae96743f4b687016ee32b920db87d20b6
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Jan 11 15:52:27 2025 -0700
+
+    implemented 2 toStrings, added a constructor
+
+commit 2eb07e28431425334180ac7580f10a835344dd40
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Jan 11 15:32:43 2025 -0700
+
+    implement ChessMove
+
+commit ee6ad2789400d4079bd68ebe563ed13abaaf2dec
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Jan 11 15:30:49 2025 -0700
+
+    implement ChessPosition
+
+commit 929f561015048072f75f751964e97e30e32ef2e5
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Jan 11 15:30:15 2025 -0700
+
+    implement basic methods on ChessBoard
+
+commit 0fb4845dcc0a3337ed3e179c178a0b021a0e1b1f
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Jan 11 14:50:08 2025 -0700
+
+    enumerated chess directions
+
+commit a9e57e71ea6ae55072d1e6ac689b6930ca08bfc7
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Jan 11 14:49:46 2025 -0700
+
+    enumerated chess directions
+
+commit 696e17db5e051874de86a2e3a5a855c2b3b74cfb
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Jan 11 13:51:03 2025 -0700
+
+    reconfigured project again, now tests run and maven is not used
+
+commit e8c5e80261303d8bd89c8a650ad4ba0e85452c3e
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Jan 11 12:53:03 2025 -0700
+
+    notes-fixed an issue with running tests
+
+commit e3704db771affd79da36d0370550c098cc0a37ee
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Sat Jan 11 12:50:34 2025 -0700
+
+    reconfigured project, looks stable now
+
+commit 28e5e3b5364a738e8f63496cf0b0b38bbecda137
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Jan 10 17:08:10 2025 -0700
+
+    git rm --cached -r the files that are to no longer be tracked, but previously were added
+
+commit af980aed6e903320abc9752cece3a4eb655a7d53
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Jan 10 16:53:17 2025 -0700
+
+    I prefer to ignore .gitignore
+
+commit fd14ec7aa4165f2747fb1da4e0a7123593a2e37f
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Fri Jan 10 16:50:13 2025 -0700
+
+    stub a notes file
+
+commit 1bfff43c04dbefe46b03eb7910c99a11fcfacb6f
+Author: Aon-Sao <larsatracy@gmail.com>
+Date:   Wed Jan 8 15:42:37 2025 -0700
+
+    init template repo
