@@ -2,9 +2,7 @@ package server;
 
 import io.javalin.Javalin;
 import service.ServiceHelpers;
-
-import static service.ServiceHelpers.authWrapper;
-import static service.ServiceHelpers.exceptionWrapper;
+import service.UserService;
 
 public class Server {
 
@@ -12,13 +10,13 @@ public class Server {
 
     public Server() {
         javalin = Javalin.create(config -> config.staticFiles.add("web"))
-                .delete("/db",      exceptionWrapper(ServiceHelpers::clearAll))
-                .post(  "/user",    exceptionWrapper(UserService::register))
-                .post(  "/session", exceptionWrapper(UserService::login))
-                .delete("/session", authWrapper(exceptionWrapper(UserService::logout)))
-                .get(   "/game",    authWrapper(exceptionWrapper(GameService::listGames)))
-                .post(  "/game",    authWrapper(exceptionWrapper(GameService::createGame)))
-                .put(   "/game",    authWrapper(exceptionWrapper(GameService::joinGame)));
+//                .delete("/db", ServiceHelpers::clearAll)
+                .post(  "/user",     UserService::register)
+                .post(  "/session",  UserService::login);
+//                .delete("/session",  UserService::logout)
+//                .get(   "/game",     GameService::listGames)
+//                .post(  "/game",     GameService::createGame)
+//                .put(   "/game",     GameService::joinGame);
 
     }
 
