@@ -12,8 +12,8 @@ public class Server {
         javalin = Javalin.create(config -> config.staticFiles.add("web"))
 //                .delete("/db", ServiceHelpers::clearAll)
                 .post(  "/user",     UserService::register)
-                .post(  "/session",  UserService::login);
-//                .delete("/session",  UserService::logout)
+                .post(  "/session",  UserService::login)
+                .delete("/session",  UserService::logout);
 //                .get(   "/game",     GameService::listGames)
 //                .post(  "/game",     GameService::createGame)
 //                .put(   "/game",     GameService::joinGame);

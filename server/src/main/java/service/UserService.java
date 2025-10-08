@@ -2,21 +2,21 @@ package service;
 
 import com.google.gson.Gson;
 import dataaccess.DataAccessException;
+import dataaccess.MemoryAuthDAO;
 import dataaccess.MemoryUserDAO;
 import io.javalin.http.Context;
 import model.UserDataRec;
 
 import java.util.Map;
 
-import static service.ServiceHelpers.authorize;
-import static service.ServiceHelpers.exceptionWrapper;
+import static service.ServiceHelpers.*;
 
 public class UserService {
 
     public static void register(Context context) throws DataAccessException {
         exceptionWrapper((cxt) -> {
             // Unpack pertinent fields from the request body
-            Map body = new Gson().fromJson(cxt.body(), Map.class);
+            Map body = new Gson().fromJson(context.body(), Map.class);
             var username = (String) body.get("username");
             var password = (String) body.get("password");
             var email = (String) body.get("email");
@@ -41,7 +41,7 @@ public class UserService {
 
             // Good to go, register the user and log them in
             userData.createUser(new UserDataRec(username, password, email));
-            login(cxt);
+            login(context);
 
         }).apply(context);
     }
@@ -77,5 +77,16 @@ public class UserService {
             return;
 
         }).apply(context);
+    }
+
+    public static void logout(Context context) throws DataAccessException {
+        authWrapper(exceptionWrapper((cxt) -> {
+            // Delete authToken
+            var authToken = context.header("authorization");
+            var authData = new MemoryAuthDAO();
+            authData.removeAuth(authToken);
+            context.status(200);
+
+        })).apply(context);
     }
 }
