@@ -1,7 +1,7 @@
 package server;
 
 import io.javalin.Javalin;
-import service.ServiceHelpers;
+import service.GameService;
 import service.UserService;
 
 public class Server {
@@ -11,11 +11,11 @@ public class Server {
     public Server() {
         javalin = Javalin.create(config -> config.staticFiles.add("web"))
 //                .delete("/db", ServiceHelpers::clearAll)
-                .post(  "/user",     UserService::register)
-                .post(  "/session",  UserService::login)
-                .delete("/session",  UserService::logout);
+                .post(  "/user",     UserService::registerHandler)
+                .post(  "/session",  UserService::loginHandler)
+                .delete("/session",  UserService::logoutHandler)
 //                .get(   "/game",     GameService::listGames)
-//                .post(  "/game",     GameService::createGame)
+                .post(  "/game",     GameService::createGameHandler);
 //                .put(   "/game",     GameService::joinGame);
 
     }
