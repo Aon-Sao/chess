@@ -33,11 +33,31 @@ public class ServiceHelpers {
             if (isAuthorized(context)) {
                 func.apply(context);
             } else {
+                StockResponses.UNAUTHORIZED.apply(context);
+            }
+        };
+    }
+
+    public enum StockResponses {
+        BAD_REQUEST,
+        UNAUTHORIZED,
+        ALREADY_TAKEN;
+
+        public void apply(Context context) {
+            if (this.equals(BAD_REQUEST)) {
+                var msg = Map.of("message", "Error: bad request");
+                context.status(400);
+                context.json(new Gson().toJson(msg));
+            } else if (this.equals(UNAUTHORIZED)) {
                 var msg = Map.of("message", "Error: unauthorized");
                 context.json(new Gson().toJson(msg));
                 context.status(401);
+            } else if (this.equals(ALREADY_TAKEN)) {
+                var msg = Map.of("message", "Error: already taken");
+                context.json(new Gson().toJson(msg));
+                context.status(403);
             }
-        };
+        }
     }
 
 }
