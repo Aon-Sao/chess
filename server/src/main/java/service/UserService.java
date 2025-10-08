@@ -14,6 +14,12 @@ import static service.ServiceHelpers.*;
 
 public class UserService {
 
+    /*
+    * Each endpoint corresponds to a .*Handler method
+    * Each .*Handler method delegates to a .*Checks method,
+    * and, if the checks pass, to a .*Action method
+    */
+
     private static boolean userExists(String username, String email) {
         var userData = new MemoryUserDAO();
         for (var user : userData.listUsers()) {
@@ -25,68 +31,98 @@ public class UserService {
         return false;
     }
 
-    public static void register(Context context) throws DataAccessException {
+    private static boolean registerChecks(Context context) {
+        // Unpack pertinent fields from the request body
+        // Note: getRequiredFields performs null checks
+        var body = getRequiredFields(context, List.of("username", "password", "email"));
+        if (!(boolean) body.get("success")) {
+            return false;
+        }
+
+        var username = (String) body.get("username");
+        var password = (String) body.get("password");
+
+        // Check if username or email is taken
+        if (userExists(username, password)) {
+            ServiceHelpers.StockResponses.ALREADY_TAKEN.apply(context);
+            return false;
+        }
+
+        return true;
+    }
+
+    private static void registerAction(String username, String password, String email) {
+        new MemoryUserDAO().createUser(new UserDataRec(username, password, email));
+    }
+
+    public static void registerHandler(Context context) throws DataAccessException {
         exceptionWrapper((cxt) -> {
-            // Unpack pertinent fields from the request body
-            var body = getRequiredFields(context, List.of("username", "password", "email"));
-            if (!(boolean) body.get("success")) {
-                return;
+            if (registerChecks(context)) {
+                var body = getRequiredFields(context, List.of("username", "password", "email"));
+                registerAction(
+                        (String) body.get("username"),
+                        (String) body.get("password"),
+                        (String) body.get("email")
+                );
+                loginHandler(context);
             }
-
-            var username = (String) body.get("username");
-            var password = (String) body.get("password");
-            var email = (String) body.get("email");
-
-            // Check if username or email is taken
-            if (userExists(username, password)) {
-                ServiceHelpers.StockResponses.ALREADY_TAKEN.apply(context);
-                return;
-            }
-
-            // Good to go, register the user and log them in
-            new MemoryUserDAO().createUser(new UserDataRec(username, password, email));
-            login(context);
-
         }).apply(context);
     }
 
-    public static void login(Context context) throws DataAccessException {
+    private static boolean loginChecks(Context context) {
+        // Unpack pertinent fields from the request body
+        var body = getRequiredFields(context, List.of("username", "password"));
+        if (!(boolean) body.get("success")) {
+            return false;
+        }
+        var username = (String) body.get("username");
+        var password = (String) body.get("password");
+
+        // Verify password
+        var userData = new MemoryUserDAO();
+        for (var user : userData.listUsers()) {
+            if (user.username().equals(username) && user.password().equals(password)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static String loginAction(String username) {
+        // If this is it for this method... it may not be necessary
+        return authorize(username);
+    }
+
+    public static void loginHandler(Context context) throws DataAccessException {
         exceptionWrapper((cxt) -> {
-            // Unpack pertinent fields from the request body
-            var body = getRequiredFields(context, List.of("username", "password"));
-            if (!(boolean) body.get("success")) {
-                return;
+            if (loginChecks(context)) {
+                var username = (String) getRequiredFields(context, List.of("username", "password")).get("username");
+                var authToken = loginAction(username);
+                var msg = Map.of("username", username, "authToken", authToken);
+                context.json(new Gson().toJson(msg));
+                context.status(200);
+            } else {
+                ServiceHelpers.StockResponses.UNAUTHORIZED.apply(context);
             }
-            var username = (String) body.get("username");
-            var password = (String) body.get("password");
-
-            // Verify password
-            var userData = new MemoryUserDAO();
-            for (var user : userData.listUsers()) {
-                if (user.username().equals(username) && user.password().equals(password)) {
-                    var authToken = authorize(username);
-                    var msg = Map.of("username", username, "authToken", authToken);
-                    context.json(new Gson().toJson(msg));
-                    context.status(200);
-                    return;
-                }
-            }
-
-            // If we got this far, the user could not be authorized
-            ServiceHelpers.StockResponses.UNAUTHORIZED.apply(context);
-            return;
-
         }).apply(context);
     }
 
-    public static void logout(Context context) throws DataAccessException {
+    private static boolean logoutChecks(Context context) {
+        var authToken = context.header("authorization");
+        return !(authToken == null || authToken.isEmpty());
+    }
+
+    private static void logoutAction(String authToken) throws DataAccessException {
+        new MemoryAuthDAO().removeAuth(authToken);
+    }
+
+    public static void logoutHandler(Context context) throws DataAccessException {
         authWrapper(exceptionWrapper((cxt) -> {
-            // Delete authToken
-            var authToken = context.header("authorization");
-            var authData = new MemoryAuthDAO();
-            authData.removeAuth(authToken);
-            context.status(200);
-
+            if (logoutChecks(context)) {
+                var authToken = context.header("authorization");
+                logoutAction(authToken);
+                context.status(200);
+            }
         })).apply(context);
     }
 }
