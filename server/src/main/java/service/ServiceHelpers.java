@@ -5,10 +5,26 @@ import dataaccess.MemoryAuthDAO;
 import io.javalin.http.Context;
 import model.AuthDataRec;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class ServiceHelpers {
+
+    public static Map getRequiredFields(Context context, List<String> fields) {
+        Map body = new Gson().fromJson(context.body(), Map.class);
+        boolean success = true;
+        for (var field : fields) {
+            var value = (String) body.get(field);
+            if (value == null || value.isEmpty()) {
+                success = false;
+                StockResponses.BAD_REQUEST.apply(context);
+                break;
+            }
+        }
+        body.put("success", success);
+        return body;
+    }
 
     public static boolean isAuthorized(String authToken) {
         for (var auth : new MemoryAuthDAO().listAuths()) {

@@ -7,40 +7,44 @@ import dataaccess.MemoryUserDAO;
 import io.javalin.http.Context;
 import model.UserDataRec;
 
+import java.util.List;
 import java.util.Map;
 
 import static service.ServiceHelpers.*;
 
 public class UserService {
 
+    private static boolean userExists(String username, String email) {
+        var userData = new MemoryUserDAO();
+        for (var user : userData.listUsers()) {
+            if (user.username().equals(username)
+                    || user.email().equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void register(Context context) throws DataAccessException {
         exceptionWrapper((cxt) -> {
             // Unpack pertinent fields from the request body
-            Map body = new Gson().fromJson(context.body(), Map.class);
+            var body = getRequiredFields(context, List.of("username", "password", "email"));
+            if (!(boolean) body.get("success")) {
+                return;
+            }
+
             var username = (String) body.get("username");
             var password = (String) body.get("password");
             var email = (String) body.get("email");
 
-            // Null checks
-            if (username == null || username.isEmpty()
-                    || password == null || password.isEmpty()
-                    || email == null || email.isEmpty()) {
-                ServiceHelpers.StockResponses.BAD_REQUEST.apply(context);
+            // Check if username or email is taken
+            if (userExists(username, password)) {
+                ServiceHelpers.StockResponses.ALREADY_TAKEN.apply(context);
                 return;
             }
 
-            // Check if username or email is taken
-            var userData = new MemoryUserDAO();
-            for (var user : userData.listUsers()) {
-                if (user.username().equals(username)
-                    || user.email().equals(email)) {
-                    ServiceHelpers.StockResponses.ALREADY_TAKEN.apply(context);
-                    return;
-                }
-            }
-
             // Good to go, register the user and log them in
-            userData.createUser(new UserDataRec(username, password, email));
+            new MemoryUserDAO().createUser(new UserDataRec(username, password, email));
             login(context);
 
         }).apply(context);
@@ -49,16 +53,12 @@ public class UserService {
     public static void login(Context context) throws DataAccessException {
         exceptionWrapper((cxt) -> {
             // Unpack pertinent fields from the request body
-            Map body = new Gson().fromJson(context.body(), Map.class);
-            var username = (String) body.get("username");
-            var password = (String) body.get("password");
-
-            // Null checks
-            if (username == null || username.isEmpty()
-                    || password == null || password.isEmpty()) {
-                ServiceHelpers.StockResponses.BAD_REQUEST.apply(context);
+            var body = getRequiredFields(context, List.of("username", "password"));
+            if (!(boolean) body.get("success")) {
                 return;
             }
+            var username = (String) body.get("username");
+            var password = (String) body.get("password");
 
             // Verify password
             var userData = new MemoryUserDAO();
