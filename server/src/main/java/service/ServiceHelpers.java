@@ -1,19 +1,30 @@
 package service;
 
 import com.google.gson.Gson;
+import dataaccess.MemoryAuthDAO;
 import io.javalin.http.Context;
+import model.AuthDataRec;
 
 import java.util.Map;
+import java.util.UUID;
 
 public class ServiceHelpers {
 
-    public static boolean isAuthorized(Context context) {
-        throw new RuntimeException("NYI");
+    public static boolean isAuthorized(String authToken) {
+        for (var auth : new MemoryAuthDAO().listAuths()) {
+            if (auth.authToken().equals(authToken)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static String authorize(String username) {
-        // Remember to clear out a user's prior token
-        throw new RuntimeException("NYI");
+        // TODO: Remember to clear out a user's prior token
+        var authData = new MemoryAuthDAO();
+        var authToken = UUID.randomUUID().toString();
+        authData.addAuth(new AuthDataRec(authToken, username));
+        return authToken;
     }
 
     public static LambdasCanThrow<Context> exceptionWrapper(LambdasCanThrow<Context> func) {
@@ -30,7 +41,16 @@ public class ServiceHelpers {
 
     public static LambdasCanThrow<Context> authWrapper(LambdasCanThrow<Context> func) {
         return (context) -> {
-            if (isAuthorized(context)) {
+            // Unpack pertinent fields from the headers
+            var authToken = context.header("authorization");
+
+            // Null checks
+            if (authToken == null || authToken.isEmpty()) {
+                StockResponses.BAD_REQUEST.apply(context);
+                return;
+            }
+
+            if (isAuthorized(authToken)) {
                 func.apply(context);
             } else {
                 StockResponses.UNAUTHORIZED.apply(context);
